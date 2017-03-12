@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.shape.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="controller.BorderPaneViewController">
+    <top>
+        <MenuBar>
+        	<Menu text="File">
+	        	<MenuItem text="Open"  fx:id="openFile"/>
+	        	<MenuItem text="Save"  fx:id="saveFile"/>
+        	</Menu>
+        </MenuBar>
+    </top>
+    <center>
+    	<ImageView fx:id="mainImage"/>
+    </center>
+    <right>
+		<VBox alignment="top_right" styleClass="vertical-box">
+    		<Region fx:id="pixelColor" styleClass="pixel-region"/>
+    		<ColorPicker fx:id="changeColorButton" styleClass="change-pixel-button"/>
+		</VBox>
+    </right>
+</BorderPane>
