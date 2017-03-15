@@ -1,0 +1,7 @@
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<fx:root type="Menu" xmlns:fx="http://javafx.com/fxml" text="New">
+	<MenuItem text="Save binary circle" fx:id="saveCircle" />
+	<MenuItem text="Save binary square" fx:id="saveSquare" />
+</fx:root>

@@ -1,0 +1,9 @@
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<fx:root type="Menu" xmlns:fx="http://javafx.com/fxml" text="File">
+	<MenuItem text="Open" fx:id="openFile" />
+	<MenuItem text="Open .raw" fx:id="openRaw" />
+	<MenuItem text="Save" fx:id="saveFile" />
+	<MenuItem text="Save .raw" fx:id="saveRaw" />
+</fx:root>

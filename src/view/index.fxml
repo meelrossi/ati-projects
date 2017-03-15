@@ -7,15 +7,11 @@
 <?import javafx.scene.text.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.shape.*?>
+<?import controller.*?>
 
 <BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="controller.BorderPaneViewController">
     <top>
-        <MenuBar>
-        	<Menu text="File">
-	        	<MenuItem text="Open"  fx:id="openFile"/>
-	        	<MenuItem text="Save"  fx:id="saveFile"/>
-        	</Menu>
-        </MenuBar>
+    	<CustomMenuBar fx:id='customMenuBar'></CustomMenuBar>
     </top>
     <center>
     	<ImageView fx:id="mainImage"/>
