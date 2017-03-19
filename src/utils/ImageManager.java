@@ -5,7 +5,7 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 
-import model.CustomImage;
+import model.ColorImage;
 
 public class ImageManager {
 	private static int IMAGE_SIZE = 200;
@@ -38,7 +38,7 @@ public class ImageManager {
 		return square;
 	}
 
-	public static CustomImage sum(CustomImage img1, CustomImage img2) {
+	public static ColorImage sum(ColorImage img1, ColorImage img2) {
 		int img1_h = img1.getHeight();
 		int img1_w = img1.getWidth();
 
@@ -84,10 +84,10 @@ public class ImageManager {
 				result_b[k][r] = (255 * result_b[k][r]) / (maxBlue - minBlue) - (255 * minBlue) / (maxBlue - minBlue);
 			}
 		}
-		return new CustomImage(result_r, result_g, result_b, width, height);
+		return new ColorImage(result_r, result_g, result_b, width, height);
 	}
 	
-	public static CustomImage sustraction(CustomImage img1, CustomImage img2) {
+	public static ColorImage sustraction(ColorImage img1, ColorImage img2) {
 		int img1_h = img1.getHeight();
 		int img1_w = img1.getWidth();
 
@@ -133,10 +133,10 @@ public class ImageManager {
 				result_b[k][r] = (255 * result_b[k][r]) / (maxBlue - minBlue) - (255 * minBlue) / (maxBlue - minBlue);
 			}
 		}
-		return new CustomImage(result_r, result_g, result_b, width, height);
+		return new ColorImage(result_r, result_g, result_b, width, height);
 	}
 	
-	public static CustomImage product(CustomImage img1, CustomImage img2) {
+	public static ColorImage product(ColorImage img1, ColorImage img2) {
 		int img1_h = img1.getHeight();
 		int img1_w = img1.getWidth();
 
@@ -182,6 +182,6 @@ public class ImageManager {
 				result_b[k][r] = (255 * result_b[k][r]) / (maxBlue - minBlue) - (255 * minBlue) / (maxBlue - minBlue);
 			}
 		}
-		return new CustomImage(result_r, result_g, result_b, width, height);
+		return new ColorImage(result_r, result_g, result_b, width, height);
 	}
 }

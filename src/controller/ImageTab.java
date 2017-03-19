@@ -19,7 +19,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import model.CustomImage;
+import model.ColorImage;
 
 public class ImageTab extends Tab {
 	@FXML
@@ -37,7 +37,7 @@ public class ImageTab extends Tab {
 	@FXML
 	private Rectangle selectionRectangle;
 
-	private CustomImage img;
+	private ColorImage img;
 	private int x;
 	private int y;
 	private Point dragPos;
@@ -60,7 +60,7 @@ public class ImageTab extends Tab {
 
 	public void openImage(File file) {
 		try {
-			img = new CustomImage(ImageIO.read(file));
+			img = new ColorImage(ImageIO.read(file));
 			mainImage.setImage(SwingFXUtils.toFXImage(img.getBufferedImage(), null));
 			mainImage.onMousePressedProperty().set(new EventHandler<MouseEvent>() {
 				@Override

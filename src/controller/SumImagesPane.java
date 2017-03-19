@@ -14,7 +14,7 @@ import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
-import model.CustomImage;
+import model.ColorImage;
 import utils.ImageManager;
 
 public class SumImagesPane extends Pane {
@@ -30,9 +30,9 @@ public class SumImagesPane extends Pane {
 	@FXML
 	private Button loadImage2Button;
 
-	private CustomImage img1;
-	private CustomImage img2;
-	private CustomImage result;
+	private ColorImage img1;
+	private ColorImage img2;
+	private ColorImage result;
 
 	private FileChooser fileChooser = new FileChooser();
 
@@ -55,7 +55,7 @@ public class SumImagesPane extends Pane {
 				File file = fileChooser.showOpenDialog(JavaFXApplication.primaryStage);
 				if (file != null) {
 					try {
-						img1 = new CustomImage(ImageIO.read(file));
+						img1 = new ColorImage(ImageIO.read(file));
 						image1.setImage(SwingFXUtils.toFXImage(img1.getBufferedImage(), null));
 						checkResult();
 					} catch (IOException e) {
@@ -71,7 +71,7 @@ public class SumImagesPane extends Pane {
 				File file = fileChooser.showOpenDialog(JavaFXApplication.primaryStage);
 				if (file != null) {
 					try {
-						img2 = new CustomImage(ImageIO.read(file));
+						img2 = new ColorImage(ImageIO.read(file));
 						image2.setImage(SwingFXUtils.toFXImage(img2.getBufferedImage(), null));
 						checkResult();
 					} catch (IOException e) {
