@@ -9,11 +9,14 @@ import javafx.fxml.Initializable;
 public class TabPaneViewController implements Initializable {
 	@FXML
 	private ImageTab imageTab;
+	@FXML
+	private OperationsTab operationsTab;
 
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		imageTab.initialize();
+		operationsTab.initialize();
 	}
 
 }

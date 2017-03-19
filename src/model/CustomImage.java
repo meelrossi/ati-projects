@@ -15,6 +15,14 @@ public class CustomImage {
 	private int width;
 	private int height;
 
+	public CustomImage(int[][] red, int[][] green, int[][] blue, int width, int height) {
+		this.red = red;
+		this.green = green;
+		this.blue = blue;
+		this.width = width;
+		this.height = height;
+	}
+
 	public CustomImage(BufferedImage bufferedImage) {
 		width = bufferedImage.getWidth();
 		height = bufferedImage.getHeight();
@@ -31,6 +39,47 @@ public class CustomImage {
 		}
 	}
 
+	public int getRed(int x, int y) {
+		if (x >= width || y >= height) {
+			return 0;
+		}
+		return red[x][y];
+	}
+
+	public int getGreen(int x, int y) {
+		if (x >= width || y >= height) {
+			return 0;
+		}
+		return green[x][y];
+	}
+
+	public int getBlue(int x, int y) {
+		if (x >= width || y >= height) {
+			return 0;
+		}
+		return blue[x][y];
+	}
+
+	public int getHeight() {
+		return height;
+	}
+
+	public int getWidth() {
+		return width;
+	}
+
+	public int[][] getRedChannel() {
+		return red;
+	}
+
+	public int[][] getGreenChannel() {
+		return green;
+	}
+
+	public int[][] getBlueChannel() {
+		return blue;
+	}
+
 	public BufferedImage getBufferedImage() {
 		BufferedImage bi = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 		for (int i = 0; i < width; i++) {
@@ -45,7 +94,7 @@ public class CustomImage {
 	public void setPixelColor(int x, int y, Color color) {
 		red[x][y] = (int) (color.getRed() * 255);
 		green[x][y] = (int) (color.getGreen() * 255);
-		blue[x][y] = (int) (color.getBlue() * 255);	
+		blue[x][y] = (int) (color.getBlue() * 255);
 	}
 
 	public Color getColor(int x, int y) {

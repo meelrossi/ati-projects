@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import controller.*?>
+
+<fx:root type="Tab" text="OPERATIONS" xmlns="http://javafx.com/javafx/8"
+	xmlns:fx="http://javafx.com/fxml/1">
+	<content>
+		<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0"
+			prefWidth="200.0">
+			<children>
+				<ToolBar prefHeight="38.0" prefWidth="800.0"
+					style="-fx-background-color: white;">
+					<items>
+						<Button mnemonicParsing="false" styleClass="operations-toolbar"
+							text="Sum" fx:id="sumButton" />
+						<Button mnemonicParsing="false" styleClass="operations-toolbar"
+							text="Substraction" fx:id="substractionButton" />
+						<Button mnemonicParsing="false" styleClass="operations-toolbar"
+							text="Product" fx:id="productButton" />
+						<Button mnemonicParsing="false" styleClass="operations-toolbar"
+							text="Scalar Product" fx:id="scalarProductButton" />
+						<Button mnemonicParsing="false" styleClass="operations-toolbar"
+							text="Power" fx:id="powerButton" />
+						<Button mnemonicParsing="false" styleClass="operations-toolbar"
+							text="Compression" fx:id="compressionButton" />
+					</items>
+				</ToolBar>
+				<ProductImagesPane fx:id="productImagesPane"/>
+				<SubstractImagesPane fx:id="substractImagesPane" />
+				<SumImagesPane fx:id="sumImagesPane" />
+				<ScalarProductImagePane fx:id="scalarProductImagePane"/>
+			</children>
+		</AnchorPane>
+	</content>
+</fx:root>

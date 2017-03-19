@@ -11,11 +11,6 @@
 	fx:controller="controller.TabPaneViewController">
 	<tabs>
 		<ImageTab fx:id="imageTab"/>
-		<Tab text="PROCESSING">
-			<content>
-				<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0"
-					prefWidth="200.0" />
-			</content>
-		</Tab>
+		<OperationsTab fx:id="operationsTab"/>
 	</tabs>
 </TabPane>

@@ -2,3 +2,8 @@
 	-fx-font-family: "Trebuchet MS", Helvetica, sans-serif;
 	-fx-background-color: white;
 }
+
+.operations-toolbar {
+	-fx-background-color: white;
+	-fx-border-color: #1e90ff;
+}
