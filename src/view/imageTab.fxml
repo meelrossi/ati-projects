@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.shape.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import controller.*?>
+<?import javafx.scene.Group?>
+
+<fx:root type="Tab" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+	text="IMAGE">
+	<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0"
+		prefWidth="200.0">
+		<children>
+			<CustomMenuBar fx:id="customMenuBar" />
+			<Line endX="800.0" layoutX="101.0" layoutY="480.0" startX="-100.0"
+				stroke="#4fb6ff" strokeWidth="6.0" AnchorPane.leftAnchor="0.0"
+				AnchorPane.rightAnchor="0.0" />
+			<Group layoutX="232.0" layoutY="84.0">
+				<children>
+					<ImageView fx:id="mainImage" layoutX="3.0" layoutY="1.0" />
+					<Rectangle layoutX="3.0" layoutY="1.0" strokeType="INSIDE"
+						fx:id="selectionRectangle" />
+				</children>
+			</Group>
+			<ColorPicker fx:id="changeColorButton" layoutX="237.0"
+				layoutY="511.0" />
+			<Rectangle fx:id="pixelColor" arcHeight="5.0" arcWidth="5.0"
+				fill="DODGERBLUE" height="48.0" layoutX="14.0" layoutY="500.0"
+				stroke="BLACK" strokeType="INSIDE" width="200.0" />
+			<Label layoutX="432.0" layoutY="530.0" text="Promedio color:" />
+			<Label layoutX="432.0" layoutY="503.0" text="Cant. pixeles" />
+			<Rectangle fx:id="colorAvergage" arcHeight="5.0" arcWidth="5.0"
+				fill="DODGERBLUE" height="22.0" layoutX="545.0" layoutY="527.0"
+				stroke="BLACK" strokeType="INSIDE" width="77.0" />
+
+			<Label fx:id="pixelAmount" layoutX="545.0" layoutY="503.0"
+				prefHeight="17.0" prefWidth="82.0" />
+		</children>
+	</AnchorPane>
+</fx:root>

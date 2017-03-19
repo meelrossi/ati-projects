@@ -27,7 +27,7 @@ public class CustomMenuBar extends MenuBar {
 		}
 	}
 
-	public void initialize(BorderPaneViewController controller) {
+	public void initialize(ImageTab controller) {
 		fileMenu.initialize(controller);
 		newMenu.initialize();
 	}

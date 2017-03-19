@@ -1,25 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.net.*?>
-<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.shape.*?>
 <?import controller.*?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="controller.BorderPaneViewController">
-    <top>
-    	<CustomMenuBar fx:id='customMenuBar'></CustomMenuBar>
-    </top>
-    <center>
-    	<ImageView fx:id="mainImage"/>
-    </center>
-    <right>
-		<VBox alignment="top_right" styleClass="vertical-box">
-    		<Region fx:id="pixelColor" styleClass="pixel-region"/>
-    		<ColorPicker fx:id="changeColorButton" styleClass="change-pixel-button"/>
-		</VBox>
-    </right>
-</BorderPane>
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+	minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0"
+	style="-fx-background-color: white;" tabClosingPolicy="UNAVAILABLE"
+	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="controller.TabPaneViewController">
+	<tabs>
+		<ImageTab fx:id="imageTab"/>
+		<Tab text="PROCESSING">
+			<content>
+				<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0"
+					prefWidth="200.0" />
+			</content>
+		</Tab>
+	</tabs>
+</TabPane>

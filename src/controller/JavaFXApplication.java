@@ -1,25 +1,22 @@
 package controller;
 
 
-import java.awt.Dimension;
-import java.awt.Toolkit;
 import java.io.File;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.control.TabPane;
 import javafx.stage.Stage;
 
 public class JavaFXApplication extends Application {
 	public static Stage primaryStage;
-	private Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
 
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			BorderPane root = FXMLLoader.load(JavaFXApplication.class.getResource("/view/index.fxml"));
-			Scene scene = new Scene(root, screen.width / 2, 500);
+			TabPane root = FXMLLoader.load(JavaFXApplication.class.getResource("/view/index.fxml"));
+			Scene scene = new Scene(root, 800, 600);
 
 			File f = new File("resources/application.css");
 			scene.getStylesheets().add("file:///" + f.getAbsolutePath().replace("\\", "/"));

@@ -13,9 +13,11 @@ public class ImageManager {
 	public static BufferedImage getBinaryCircle() {
 		BufferedImage circle = new BufferedImage(IMAGE_SIZE, IMAGE_SIZE, BufferedImage.TYPE_BYTE_BINARY);
 		Graphics2D g2d = circle.createGraphics();
+		int size = (IMAGE_SIZE / 2);
+		int radius = (CIRCLE_D / 2);
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		g2d.setPaint(Color.WHITE);
-		g2d.fillOval((IMAGE_SIZE / 2) - (CIRCLE_D / 2), (IMAGE_SIZE / 2) - (CIRCLE_D / 2), CIRCLE_D, CIRCLE_D);
+		g2d.fillOval(size - radius, size - radius, CIRCLE_D, CIRCLE_D);
 		g2d.dispose();
 		return circle;
 	}

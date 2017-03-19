@@ -34,7 +34,7 @@ public class FileMenu extends Menu {
 		}
 	}
 
-	public void initialize(BorderPaneViewController controller) {
+	public void initialize(ImageTab controller) {
 		openFile.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(final ActionEvent e) {

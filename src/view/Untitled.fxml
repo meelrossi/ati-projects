@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.shape.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: white;" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.TabPaneViewController">
+	<tabs>
+		<Tab text="IMAGE">
+			<content>
+				<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+					<children>
+						<MenuBar maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" prefWidth="800.0" style="-fx-background-color: white; -fx-border-color: #4fb6ff; -fx-border-width: 0 0 2 0;">
+							<menus>
+								<Menu mnemonicParsing="false" text="File">
+									<items>
+										<MenuItem mnemonicParsing="false" text="Open" />
+										<MenuItem mnemonicParsing="false" text="Open .raw" />
+										<MenuItem mnemonicParsing="false" text="Save" />
+										<MenuItem mnemonicParsing="false" text="Save.raw" />
+									</items>
+								</Menu>
+								<Menu mnemonicParsing="false" text="New">
+									<items>
+										<MenuItem mnemonicParsing="false" text="Delete" />
+									</items>
+								</Menu>
+							</menus>
+						</MenuBar>
+						<Line endX="800.0" layoutX="101.0" layoutY="480.0" startX="-100.0" stroke="#4fb6ff" strokeWidth="6.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+						<ColorPicker fx:id="changeColorButton" layoutX="237.0" layoutY="511.0" />
+						<Rectangle fx:id="pixelColor" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="48.0" layoutX="14.0" layoutY="500.0" stroke="BLACK" strokeType="INSIDE" width="200.0" />
+						<Label layoutX="432.0" layoutY="530.0" text="Promedio color:" />
+						<Label layoutX="432.0" layoutY="503.0" text="Cant. pixeles" />
+						<Label fx:id="pixelAmount" layoutX="545.0" layoutY="503.0" prefHeight="17.0" prefWidth="82.0" />
+                  <Group layoutX="232.0" layoutY="84.0">
+                     <children>
+      						<ImageView fx:id="mainImage" fitHeight="340.0" fitWidth="330.0" layoutX="3.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true" />
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="340.0" layoutX="3.0" layoutY="1.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="333.0" />
+                     </children>
+                  </Group>					</children>
+				</AnchorPane>
+			</content>
+		</Tab>
+		<Tab text="PROCESSING">
+			<content>
+				<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+			</content>
+		</Tab>
+	</tabs>
+</TabPane>
