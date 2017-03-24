@@ -52,4 +52,16 @@ public class RawImage extends CustomImage {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public void normalize() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void compressionDinamicRange() {
+		// TODO Auto-generated method stub
+		
+	}
 }

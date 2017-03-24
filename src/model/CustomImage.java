@@ -46,5 +46,9 @@ public abstract class CustomImage {
 	public abstract String getHexColor(int x, int y);
 
 	public abstract Color getAverageColor(int x, int y, int recWidth, int recHeight);
+	
+	public abstract void normalize();
+	
+	public abstract void compressionDinamicRange();
 
 }

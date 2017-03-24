@@ -38,7 +38,7 @@ public class ImageManager {
 		return square;
 	}
 
-	public static ColorImage sum(ColorImage img1, ColorImage img2) {
+	public static ColorImage calculate(ColorImage img1, ColorImage img2, ImageOperation op) {
 		int img1_h = img1.getHeight();
 		int img1_w = img1.getWidth();
 
@@ -47,139 +47,72 @@ public class ImageManager {
 
 		int width = Math.max(img1_w, img2_w);
 		int height = Math.max(img1_h, img2_h);
-		int[][] result_r = new int[width][height];
-		int[][] result_g = new int[width][height];
-		int[][] result_b = new int[width][height];
+		double[][] result_r = new double[width][height];
+		double[][] result_g = new double[width][height];
+		double[][] result_b = new double[width][height];
 
-		int minRed = Integer.MAX_VALUE;
-		int maxRed = 0;
-		int minGreen = Integer.MAX_VALUE;
-		int maxGreen = 0;
-		int minBlue = Integer.MAX_VALUE;
-		int maxBlue = 0;
 
 		for (int i = 0; i < width; i++) {
 			for (int j = 0; j < height; j++) {
-				int red = img1.getRed(i, j) + img2.getRed(i, j);
-				minRed = Math.min(red, minRed);
-				maxRed = Math.max(red, maxRed);
-				result_r[i][j] = red;
-
-				int green = img1.getGreen(i, j) + img2.getGreen(i, j);
-				minGreen = Math.min(green, minGreen);
-				maxGreen = Math.max(green, maxGreen);
-				result_g[i][j] = green;
-
-				int blue = img1.getBlue(i, j) + img2.getBlue(i, j);
-				minBlue = Math.min(blue, minBlue);
-				maxBlue = Math.max(blue, maxBlue);
-				result_b[i][j] = blue;
+				result_r[i][j] = op.apply(img1.getRed(i, j), img2.getRed(i, j));
+				result_g[i][j] = op.apply(img1.getGreen(i, j), img2.getGreen(i, j));
+				result_b[i][j] = op.apply(img1.getBlue(i, j), img2.getBlue(i, j));
 			}
 		}
-		
-		for (int k = 0; k < width; k++) {
-			for (int r = 0; r < height; r++) {
-				result_r[k][r] = (255 * result_r[k][r]) / (maxRed - minRed) - (255 * minRed) / (maxRed - minRed);
-				result_g[k][r] = (255 * result_g[k][r]) / (maxGreen - minGreen) - (255 * minGreen) / (maxGreen - minGreen);
-				result_b[k][r] = (255 * result_b[k][r]) / (maxBlue - minBlue) - (255 * minBlue) / (maxBlue - minBlue);
-			}
-		}
-		return new ColorImage(result_r, result_g, result_b, width, height);
+		ColorImage img = new ColorImage(result_r, result_g, result_b, width, height);
+		img.normalize();
+		return img;
 	}
 	
-	public static ColorImage sustraction(ColorImage img1, ColorImage img2) {
-		int img1_h = img1.getHeight();
-		int img1_w = img1.getWidth();
+	public static ColorImage scalarProduct(ColorImage img, double scalar) {
+		int width = img.getWidth();
+		int height = img.getHeight();
+		double[][] result_r = new double[width][height];
+		double[][] result_g = new double[width][height];
+		double[][] result_b = new double[width][height];
 
-		int img2_h = img2.getHeight();
-		int img2_w = img2.getWidth();
-
-		int width = Math.max(img1_w, img2_w);
-		int height = Math.max(img1_h, img2_h);
-		int[][] result_r = new int[width][height];
-		int[][] result_g = new int[width][height];
-		int[][] result_b = new int[width][height];
-
-		int minRed = Integer.MAX_VALUE;
-		int maxRed = Integer.MIN_VALUE;
-		int minGreen = Integer.MAX_VALUE;
-		int maxGreen = Integer.MIN_VALUE;
-		int minBlue = Integer.MAX_VALUE;
-		int maxBlue = Integer.MIN_VALUE;
 
 		for (int i = 0; i < width; i++) {
 			for (int j = 0; j < height; j++) {
-				int red = img1.getRed(i, j) - img2.getRed(i, j);
-				minRed = Math.min(red, minRed);
-				maxRed = Math.max(red, maxRed);
-				result_r[i][j] = red;
-
-				int green = img1.getGreen(i, j) - img2.getGreen(i, j);
-				minGreen = Math.min(green, minGreen);
-				maxGreen = Math.max(green, maxGreen);
-				result_g[i][j] = green;
-
-				int blue = img1.getBlue(i, j) - img2.getBlue(i, j);
-				minBlue = Math.min(blue, minBlue);
-				maxBlue = Math.max(blue, maxBlue);
-				result_b[i][j] = blue;
+				result_r[i][j] = img.getRed(i, j) * scalar;
+				result_g[i][j] = img.getGreen(i, j) * scalar;
+				result_b[i][j] = img.getBlue(i, j) * scalar;
 			}
 		}
-		
-		for (int k = 0; k < width; k++) {
-			for (int r = 0; r < height; r++) {
-				result_r[k][r] = (255 * result_r[k][r]) / (maxRed - minRed) - (255 * minRed) / (maxRed - minRed);
-				result_g[k][r] = (255 * result_g[k][r]) / (maxGreen - minGreen) - (255 * minGreen) / (maxGreen - minGreen);
-				result_b[k][r] = (255 * result_b[k][r]) / (maxBlue - minBlue) - (255 * minBlue) / (maxBlue - minBlue);
-			}
-		}
-		return new ColorImage(result_r, result_g, result_b, width, height);
+		ColorImage result = new ColorImage(result_r, result_g, result_b, width, height);
+		result.compressionDinamicRange();
+		return result;
 	}
 	
-	public static ColorImage product(ColorImage img1, ColorImage img2) {
-		int img1_h = img1.getHeight();
-		int img1_w = img1.getWidth();
-
-		int img2_h = img2.getHeight();
-		int img2_w = img2.getWidth();
-
-		int width = Math.max(img1_w, img2_w);
-		int height = Math.max(img1_h, img2_h);
-		int[][] result_r = new int[width][height];
-		int[][] result_g = new int[width][height];
-		int[][] result_b = new int[width][height];
-
-		int minRed = Integer.MAX_VALUE;
-		int maxRed = Integer.MIN_VALUE;
-		int minGreen = Integer.MAX_VALUE;
-		int maxGreen = Integer.MIN_VALUE;
-		int minBlue = Integer.MAX_VALUE;
-		int maxBlue = Integer.MIN_VALUE;
-
-		for (int i = 0; i < width; i++) {
-			for (int j = 0; j < height; j++) {
-				int red = img1.getRed(i, j) * img2.getRed(i, j);
-				minRed = Math.min(red, minRed);
-				maxRed = Math.max(red, maxRed);
-				result_r[i][j] = red;
-
-				int green = img1.getGreen(i, j) * img2.getGreen(i, j);
-				minGreen = Math.min(green, minGreen);
-				maxGreen = Math.max(green, maxGreen);
-				result_g[i][j] = green;
-
-				int blue = img1.getBlue(i, j) * img2.getBlue(i, j);
-				minBlue = Math.min(blue, minBlue);
-				maxBlue = Math.max(blue, maxBlue);
-				result_b[i][j] = blue;
+	public static double compression(double r, double R) {
+		double c = 255 / Math.log(1 + R);
+		return c * Math.log(1 + r);
+	}
+	
+	public static ColorImage limitImage(ColorImage img, double limit) {
+		BufferedImage result = new BufferedImage(img.getWidth(), img.getHeight(), BufferedImage.TYPE_BYTE_BINARY);
+		for (int i = 0; i < img.getWidth(); i++) {
+			for (int j = 0; j < img.getHeight(); j++) {
+				if(img.getGrey(i, j) < limit) {
+					result.setRGB(i, j, Color.WHITE.getRGB());
+				}
 			}
 		}
-		
-		for (int k = 0; k < width; k++) {
-			for (int r = 0; r < height; r++) {
-				result_r[k][r] = (255 * result_r[k][r]) / (maxRed - minRed) - (255 * minRed) / (maxRed - minRed);
-				result_g[k][r] = (255 * result_g[k][r]) / (maxGreen - minGreen) - (255 * minGreen) / (maxGreen - minGreen);
-				result_b[k][r] = (255 * result_b[k][r]) / (maxBlue - minBlue) - (255 * minBlue) / (maxBlue - minBlue);
+		return new ColorImage(result);
+	}
+	
+	public static ColorImage limitImageWithColor(ColorImage img, double limit) {
+		int width = img.getWidth();
+		int height = img.getHeight();
+		double[][] result_r = new double[width][height];
+		double[][] result_g = new double[width][height];
+		double[][] result_b = new double[width][height];
+
+		for (int i = 0; i < img.getWidth(); i++) {
+			for (int j = 0; j < img.getHeight(); j++) {
+				result_r[i][j] = img.getRed(i, j) < limit ? 0 : 255;
+				result_g[i][j] = img.getGreen(i, j) < limit ? 0 : 255;
+				result_b[i][j] = img.getBlue(i, j) < limit ? 0 : 255;
 			}
 		}
 		return new ColorImage(result_r, result_g, result_b, width, height);

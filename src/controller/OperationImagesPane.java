@@ -16,8 +16,9 @@ import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import model.ColorImage;
 import utils.ImageManager;
+import utils.ImageOperation;
 
-public class SubstractImagesPane extends Pane {
+public class OperationImagesPane extends Pane {
 	@FXML
 	private ImageView image1;
 	@FXML
@@ -32,11 +33,12 @@ public class SubstractImagesPane extends Pane {
 	private ColorImage img1;
 	private ColorImage img2;
 	private ColorImage result;
-	
+	private ImageOperation op;
+
 	private FileChooser fileChooser = new FileChooser();
 
-	public SubstractImagesPane() {
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/substractImagesPane.fxml"));
+	public OperationImagesPane() {
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/operationImagesPane.fxml"));
 		fxmlLoader.setRoot(this);
 		fxmlLoader.setController(this);
 		try {
@@ -44,6 +46,16 @@ public class SubstractImagesPane extends Pane {
 		} catch (IOException exception) {
 			throw new RuntimeException(exception);
 		}
+	}
+	
+	public void setOperation(ImageOperation op) {
+		this.op = op;
+		img1 = null;
+		img2 = null;
+		result = null;
+		image1.setImage(null);
+		image2.setImage(null);
+		resultImage.setImage(null);
 	}
 
 	public void initialize() {
@@ -83,7 +95,7 @@ public class SubstractImagesPane extends Pane {
 
 	public void checkResult() {
 		if (img1 != null && img2 != null) {
-			result = ImageManager.sustraction(img1, img2);
+			result = ImageManager.calculate(img1, img2, op);
 			resultImage.setImage(SwingFXUtils.toFXImage(result.getBufferedImage(), null));
 		}
 	}

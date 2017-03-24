@@ -3,13 +3,14 @@ package model;
 import java.awt.image.BufferedImage;
 
 import javafx.scene.paint.Color;
+import utils.ImageManager;
 
 public class ColorImage extends CustomImage {
-	private int[][] red;
-	private int[][] green;
-	private int[][] blue;
+	private double[][] red;
+	private double[][] green;
+	private double[][] blue;
 
-	public ColorImage(int[][] red, int[][] green, int[][] blue, int width, int height) {
+	public ColorImage(double[][] red, double[][] green, double[][] blue, int width, int height) {
 		super(width, height);
 		this.red = red;
 		this.green = green;
@@ -18,9 +19,9 @@ public class ColorImage extends CustomImage {
 
 	public ColorImage(BufferedImage bufferedImage) {
 		super(bufferedImage.getWidth(), bufferedImage.getHeight());
-		red = new int[width][height];
-		green = new int[width][height];
-		blue = new int[width][height];
+		red = new double[width][height];
+		green = new double[width][height];
+		blue = new double[width][height];
 		for (int i = 0; i < width; i++) {
 			for (int j = 0; j < height; j++) {
 				Integer color = bufferedImage.getRGB(i, j);
@@ -31,36 +32,40 @@ public class ColorImage extends CustomImage {
 		}
 	}
 
-	public int getRed(int x, int y) {
+	public double getRed(int x, int y) {
 		if (x >= width || y >= height) {
 			return 0;
 		}
 		return red[x][y];
 	}
 
-	public int getGreen(int x, int y) {
+	public double getGreen(int x, int y) {
 		if (x >= width || y >= height) {
 			return 0;
 		}
 		return green[x][y];
 	}
 
-	public int getBlue(int x, int y) {
+	public double getBlue(int x, int y) {
 		if (x >= width || y >= height) {
 			return 0;
 		}
 		return blue[x][y];
 	}
+	
+	public double getGrey(int x, int y) {
+		return (this.getRed(x, y) + this.getGreen(x, y) + this.getBlue(x, y)) / 3;
+	}
 
-	public int[][] getRedChannel() {
+	public double[][] getRedChannel() {
 		return red;
 	}
 
-	public int[][] getGreenChannel() {
+	public double[][] getGreenChannel() {
 		return green;
 	}
 
-	public int[][] getBlueChannel() {
+	public double[][] getBlueChannel() {
 		return blue;
 	}
 
@@ -68,7 +73,7 @@ public class ColorImage extends CustomImage {
 		BufferedImage bi = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 		for (int i = 0; i < width; i++) {
 			for (int j = 0; j < height; j++) {
-				java.awt.Color c = new java.awt.Color(red[i][j], green[i][j], blue[i][j]);
+				java.awt.Color c = new java.awt.Color((int) red[i][j], (int) green[i][j], (int) blue[i][j]);
 				bi.setRGB(i, j, c.getRGB());
 			}
 		}
@@ -83,7 +88,7 @@ public class ColorImage extends CustomImage {
 
 	public Color getColor(int x, int y) {
 		if (x < width && y < height) {
-			return Color.rgb(red[x][y], green[x][y], blue[x][y]);
+			return Color.rgb((int) red[x][y], (int) green[x][y], (int) blue[x][y]);
 		}
 		return Color.rgb(255, 255, 255);
 	}
@@ -93,9 +98,9 @@ public class ColorImage extends CustomImage {
 	}
 
 	public Color getAverageColor(int x, int y, int recWidth, int recHeight) {
-		int avRed = 0;
-		int avGreen = 0;
-		int avBlue = 0;
+		double avRed = 0;
+		double avGreen = 0;
+		double avBlue = 0;
 		int size = recWidth * recHeight;
 		for (int i = 0; i < recWidth; i++) {
 			for (int j = 0; j < recHeight; j++) {
@@ -107,6 +112,79 @@ public class ColorImage extends CustomImage {
 				}
 			}
 		}
-		return Color.rgb(avRed / size, avGreen / size, avBlue / size);
+		return Color.rgb((int) (avRed / size), (int) (avGreen / size), (int) (avBlue / size));
+	}
+
+	@Override
+	public void normalize() {
+		double minRed = Integer.MAX_VALUE;
+		double maxRed = 0;
+		double minGreen = Integer.MAX_VALUE;
+		double maxGreen = 0;
+		double minBlue = Integer.MAX_VALUE;
+		double maxBlue = 0;
+		for (int i = 0; i < width; i++) {
+			for (int j = 0; j < height; j++) {
+				double r = red[i][j];
+				minRed = Math.min(r, minRed);
+				maxRed = Math.max(r, maxRed);
+
+				double g = green[i][j];
+				minGreen = Math.min(g, minGreen);
+				maxGreen = Math.max(g, maxGreen);
+
+				double b = blue[i][j];
+				minBlue = Math.min(b, minBlue);
+				maxBlue = Math.max(b, maxBlue);
+			}
+		}
+
+		for (int k = 0; k < width; k++) {
+			for (int r = 0; r < height; r++) {
+				red[k][r] = (255 * red[k][r]) / (maxRed - minRed) - (255 * minRed) / (maxRed - minRed);
+				green[k][r] = (255 * green[k][r]) / (maxGreen - minGreen) - (255 * minGreen) / (maxGreen - minGreen);
+				blue[k][r] = (255 * blue[k][r]) / (maxBlue - minBlue) - (255 * minBlue) / (maxBlue - minBlue);
+			}
+		}
+
+	}
+
+	public void compressionDinamicRange() {
+		double maxRed = 0;
+		double maxGreen = 0;
+		double maxBlue = 0;
+		for (int i = 0; i < width; i++) {
+			for (int j = 0; j < height; j++) {
+				double r = red[i][j];
+				maxRed = Math.max(r, maxRed);
+
+				double g = green[i][j];
+				maxGreen = Math.max(g, maxGreen);
+
+				double b = blue[i][j];
+				maxBlue = Math.max(b, maxBlue);
+			}
+		}
+		for (int k = 0; k < width; k++) {
+			for (int r = 0; r < height; r++) {
+				red[k][r] = ImageManager.compression(red[k][r], maxRed);
+				green[k][r] = ImageManager.compression(green[k][r], maxGreen);
+				blue[k][r] = ImageManager.compression(blue[k][r], maxBlue);
+			}
+		}
+	}
+
+	public ColorImage getNegative() {
+		double[][] r = new double[width][height];
+		double[][] g = new double[width][height];
+		double[][] b = new double[width][height];
+		for (int i = 0; i < width; i++) {
+			for (int j = 0; j < height; j++) {
+				r[i][j] = 255 - red[i][j];
+				g[i][j] = 255 - green[i][j];
+				b[i][j] = 255 - blue[i][j];
+			}
+		}
+		return new ColorImage(r, g, b, width, height);
 	}
 }

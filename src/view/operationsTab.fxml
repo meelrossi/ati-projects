@@ -23,13 +23,18 @@
 						<Button mnemonicParsing="false" styleClass="operations-toolbar"
 							text="Power" fx:id="powerButton" />
 						<Button mnemonicParsing="false" styleClass="operations-toolbar"
-							text="Compression" fx:id="compressionButton" />
+							text="Negative" fx:id="negativeButton" />
+						<Button mnemonicParsing="false" styleClass="operations-toolbar"
+							text="Limit" fx:id="limitImageButton" />
+						<Button mnemonicParsing="false" styleClass="operations-toolbar"
+							text="Limit with Color" fx:id="limitImageWithColorButton" />
 					</items>
 				</ToolBar>
-				<ProductImagesPane fx:id="productImagesPane"/>
-				<SubstractImagesPane fx:id="substractImagesPane" />
-				<SumImagesPane fx:id="sumImagesPane" />
+				<OperationImagesPane fx:id="operationImagesPane"/>
 				<ScalarProductImagePane fx:id="scalarProductImagePane"/>
+				<NegativeImagePane fx:id="negativeImagePane"/>
+				<LimitImagePane fx:id="limitImagePane"/>
+				<LimitImageWithColorPane fx:id="limitImageWithColorPane"/>
 			</children>
 		</AnchorPane>
 	</content>

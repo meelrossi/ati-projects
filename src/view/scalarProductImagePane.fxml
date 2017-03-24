@@ -5,11 +5,12 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<fx:root type="Pane" layoutY="35" prefHeight="533.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root layoutY="35" prefHeight="533.0" prefWidth="800.0" type="Pane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ImageView fitHeight="247.0" fitWidth="317.0" layoutX="39.0" layoutY="86.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fitHeight="222.0" fitWidth="300.0" layoutX="456.0" layoutY="125.0" pickOnBounds="true" preserveRatio="true" />
-      <Button layoutX="140.0" layoutY="183.0" mnemonicParsing="false" text="Cargar imagen.." />
-      <Slider layoutX="97.0" layoutY="383.0" prefHeight="15.0" prefWidth="185.0" />
+      <ImageView fx:id="image" fitHeight="247.0" fitWidth="317.0" layoutX="39.0" layoutY="86.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="resultImage" fitHeight="222.0" fitWidth="300.0" layoutX="456.0" layoutY="125.0" pickOnBounds="true" preserveRatio="true" />
+      <Button fx:id="loadImageButton" layoutX="140.0" layoutY="300.0" mnemonicParsing="false" text="Cargar imagen.." />
+      <Slider fx:id="scalarSlider" layoutX="97.0" layoutY="383.0" prefHeight="15.0" prefWidth="185.0" />
+      <Label fx:id="scalarLabel" layoutX="285.0" layoutY="383.0" prefHeight="17.0" prefWidth="63.0" text="0" />
    </children>
 </fx:root>

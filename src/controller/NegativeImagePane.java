@@ -15,29 +15,21 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import model.ColorImage;
-import utils.ImageManager;
 
-public class SumImagesPane extends Pane {
-
+public class NegativeImagePane extends Pane {
 	@FXML
-	private ImageView image1;
-	@FXML
-	private ImageView image2;
+	private ImageView image;
 	@FXML
 	private ImageView resultImage;
 	@FXML
-	private Button loadImage1Button;
-	@FXML
-	private Button loadImage2Button;
-
-	private ColorImage img1;
-	private ColorImage img2;
+	private Button loadImageButton;
+	
+	private ColorImage img;
 	private ColorImage result;
-
 	private FileChooser fileChooser = new FileChooser();
 
-	public SumImagesPane() {
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/sumImagesPane.fxml"));
+	public NegativeImagePane() {
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/negativeImagePane.fxml"));
 		fxmlLoader.setRoot(this);
 		fxmlLoader.setController(this);
 		try {
@@ -48,31 +40,15 @@ public class SumImagesPane extends Pane {
 	}
 
 	public void initialize() {
-		loadImage1Button.setOnAction(new EventHandler<ActionEvent>() {
+		loadImageButton.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(ActionEvent event) {
 				File file = fileChooser.showOpenDialog(JavaFXApplication.primaryStage);
 				if (file != null) {
 					try {
-						img1 = new ColorImage(ImageIO.read(file));
-						image1.setImage(SwingFXUtils.toFXImage(img1.getBufferedImage(), null));
-						checkResult();
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-				}
-			}
-		});
-		loadImage2Button.setOnAction(new EventHandler<ActionEvent>() {
-
-			@Override
-			public void handle(ActionEvent event) {
-				File file = fileChooser.showOpenDialog(JavaFXApplication.primaryStage);
-				if (file != null) {
-					try {
-						img2 = new ColorImage(ImageIO.read(file));
-						image2.setImage(SwingFXUtils.toFXImage(img2.getBufferedImage(), null));
+						img = new ColorImage(ImageIO.read(file));
+						image.setImage(SwingFXUtils.toFXImage(img.getBufferedImage(), null));
 						checkResult();
 					} catch (IOException e) {
 						e.printStackTrace();
@@ -83,10 +59,9 @@ public class SumImagesPane extends Pane {
 	}
 	
 	public void checkResult() {
-		if (img1 != null && img2 != null) {
-			result = ImageManager.sum(img1, img2);
+		if (img != null) {
+			result = img.getNegative();
 			resultImage.setImage(SwingFXUtils.toFXImage(result.getBufferedImage(), null));
 		}
 	}
-
 }

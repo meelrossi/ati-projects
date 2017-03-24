@@ -9,6 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.layout.Pane;
+import utils.ImageOperation;
 
 public class OperationsTab extends Tab {
 	@FXML
@@ -22,16 +23,22 @@ public class OperationsTab extends Tab {
 	@FXML
 	private Button powerButton;
 	@FXML
-	private Button compressionButton;
+	private Button negativeButton;
+	@FXML
+	private Button limitImageButton;
+	@FXML
+	private Button limitImageWithColorButton;
 
 	@FXML
-	private SumImagesPane sumImagesPane;
-	@FXML
-	private SubstractImagesPane substractImagesPane;
+	private OperationImagesPane operationImagesPane;
 	@FXML
 	private ScalarProductImagePane scalarProductImagePane;
 	@FXML
-	private ProductImagesPane productImagesPane;
+	private NegativeImagePane negativeImagePane;
+	@FXML
+	private LimitImagePane limitImagePane;
+	@FXML
+	private LimitImageWithColorPane limitImageWithColorPane;
 
 	public OperationsTab() {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/operationsTab.fxml"));
@@ -45,16 +52,17 @@ public class OperationsTab extends Tab {
 	}
 
 	public void initialize() {
-		sumImagesPane.setVisible(false);
-		substractImagesPane.setVisible(false);
 		scalarProductImagePane.setVisible(false);
-		productImagesPane.setVisible(false);
+		operationImagesPane.setVisible(false);
+		negativeImagePane.setVisible(false);
+		limitImagePane.setVisible(false);
+		limitImageWithColorPane.setVisible(false);
 		sumButton.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(ActionEvent event) {
-				System.out.println("dlaskjdalsjdkls");
-				setVisible(sumImagesPane);
+				operationImagesPane.setOperation(ImageOperation.SUM);
+				setVisible(operationImagesPane);
 				setBackground(sumButton);
 			}
 		});
@@ -62,7 +70,8 @@ public class OperationsTab extends Tab {
 
 			@Override
 			public void handle(ActionEvent event) {
-				setVisible(productImagesPane);
+				operationImagesPane.setOperation(ImageOperation.PRODUCT);
+				setVisible(operationImagesPane);
 				setBackground(productButton);
 			}
 		});
@@ -70,7 +79,8 @@ public class OperationsTab extends Tab {
 
 			@Override
 			public void handle(ActionEvent event) {
-				setVisible(substractImagesPane);
+				operationImagesPane.setOperation(ImageOperation.SUSTRACTION);
+				setVisible(operationImagesPane);
 				setBackground(substractionButton);
 			}
 		});
@@ -82,13 +92,38 @@ public class OperationsTab extends Tab {
 				setBackground(scalarProductButton);
 			}
 		});
+		negativeButton.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				setVisible(negativeImagePane);
+				setBackground(negativeButton);
+			}
+		});
+		limitImageWithColorButton.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				setVisible(limitImageWithColorPane);
+				setBackground(limitImageWithColorButton);				
+			}
+		});
+		limitImageButton.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				setVisible(limitImagePane);
+				setBackground(limitImageButton);				
+			}
+		});
 	}
 
 	public void setVisible(Pane pane) {
-		sumImagesPane.setVisible(sumImagesPane == pane);
-		productImagesPane.setVisible(productImagesPane == pane);
+		operationImagesPane.setVisible(operationImagesPane == pane);
 		scalarProductImagePane.setVisible(scalarProductImagePane == pane);
-		substractImagesPane.setVisible(substractImagesPane == pane);
+		negativeImagePane.setVisible(negativeImagePane == pane);
+		limitImagePane.setVisible(limitImagePane == pane);
+		limitImageWithColorPane.setVisible(limitImageWithColorPane == pane);
 	}
 
 	public void setBackground(Button btn) {
@@ -97,5 +132,8 @@ public class OperationsTab extends Tab {
 		scalarProductButton.setStyle(btn != scalarProductButton ? style + "white" : style + "#1e90ff");
 		productButton.setStyle(btn != productButton ? style + "white" : style + "#1e90ff");
 		substractionButton.setStyle(btn != substractionButton ? style + "white" : style + "#1e90ff");
+		negativeButton.setStyle(btn != negativeButton ? style + "white" : style + "#1e90ff");
+		limitImageButton.setStyle(btn != limitImageButton ? style + "white" : style + "#1e90ff");
+		limitImageWithColorButton.setStyle(btn != limitImageWithColorButton ? style + "white" : style + "#1e90ff");
 	}
 }

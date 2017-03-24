@@ -11,32 +11,33 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
+import javafx.scene.control.Slider;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import model.ColorImage;
+import model.CustomImage;
 import utils.ImageManager;
 
-public class ProductImagesPane extends Pane {
+public class LimitImagePane extends Pane {
 	@FXML
-	private ImageView image1;
+	protected ImageView image;
 	@FXML
-	private ImageView image2;
+	protected ImageView resultImage;
 	@FXML
-	private ImageView resultImage;
+	protected Button loadImageButton;
 	@FXML
-	private Button loadImage1Button;
-	@FXML
-	private Button loadImage2Button;
-
-	private ColorImage img1;
-	private ColorImage img2;
-	private ColorImage result;
+	protected Slider limitSlider;
 
 	private FileChooser fileChooser = new FileChooser();
 
-	public ProductImagesPane() {
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/productImagesPane.fxml"));
+	protected CustomImage img;
+
+	protected CustomImage result;
+
+	public LimitImagePane() {
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/limitImagePane.fxml"));
 		fxmlLoader.setRoot(this);
 		fxmlLoader.setController(this);
 		try {
@@ -47,15 +48,15 @@ public class ProductImagesPane extends Pane {
 	}
 
 	public void initialize() {
-		loadImage1Button.setOnAction(new EventHandler<ActionEvent>() {
+		loadImageButton.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(ActionEvent event) {
 				File file = fileChooser.showOpenDialog(JavaFXApplication.primaryStage);
 				if (file != null) {
 					try {
-						img1 = new ColorImage(ImageIO.read(file));
-						image1.setImage(SwingFXUtils.toFXImage(img1.getBufferedImage(), null));
+						img = new ColorImage(ImageIO.read(file));
+						image.setImage(SwingFXUtils.toFXImage(img.getBufferedImage(), null));
 						checkResult();
 					} catch (IOException e) {
 						e.printStackTrace();
@@ -63,29 +64,19 @@ public class ProductImagesPane extends Pane {
 				}
 			}
 		});
-		loadImage2Button.setOnAction(new EventHandler<ActionEvent>() {
-
+		limitSlider.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
-			public void handle(ActionEvent event) {
-				File file = fileChooser.showOpenDialog(JavaFXApplication.primaryStage);
-				if (file != null) {
-					try {
-						img2 = new ColorImage(ImageIO.read(file));
-						image2.setImage(SwingFXUtils.toFXImage(img2.getBufferedImage(), null));
-						checkResult();
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-				}
+			public void handle(MouseEvent event) {
+				checkResult();
 			}
+
 		});
 	}
 
 	public void checkResult() {
-		if (img1 != null && img2 != null) {
-			result = ImageManager.product(img1, img2);
+		if (img != null) {
+			result = ImageManager.limitImage((ColorImage) img, limitSlider.getValue());
 			resultImage.setImage(SwingFXUtils.toFXImage(result.getBufferedImage(), null));
 		}
 	}
-
 }
