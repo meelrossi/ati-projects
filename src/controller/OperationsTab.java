@@ -32,6 +32,8 @@ public class OperationsTab extends Tab {
 	private Button limitImageWithColorButton;
 	@FXML
 	private Button histogramColorButton;
+	@FXML
+	private Button contrastButton;
 
 	@FXML
 	private OperationImagesPane operationImagesPane;
@@ -45,6 +47,8 @@ public class OperationsTab extends Tab {
 	private LimitImageWithColorPane limitImageWithColorPane;
 	@FXML
 	private HistogramColorPane histogramColorPane;
+	@FXML
+	private ContrastPane contrastPane;
 
 	private List<ButtonPane> panes;
 
@@ -69,6 +73,7 @@ public class OperationsTab extends Tab {
 		panes.add(new ButtonPane(sumButton, operationImagesPane, ImageOperation.SUM));
 		panes.add(new ButtonPane(productButton, operationImagesPane, ImageOperation.PRODUCT));
 		panes.add(new ButtonPane(substractionButton, operationImagesPane, ImageOperation.SUSTRACTION));
+		panes.add(new ButtonPane(contrastButton, contrastPane));
 
 		panes.forEach((bp -> {
 			bp.getPane().setVisible(false);

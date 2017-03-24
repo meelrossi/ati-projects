@@ -31,6 +31,8 @@
 							text="Limit with Color" fx:id="limitImageWithColorButton" />
 						<Button mnemonicParsing="false" styleClass="operations-toolbar"
 							text="Histogram" fx:id="histogramColorButton" />
+						<Button mnemonicParsing="false" styleClass="operations-toolbar"
+							text="Contrast" fx:id="contrastButton" />
 					</items>
 				</ToolBar>
 				<OperationImagesPane fx:id="operationImagesPane"/>
@@ -39,6 +41,7 @@
 				<LimitImagePane fx:id="limitImagePane"/>
 				<LimitImageWithColorPane fx:id="limitImageWithColorPane"/>
 				<HistogramColorPane fx:id="histogramColorPane"/>
+				<ContrastPane fx:id="contrastPane"/>
 			</children>
 		</AnchorPane>
 	</content>
