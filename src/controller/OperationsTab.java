@@ -1,6 +1,8 @@
 package controller;
 
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -28,6 +30,8 @@ public class OperationsTab extends Tab {
 	private Button limitImageButton;
 	@FXML
 	private Button limitImageWithColorButton;
+	@FXML
+	private Button histogramColorButton;
 
 	@FXML
 	private OperationImagesPane operationImagesPane;
@@ -39,6 +43,10 @@ public class OperationsTab extends Tab {
 	private LimitImagePane limitImagePane;
 	@FXML
 	private LimitImageWithColorPane limitImageWithColorPane;
+	@FXML
+	private HistogramColorPane histogramColorPane;
+
+	private List<ButtonPane> panes;
 
 	public OperationsTab() {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/operationsTab.fxml"));
@@ -52,88 +60,45 @@ public class OperationsTab extends Tab {
 	}
 
 	public void initialize() {
-		scalarProductImagePane.setVisible(false);
-		operationImagesPane.setVisible(false);
-		negativeImagePane.setVisible(false);
-		limitImagePane.setVisible(false);
-		limitImageWithColorPane.setVisible(false);
-		sumButton.setOnAction(new EventHandler<ActionEvent>() {
+		panes = new LinkedList<ButtonPane>();
+		panes.add(new ButtonPane(scalarProductButton, scalarProductImagePane));
+		panes.add(new ButtonPane(negativeButton, negativeImagePane));
+		panes.add(new ButtonPane(limitImageButton, limitImagePane));
+		panes.add(new ButtonPane(limitImageWithColorButton, limitImageWithColorPane));
+		panes.add(new ButtonPane(histogramColorButton, histogramColorPane));
+		panes.add(new ButtonPane(sumButton, operationImagesPane, ImageOperation.SUM));
+		panes.add(new ButtonPane(productButton, operationImagesPane, ImageOperation.PRODUCT));
+		panes.add(new ButtonPane(substractionButton, operationImagesPane, ImageOperation.SUSTRACTION));
 
-			@Override
-			public void handle(ActionEvent event) {
-				operationImagesPane.setOperation(ImageOperation.SUM);
-				setVisible(operationImagesPane);
-				setBackground(sumButton);
-			}
-		});
-		productButton.setOnAction(new EventHandler<ActionEvent>() {
+		panes.forEach((bp -> {
+			bp.getPane().setVisible(false);
+			bp.getButton().setOnAction(new EventHandler<ActionEvent>() {
 
-			@Override
-			public void handle(ActionEvent event) {
-				operationImagesPane.setOperation(ImageOperation.PRODUCT);
-				setVisible(operationImagesPane);
-				setBackground(productButton);
-			}
-		});
-		substractionButton.setOnAction(new EventHandler<ActionEvent>() {
-
-			@Override
-			public void handle(ActionEvent event) {
-				operationImagesPane.setOperation(ImageOperation.SUSTRACTION);
-				setVisible(operationImagesPane);
-				setBackground(substractionButton);
-			}
-		});
-		scalarProductButton.setOnAction(new EventHandler<ActionEvent>() {
-
-			@Override
-			public void handle(ActionEvent event) {
-				setVisible(scalarProductImagePane);
-				setBackground(scalarProductButton);
-			}
-		});
-		negativeButton.setOnAction(new EventHandler<ActionEvent>() {
-
-			@Override
-			public void handle(ActionEvent event) {
-				setVisible(negativeImagePane);
-				setBackground(negativeButton);
-			}
-		});
-		limitImageWithColorButton.setOnAction(new EventHandler<ActionEvent>() {
-
-			@Override
-			public void handle(ActionEvent event) {
-				setVisible(limitImageWithColorPane);
-				setBackground(limitImageWithColorButton);				
-			}
-		});
-		limitImageButton.setOnAction(new EventHandler<ActionEvent>() {
-
-			@Override
-			public void handle(ActionEvent event) {
-				setVisible(limitImagePane);
-				setBackground(limitImageButton);				
-			}
-		});
+				@Override
+				public void handle(ActionEvent event) {
+					if (bp.getOperation() != null) {
+						((OperationImagesPane) bp.getPane()).setOperation(bp.getOperation());
+					}
+					setVisible(bp.getPane());
+					setBackground(bp.getButton());
+				}
+			});
+		}));
 	}
 
 	public void setVisible(Pane pane) {
-		operationImagesPane.setVisible(operationImagesPane == pane);
-		scalarProductImagePane.setVisible(scalarProductImagePane == pane);
-		negativeImagePane.setVisible(negativeImagePane == pane);
-		limitImagePane.setVisible(limitImagePane == pane);
-		limitImageWithColorPane.setVisible(limitImageWithColorPane == pane);
+		panes.forEach(bp -> {
+			Pane p = bp.getPane();
+			p.setVisible(p == pane);
+		});
 	}
 
 	public void setBackground(Button btn) {
-		String style = "-fx-background-color:";
-		sumButton.setStyle(btn != sumButton ? style + "white" : style + "#1e90ff");
-		scalarProductButton.setStyle(btn != scalarProductButton ? style + "white" : style + "#1e90ff");
-		productButton.setStyle(btn != productButton ? style + "white" : style + "#1e90ff");
-		substractionButton.setStyle(btn != substractionButton ? style + "white" : style + "#1e90ff");
-		negativeButton.setStyle(btn != negativeButton ? style + "white" : style + "#1e90ff");
-		limitImageButton.setStyle(btn != limitImageButton ? style + "white" : style + "#1e90ff");
-		limitImageWithColorButton.setStyle(btn != limitImageWithColorButton ? style + "white" : style + "#1e90ff");
+		String notSelectedStyle = "-fx-background-color:white";
+		String selectedStyle = "-fx-background-color:#1e90ff";
+		panes.forEach(bp -> {
+			Button b = bp.getButton();
+			b.setStyle(b != btn ? notSelectedStyle : selectedStyle);
+		});
 	}
 }

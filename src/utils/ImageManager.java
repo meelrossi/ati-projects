@@ -5,6 +5,7 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 
+import javafx.scene.chart.XYChart;
 import model.ColorImage;
 
 public class ImageManager {
@@ -116,5 +117,20 @@ public class ImageManager {
 			}
 		}
 		return new ColorImage(result_r, result_g, result_b, width, height);
+	}
+	
+	public static XYChart.Series<String, Number> getHistogramData(double[][] channel, int width, int height) {
+		int[] pixelColor = new int[256];
+		for (int i = 0; i < width; i++) {
+			for (int j = 0; j < height; j++) {
+				int color = (int)channel[i][j];
+				pixelColor[color] += 1;
+			}
+		}
+		XYChart.Series<String, Number> series = new XYChart.Series<String,Number>();
+        for (int k = 0; k < 256; k++) {
+            series.getData().add(new XYChart.Data<String,Number>("" + k, pixelColor[k]));
+        }
+        return series;
 	}
 }
