@@ -49,6 +49,8 @@ public class OperationsTab extends Tab {
 	private HistogramColorPane histogramColorPane;
 	@FXML
 	private ContrastPane contrastPane;
+	@FXML
+	private PowerPane powerPane;
 
 	private List<ButtonPane> panes;
 
@@ -74,6 +76,7 @@ public class OperationsTab extends Tab {
 		panes.add(new ButtonPane(productButton, operationImagesPane, ImageOperation.PRODUCT));
 		panes.add(new ButtonPane(substractionButton, operationImagesPane, ImageOperation.SUSTRACTION));
 		panes.add(new ButtonPane(contrastButton, contrastPane));
+		panes.add(new ButtonPane(powerButton, powerPane));
 
 		panes.forEach((bp -> {
 			bp.getPane().setVisible(false);

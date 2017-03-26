@@ -7,6 +7,7 @@ import java.awt.image.BufferedImage;
 
 import javafx.scene.chart.XYChart;
 import model.ColorImage;
+import model.CustomImage;
 
 public class ImageManager {
 	private static int IMAGE_SIZE = 200;
@@ -132,8 +133,7 @@ public class ImageManager {
 		return series;
 	}
 
-	public static ColorImage calculateContrast(ColorImage img, Double r1, Double r2, Double s1,
-			Double s2) {
+	public static ColorImage calculateContrast(ColorImage img, Double r1, Double r2, Double s1, Double s2) {
 		int width = img.getWidth();
 		int height = img.getHeight();
 		double[][] red = new double[width][height];
@@ -163,5 +163,24 @@ public class ImageManager {
 		double m = (origin_y - end_y) / (origin_x - end_x);
 		double b = origin_y - m * origin_x;
 		return m * pixel + b;
+	}
+
+	public static CustomImage powerImage(ColorImage img, double value) {
+		double c = Math.pow(255, 1 - value);
+		int width = img.getWidth();
+		int height = img.getHeight();
+		double[][] red = new double[width][height];
+		double[][] green = new double[width][height];
+		double[][] blue = new double[width][height];
+		for (int i = 0; i < width; i++) {
+			for (int j = 0; j < height; j++) {
+				red[i][j] = c * Math.pow(img.getRed(i, j), value);
+				green[i][j] = c * Math.pow(img.getGreen(i, j), value);
+				blue[i][j] = c * Math.pow(img.getBlue(i, j), value);
+			}
+		}
+		ColorImage resp = new ColorImage(red, green, blue, width, height);
+		resp.normalize();
+		return resp;
 	}
 }

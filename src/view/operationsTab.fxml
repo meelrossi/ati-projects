@@ -42,6 +42,7 @@
 				<LimitImageWithColorPane fx:id="limitImageWithColorPane"/>
 				<HistogramColorPane fx:id="histogramColorPane"/>
 				<ContrastPane fx:id="contrastPane"/>
+				<PowerPane fx:id="powerPane"/>
 			</children>
 		</AnchorPane>
 	</content>
