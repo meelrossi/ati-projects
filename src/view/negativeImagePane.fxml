@@ -9,6 +9,6 @@
    <children>
       <ImageView fx:id="image" fitHeight="247.0" fitWidth="317.0" layoutX="39.0" layoutY="125.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="resultImage" fitHeight="247.0" fitWidth="317.0" layoutX="456.0" layoutY="125.0" pickOnBounds="true" preserveRatio="true" />
-      <Button fx:id="loadImageButton" layoutX="129.0" layoutY="386.0" mnemonicParsing="false" text="Cargar imagen.." />
+      <Button fx:id="loadImageButton" layoutX="129.0" layoutY="386.0" mnemonicParsing="false" text="Load image..." />
    </children>
 </fx:root>

@@ -118,19 +118,27 @@ public class ImageManager {
 		return new ColorImage(result_r, result_g, result_b, width, height);
 	}
 
-	public static XYChart.Series<String, Number> getHistogramData(double[][] channel, int width, int height) {
-		int[] pixelColor = new int[256];
+	public static XYChart.Series<String, Number> getHistogramSeries(double[][] channel, int width, int height) {
+		double[] pixelColor = ImageManager.getHistogramData(channel, width, height);
+		XYChart.Series<String, Number> series = new XYChart.Series<String, Number>();
+		for (int k = 0; k < 256; k++) {
+			series.getData().add(new XYChart.Data<String, Number>("" + k, pixelColor[k]));
+		}
+		return series;
+	}
+	
+	public static double[] getHistogramData (double[][] channel, int width, int height) {
+		double[] pixelColor = new double[256];
 		for (int i = 0; i < width; i++) {
 			for (int j = 0; j < height; j++) {
 				int color = (int) channel[i][j];
 				pixelColor[color] += 1;
 			}
 		}
-		XYChart.Series<String, Number> series = new XYChart.Series<String, Number>();
 		for (int k = 0; k < 256; k++) {
-			series.getData().add(new XYChart.Data<String, Number>("" + k, pixelColor[k]));
+			pixelColor[k] = pixelColor[k] / (width * height);
 		}
-		return series;
+		return pixelColor;
 	}
 
 	public static ColorImage calculateContrast(ColorImage img, Double r1, Double r2, Double s1, Double s2) {
@@ -182,5 +190,37 @@ public class ImageManager {
 		ColorImage resp = new ColorImage(red, green, blue, width, height);
 		resp.normalize();
 		return resp;
+	}
+	
+	public static int[] getHistogramDataEqualize(double[][] channel, int width, int height) {
+		double[] pixelColor = ImageManager.getHistogramData(channel, width, height);
+		for (int i = 1; i < 256; i++) {
+			pixelColor[i] = pixelColor[i] + pixelColor[i-1];
+		}
+		int[] equalizeColor = new int[256];
+		double min = pixelColor[0];
+		for (int j = 0; j < 256; j++) {
+			equalizeColor[j] = (int) (((pixelColor[j] - min) / (1 + min) * 255) + 0.5);
+		}
+		return equalizeColor;
+	}
+	
+	public static ColorImage equalizeImage(ColorImage img) {
+		int width = img.getWidth();
+		int height = img.getHeight();
+		int[] redData = ImageManager.getHistogramDataEqualize(img.getRedChannel(), width, height);
+		int[] greenData = ImageManager.getHistogramDataEqualize(img.getRedChannel(), width, height);
+		int[] blueData = ImageManager.getHistogramDataEqualize(img.getRedChannel(), width, height);
+		double[][] red = new double[width][height];
+		double[][] green = new double[width][height];
+		double[][] blue = new double[width][height];
+		for (int i = 0; i < width; i++) {
+			for (int j = 0; j < height; j++) {
+				red[i][j] = redData[(int)img.getRed(i, j)];
+				green[i][j] = greenData[(int)img.getGreen(i, j)];
+				blue[i][j] = blueData[(int)img.getBlue(i, j)];
+			}
+		}
+		return new ColorImage(red, blue, green, width, height);
 	}
 }

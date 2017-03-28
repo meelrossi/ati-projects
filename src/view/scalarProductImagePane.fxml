@@ -9,7 +9,7 @@
    <children>
       <ImageView fx:id="image" fitHeight="247.0" fitWidth="317.0" layoutX="39.0" layoutY="86.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="resultImage" fitHeight="222.0" fitWidth="300.0" layoutX="456.0" layoutY="125.0" pickOnBounds="true" preserveRatio="true" />
-      <Button fx:id="loadImageButton" layoutX="140.0" layoutY="300.0" mnemonicParsing="false" text="Cargar imagen.." />
+      <Button fx:id="loadImageButton" layoutX="140.0" layoutY="300.0" mnemonicParsing="false" text="Load image.." />
       <Slider fx:id="scalarSlider" layoutX="97.0" layoutY="383.0" prefHeight="15.0" prefWidth="185.0" />
       <Label fx:id="scalarLabel" layoutX="285.0" layoutY="383.0" prefHeight="17.0" prefWidth="63.0" text="0" />
    </children>

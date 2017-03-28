@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.shape.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import controller.*?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.chart.*?>
+
+<fx:root xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+	type="Tab" text="EQUALIZING">
+	<content>
+		<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0"
+			prefWidth="200.0">
+			<children>
+				<SplitPane dividerPositions="0.5" layoutX="1.0" layoutY="1.0"
+					prefHeight="566.0" prefWidth="800.0">
+					<items>
+						<ImageWithHistogramPane fx:id="mainImagePane"/>
+						<ImageWithHistogramPane fx:id="resultImagePane"/>
+					</items>
+				</SplitPane>
+			</children>
+		</AnchorPane>
+	</content>
+</fx:root>

@@ -77,29 +77,29 @@ public class HistogramColorPane extends Pane {
 	public void calculateHistograms() {
 		resetCharts();
 		
-        chartRed.getData().addAll(ImageManager.getHistogramData(img.getRedChannel(), img.getWidth(), img.getHeight()));
+        chartRed.getData().addAll(ImageManager.getHistogramSeries(img.getRedChannel(), img.getWidth(), img.getHeight()));
         chartRed.setLegendVisible(false);
         for(Node n:chartRed.lookupAll(".default-color0.chart-bar")) {
             n.setStyle("-fx-bar-fill: red;");
         }
 
 		
-        chartGreen.getData().addAll(ImageManager.getHistogramData(img.getGreenChannel(), img.getWidth(), img.getHeight()));
+        chartGreen.getData().addAll(ImageManager.getHistogramSeries(img.getGreenChannel(), img.getWidth(), img.getHeight()));
         chartGreen.setLegendVisible(false);
         for(Node n:chartGreen.lookupAll(".default-color0.chart-bar")) {
             n.setStyle("-fx-bar-fill: green;");
         }
 
 		
-        chartBlue.getData().addAll(ImageManager.getHistogramData(img.getBlueChannel(), img.getWidth(), img.getHeight()));
+        chartBlue.getData().addAll(ImageManager.getHistogramSeries(img.getBlueChannel(), img.getWidth(), img.getHeight()));
         chartBlue.setLegendVisible(false);
         for(Node n:chartBlue.lookupAll(".default-color0.chart-bar")) {
             n.setStyle("-fx-bar-fill: blue;");
         }
         
-		chart.getData().addAll(ImageManager.getHistogramData(img.getRedChannel(), img.getWidth(), img.getHeight()));
-		chart.getData().addAll(ImageManager.getHistogramData(img.getGreenChannel(), img.getWidth(), img.getHeight()));
-		chart.getData().addAll(ImageManager.getHistogramData(img.getBlueChannel(), img.getWidth(), img.getHeight()));
+		chart.getData().addAll(ImageManager.getHistogramSeries(img.getRedChannel(), img.getWidth(), img.getHeight()));
+		chart.getData().addAll(ImageManager.getHistogramSeries(img.getGreenChannel(), img.getWidth(), img.getHeight()));
+		chart.getData().addAll(ImageManager.getHistogramSeries(img.getBlueChannel(), img.getWidth(), img.getHeight()));
 		chart.setLegendVisible(false);
         for(Node n:chart.lookupAll(".default-color0.chart-bar")) {
             n.setStyle("-fx-bar-fill: red;");

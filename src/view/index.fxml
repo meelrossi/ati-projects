@@ -12,5 +12,6 @@
 	<tabs>
 		<ImageTab fx:id="imageTab"/>
 		<OperationsTab fx:id="operationsTab"/>
+		<EqualizingTab fx:id="equalizingTab"/>
 	</tabs>
 </TabPane>
