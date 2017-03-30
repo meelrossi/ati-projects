@@ -1,7 +1,5 @@
 package random_number_generator;
 
-import java.util.Random;
-
 public class RayleighRandomNumberGenerator implements RandomNumberGenerator {
 
 	private final GaussianRandomNumberGenerator gaussianRng;

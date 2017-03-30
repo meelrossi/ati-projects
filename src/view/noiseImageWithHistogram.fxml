@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<fx:root type="Pane" minHeight="0.0" minWidth="0.0" prefHeight="520.0" prefWidth="446.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+	<children>
+		<ToolBar prefHeight="35.0" prefWidth="396.0" style="-fx-background-color: transparent;" stylesheets="@../../resources/application.css">
+			<items>
+				<Button fx:id="imageButton" mnemonicParsing="false" styleClass="operations-toolbar" text="Image" />
+				<Button fx:id="histogramButton" mnemonicParsing="false" styleClass="operations-toolbar" text="Histogram" />
+			</items>
+		</ToolBar>
+		<TabPane fx:id="histogramView" layoutX="14.0" layoutY="80.0" prefHeight="450.0" prefWidth="362.0" tabClosingPolicy="UNAVAILABLE">
+			<tabs>
+				<Tab text="All">
+					<content>
+						<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+							<children>
+								<BarChart fx:id="chart" layoutY="33.0" prefHeight="384.0" prefWidth="362.0">
+									<xAxis>
+										<CategoryAxis side="BOTTOM" />
+									</xAxis>
+									<yAxis>
+										<NumberAxis side="LEFT" upperBound="255.0" />
+									</yAxis>
+								</BarChart>
+							</children>
+						</AnchorPane>
+					</content>
+				</Tab>
+				<Tab text="Red">
+					<content>
+						<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+							<children>
+								<BarChart fx:id="chartRed" layoutY="33.0" prefHeight="384.0" prefWidth="362.0">
+									<xAxis>
+										<CategoryAxis side="BOTTOM" />
+									</xAxis>
+									<yAxis>
+										<NumberAxis side="LEFT" upperBound="255.0" />
+									</yAxis>
+								</BarChart>
+							</children>
+						</AnchorPane>
+					</content>
+				</Tab>
+				<Tab text="Green">
+					<content>
+						<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+							<children>
+								<BarChart fx:id="chartGreen" layoutY="33.0" prefHeight="384.0" prefWidth="362.0">
+									<xAxis>
+										<CategoryAxis side="BOTTOM" />
+									</xAxis>
+									<yAxis>
+										<NumberAxis side="LEFT" upperBound="255.0" />
+									</yAxis>
+								</BarChart>
+							</children>
+						</AnchorPane>
+					</content>
+				</Tab>
+				<Tab text="Blue">
+					<content>
+						<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="374.0" prefWidth="419.0">
+							<children>
+								<BarChart fx:id="chartBlue" layoutY="33.0" prefHeight="384.0" prefWidth="362.0">
+									<xAxis>
+										<CategoryAxis side="BOTTOM" />
+									</xAxis>
+									<yAxis>
+										<NumberAxis side="LEFT" upperBound="255.0" />
+									</yAxis>
+								</BarChart>
+							</children>
+						</AnchorPane>
+					</content>
+				</Tab>
+			</tabs>
+		</TabPane>
+		<Pane fx:id="imagePane" layoutY="35.0" prefHeight="525.0" prefWidth="395.0">
+			<children>
+				<ImageView fx:id="image" fitHeight="284.0" fitWidth="345.0" layoutX="25.0" layoutY="38.0" pickOnBounds="true" preserveRatio="true" />
+				<Button fx:id="saveImageButton" layoutX="153.0" layoutY="322.0" mnemonicParsing="false" text="Save Image" />
+				<Button fx:id="loadImageButton" layoutX="147.0" layoutY="322.0" mnemonicParsing="false" text="Load Image..." />
+				<TextField fx:id="textField1" layoutX="25.0" layoutY="369.0" />
+				<TextField fx:id="textField2" layoutX="214.0" layoutY="369.0" />
+				<Button fx:id="calculateButton" layoutX="285.0" layoutY="418.0" mnemonicParsing="false" text="Calculate" />
+			</children>
+		</Pane>
+	</children>
+</fx:root>

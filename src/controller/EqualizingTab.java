@@ -2,17 +2,11 @@ package controller;
 
 import java.io.IOException;
 
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Tab;
 import model.ColorImage;
+import utils.ImageManager;
 
-public class EqualizingTab extends Tab {
-	
-	@FXML
-	private ImageWithHistogramPane mainImagePane;
-	@FXML
-	private ImageWithHistogramPane resultImagePane;
+public class EqualizingTab extends HistogramTab {
 
 	public EqualizingTab() {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/equalizingTab.fxml"));
@@ -24,13 +18,13 @@ public class EqualizingTab extends Tab {
 			throw new RuntimeException(exception);
 		}
 	}
-	
+
 	public void initialize() {
 		mainImagePane.initialize(this, false);
 		resultImagePane.initialize(this, true);
 	}
-	
+
 	public void setImage(ColorImage img) {
-		resultImagePane.setImage(img);
+		resultImagePane.setImage(ImageManager.equalizeImage(img));
 	}
 }

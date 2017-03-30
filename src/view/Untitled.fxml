@@ -113,5 +113,43 @@
             </AnchorPane>
          </content>
       </Tab>
+      <Tab text="NOISE">
+         <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <ToolBar prefHeight="38.0" prefWidth="800.0" style="-fx-background-color: white;">
+                     <items>
+                        <Button fx:id="gaussianButton" mnemonicParsing="false" text="GAUSSIAN" />
+                        <Button fx:id="rayleighButton" mnemonicParsing="false" text="RAYLEIGH" />
+                        <Button fx:id="exponentialButton" mnemonicParsing="false" text="EXPONENTIAL" />
+                        <Button fx:id="saltAndPepperButton" mnemonicParsing="false" text="SALT AND PEPPER" />
+                     </items>
+                  </ToolBar>
+                  <Pane layoutY="35.0" prefHeight="534.0" prefWidth="800.0">
+                     <children>
+                        <ImageView fitHeight="308.0" fitWidth="357.0" layoutX="49.0" layoutY="55.0" pickOnBounds="true" preserveRatio="true" />
+                        <TextField fx:id="textField1" layoutX="49.0" layoutY="390.0" />
+                        <TextField fx:id="textField2" layoutX="239.0" layoutY="390.0" />
+                        <TabPane fx:id="HisotgramTabPane1" layoutX="424.0" layoutY="55.0" prefHeight="363.0" prefWidth="362.0" tabClosingPolicy="UNAVAILABLE">
+                           <tabs>
+                              <Tab text="Untitled Tab 1">
+                                 <content>
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="346.0" prefWidth="362.0" />
+                                 </content>
+                              </Tab>
+                              <Tab text="Untitled Tab 2">
+                                 <content>
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                                 </content>
+                              </Tab>
+                           </tabs>
+                        </TabPane>
+                        <Button layoutX="330.0" layoutY="449.0" mnemonicParsing="false" text="Calculate" />
+                     </children>
+                  </Pane>
+               </children>
+            </AnchorPane>
+         </content>
+      </Tab>
 	</tabs>
 </TabPane>

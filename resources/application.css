@@ -7,3 +7,9 @@
 	-fx-background-color: white;
 	-fx-border-color: #1e90ff;
 }
+
+.noise-toolbar {
+	-fx-background-color: #F0F8FF;
+	-fx-border-color: #1e90ff;
+	-fx-border-radius: 10px;
+}

@@ -11,7 +11,7 @@ public class ExponentialNoiseGenerator extends NoiseGenerator {
 	}
 	
 	@Override
-	public int addNoiseToPixel(int pixel) {
+	public double addNoiseToPixel(double pixel) {
 		pixel += exponentialRng.random();
 		if(pixel<0){
 			return 0;

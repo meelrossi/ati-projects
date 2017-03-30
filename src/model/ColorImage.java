@@ -211,4 +211,8 @@ public class ColorImage extends CustomImage {
 		green = grey;
 		blue = grey;
 	}
+
+	public ColorImageType colorImageType() {
+		return this.imageType;
+	}
 }

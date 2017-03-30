@@ -5,4 +5,5 @@
 	<MenuItem text="Save binary circle" fx:id="saveCircle" />
 	<MenuItem text="Save binary square" fx:id="saveSquare" />
 	<MenuItem text="Print grey scale" fx:id="printGrey" />
+	<MenuItem text="Synthetic Images" fx:id="syntheticImages"/>
 </fx:root>

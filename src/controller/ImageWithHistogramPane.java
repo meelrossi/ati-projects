@@ -2,6 +2,7 @@ package controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.LinkedList;
 import java.util.Optional;
 
@@ -28,9 +29,9 @@ import utils.ImageManager;
 
 public class ImageWithHistogramPane extends Pane {
 	@FXML
-	private Button loadImageButton;
+	protected Button loadImageButton;
 	@FXML
-	private ImageView image;
+	protected ImageView image;
 	@FXML
 	private Button saveImageButton;
 	@FXML
@@ -50,11 +51,12 @@ public class ImageWithHistogramPane extends Pane {
 	@FXML
 	private Pane imagePane;
 
-	private ColorImage img;
-	private FileChooser fileChooser = new FileChooser();
+	protected ColorImage img;
+	protected FileChooser fileChooser = new FileChooser();
 
 	public ImageWithHistogramPane() {
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/imageWithHistogramPane.fxml"));
+		System.out.println("dsaldkjasldj");
+		FXMLLoader fxmlLoader = new FXMLLoader(getResource());
 		fxmlLoader.setRoot(this);
 		fxmlLoader.setController(this);
 		try {
@@ -63,8 +65,12 @@ public class ImageWithHistogramPane extends Pane {
 			throw new RuntimeException(exception);
 		}
 	}
+	
+	public URL getResource() {
+		return getClass().getResource("/view/imageWithHistogramPane.fxml");
+	}
 
-	public void initialize(EqualizingTab controller, boolean isResult) {
+	public void initialize(HistogramTab controller, boolean isResult) {
 		imagePane.setVisible(false);
 		histogramView.setVisible(false);
 		loadImageButton.setVisible(!isResult);
@@ -110,6 +116,7 @@ public class ImageWithHistogramPane extends Pane {
 							}
 						}
 						image.setImage(SwingFXUtils.toFXImage(img.getBufferedImage(), null));
+						controller.setImage(img);
 						calculateHistograms();
 					} catch (IOException e) {
 						e.printStackTrace();

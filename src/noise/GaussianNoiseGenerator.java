@@ -11,14 +11,14 @@ public class GaussianNoiseGenerator extends NoiseGenerator{
 	}
 	
 	@Override
-	public int addNoiseToPixel(int pixel) {
+	public double addNoiseToPixel(double pixel) {
 		pixel += gaussianRng.random();
 		if(pixel<0){
 			return 0;
 		} else if(pixel>255){
 			return 255;
 		}
-		return (int)pixel;
+		return pixel;
 	}
 
 }

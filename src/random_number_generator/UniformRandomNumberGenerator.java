@@ -8,7 +8,7 @@ public class UniformRandomNumberGenerator implements RandomNumberGenerator {
 	
 	public UniformRandomNumberGenerator() {
 		this.rng = new Random();
-		}
+	}
 	
 	@Override
 	public double random() {
