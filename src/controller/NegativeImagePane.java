@@ -2,6 +2,7 @@ package controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Optional;
 
 import javax.imageio.ImageIO;
 
@@ -14,7 +15,10 @@ import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
+import javafx.util.Pair;
 import model.ColorImage;
+import model.ColorImageType;
+import utils.ImageManager;
 
 public class NegativeImagePane extends Pane {
 	@FXML
@@ -47,7 +51,22 @@ public class NegativeImagePane extends Pane {
 				File file = fileChooser.showOpenDialog(JavaFXApplication.primaryStage);
 				if (file != null) {
 					try {
-						img = new ColorImage(ImageIO.read(file));
+						if (file.getName().toLowerCase().contains(".raw")) {
+							OpenRawImageDialog dialog = new OpenRawImageDialog();
+							Optional<Pair<Integer, Integer>> result = dialog.showAndWait();
+							result.ifPresent(d -> {
+							    img = ImageManager.readFromRaw(file, result.get().getKey(), result.get().getValue());
+							});
+						} else {
+							OpenColorImageDialog dialog = new OpenColorImageDialog();
+							Optional<ColorImageType> result = dialog.showAndWait();
+							if (result.isPresent()){
+								img = new ColorImage(ImageIO.read(file));
+							    if (result.get() == ColorImageType.BLACK_AND_WHITE) {
+							    	img.toBlackAndWhite();
+							    }
+							}
+						}
 						image.setImage(SwingFXUtils.toFXImage(img.getBufferedImage(), null));
 						checkResult();
 					} catch (IOException e) {

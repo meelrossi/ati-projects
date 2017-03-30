@@ -20,6 +20,8 @@ public class NewMenu extends Menu {
 	private MenuItem saveCircle;
 	@FXML
 	private MenuItem saveSquare;
+	@FXML
+	private MenuItem printGrey;
 	
 	public NewMenu() {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/newMenu.fxml"));
@@ -55,6 +57,20 @@ public class NewMenu extends Menu {
 				File file = fileChooser.showSaveDialog(JavaFXApplication.primaryStage);
 				if (file != null) {
 					BufferedImage bi = ImageManager.getBinaryCircle();
+					try {
+						ImageIO.write(bi, "png", file);
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+				}
+			}
+		});
+		printGrey.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(final ActionEvent e) {
+				File file = fileChooser.showSaveDialog(JavaFXApplication.primaryStage);
+				if (file != null) {
+					BufferedImage bi = ImageManager.getGreyImage();
 					try {
 						ImageIO.write(bi, "png", file);
 					} catch (IOException e1) {

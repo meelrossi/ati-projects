@@ -2,6 +2,7 @@ package controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Optional;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -10,6 +11,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.stage.FileChooser;
+import javafx.util.Pair;
+import utils.ImageManager;
 
 public class FileMenu extends Menu {
 	@FXML
@@ -54,6 +57,22 @@ public class FileMenu extends Menu {
 				}
 			}
 
+		});
+		openRaw.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				File file = fileChooser.showOpenDialog(JavaFXApplication.primaryStage);
+				if (file != null) {
+					if (file.getName().toLowerCase().contains(".raw")) {
+						OpenRawImageDialog dialog = new OpenRawImageDialog();
+						dialog.initOwner(getParentPopup());
+						Optional<Pair<Integer, Integer>> result = dialog.showAndWait();
+						result.ifPresent(usernamePassword -> {
+						    ImageManager.readFromRaw(file, result.get().getKey(), result.get().getValue());
+						});
+					}
+				}
+			}
 		});
 	}
 }

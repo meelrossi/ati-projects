@@ -9,12 +9,23 @@ public class ColorImage extends CustomImage {
 	private double[][] red;
 	private double[][] green;
 	private double[][] blue;
+	ColorImageType imageType;
 
 	public ColorImage(double[][] red, double[][] green, double[][] blue, int width, int height) {
 		super(width, height);
 		this.red = red;
 		this.green = green;
 		this.blue = blue;
+		imageType= ColorImageType.COLOR;
+	}
+	
+	public ColorImage(double[][] grey, int width, int height) {
+		super(width, height);
+		this.red = grey;
+		this.green = grey;
+		this.blue = grey;
+		imageType= ColorImageType.BLACK_AND_WHITE;
+		
 	}
 
 	public ColorImage(BufferedImage bufferedImage) {
@@ -186,5 +197,18 @@ public class ColorImage extends CustomImage {
 			}
 		}
 		return new ColorImage(r, g, b, width, height);
+	}
+	
+	public void toBlackAndWhite() {
+		imageType = ColorImageType.BLACK_AND_WHITE;
+		double[][] grey = new double[width][height];
+		for (int i = 0; i < width; i++) {
+			for (int j = 0; j < height; j++) {
+				grey[i][j] = (red[i][j] + green[i][j] + blue[i][j]) / 3;
+			}
+		}
+		red = grey;
+		green = grey;
+		blue = grey;
 	}
 }

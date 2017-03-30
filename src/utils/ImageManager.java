@@ -4,10 +4,12 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
+import java.io.DataInputStream;
+import java.io.File;
+import java.io.FileInputStream;
 
 import javafx.scene.chart.XYChart;
 import model.ColorImage;
-import model.CustomImage;
 
 public class ImageManager {
 	private static int IMAGE_SIZE = 200;
@@ -38,6 +40,17 @@ public class ImageManager {
 			}
 		}
 		return square;
+	}
+	
+	public static BufferedImage getGreyImage() {
+		BufferedImage bi = new BufferedImage(256, 256, BufferedImage.TYPE_INT_RGB);
+		for (int i = 0; i < 256; i++) {
+			for (int j = 0; j < 256; j++) {
+				java.awt.Color c = new java.awt.Color(i, i, i);
+				bi.setRGB(i, j, c.getRGB());
+			}
+		}
+		return bi;
 	}
 
 	public static ColorImage calculate(ColorImage img1, ColorImage img2, ImageOperation op) {
@@ -173,7 +186,7 @@ public class ImageManager {
 		return m * pixel + b;
 	}
 
-	public static CustomImage powerImage(ColorImage img, double value) {
+	public static ColorImage powerImage(ColorImage img, double value) {
 		double c = Math.pow(255, 1 - value);
 		int width = img.getWidth();
 		int height = img.getHeight();
@@ -222,5 +235,24 @@ public class ImageManager {
 			}
 		}
 		return new ColorImage(red, blue, green, width, height);
+	}
+
+	public static ColorImage readFromRaw(File file, int width, int height) {
+		DataInputStream dis;
+		double[][] image = new double[width][height];
+		try {
+			dis = new DataInputStream(new FileInputStream(file));
+	        for (int i = 0; i < height; i++) {
+	        	for(int j = 0; j < width; j++) {
+	              image[j][i] = dis.readByte();
+	              if (image[j][i] < 0) {
+	            	  image[j][i] += 256;
+	              }
+	        	}
+	        }
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+        return new ColorImage(image, width, height);
 	}
 }

@@ -20,6 +20,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import model.ColorImage;
+import utils.ImageManager;
 
 public class ImageTab extends Tab {
 	@FXML
@@ -112,6 +113,54 @@ public class ImageTab extends Tab {
 
 	public void saveImage(File file) {
 		img.saveOn(file);
+	}
+	
+	public void openRawImage(File file, int width, int height) {
+        img = ImageManager.readFromRaw(file, width, height);
+		mainImage.setImage(SwingFXUtils.toFXImage(img.getBufferedImage(), null));
+		mainImage.onMousePressedProperty().set(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				if (event.isShiftDown()) {
+					dragPos = new Point((int) event.getX(), (int) event.getY());
+				} else {
+
+					x = (int) event.getX();
+					y = (int) event.getY();
+					refreshPixelColor();
+				}
+				resetRectangle();
+			}
+		});
+		mainImage.setOnMouseDragged(new EventHandler<MouseEvent>() {
+
+			@Override
+			public void handle(MouseEvent event) {
+				if (!event.isShiftDown())
+					return;
+				int width = Math.abs(dragPos.x - (int) event.getX());
+				int height = Math.abs(dragPos.y - (int) event.getY());
+				selectionRectangle.setWidth(width);
+				selectionRectangle.setHeight(height);
+			}
+		});
+
+		mainImage.setOnMouseReleased(new EventHandler<MouseEvent>() {
+
+			@Override
+			public void handle(MouseEvent event) {
+				if (event.isShiftDown()) {
+					int width = (int) selectionRectangle.getWidth();
+					int height = (int) selectionRectangle.getHeight();
+					pixelAmount.setText("" + width * height);
+					colorAvergage.setFill(img.getAverageColor(dragPos.x, dragPos.y, width, height));
+				} else {
+					pixelAmount.setText("" + 1);
+					colorAvergage.setFill(img.getColor(x, y));
+				}
+			}
+
+		});
 	}
 
 	public void resetRectangle() {
