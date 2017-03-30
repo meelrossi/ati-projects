@@ -14,5 +14,6 @@
 		<OperationsTab fx:id="operationsTab"/>
 		<EqualizingTab fx:id="equalizingTab"/>
 		<NoiseTab fx:id="noiseTab"/>
+		<FilterTab fx:id="filterTab"/>
 	</tabs>
 </TabPane>

@@ -12,11 +12,7 @@ public class RayleighNoiseGenerator extends NoiseGenerator {
 
 	@Override
 	public double addNoiseToPixel(double pixel) {
-		pixel *= rayleighRng.random();
-		if(pixel>255){
-			return 255;
-		}
-		return pixel;
+		return pixel * rayleighRng.random();
 	}
 
 }

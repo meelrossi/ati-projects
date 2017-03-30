@@ -36,9 +36,13 @@ public class FilterTab extends Tab {
 	@FXML
 	private Button gaussianButton;
 	@FXML
+	private Button borderButton;
+	@FXML
 	private TextField textField1;
 	@FXML
 	private TextField textField2;
+	@FXML
+	private TextField windowSize;
 	@FXML
 	private Button calculateButton;
 	@FXML
@@ -71,6 +75,7 @@ public class FilterTab extends Tab {
 		buttons.add(new FilterButton(medianButton, FilterType.MEDIAN));
 		buttons.add(new FilterButton(weightedMedianButton, FilterType.WEIGHTED_MEDIAN));
 		buttons.add(new FilterButton(gaussianButton, FilterType.GAUSSIAN));
+		buttons.add(new FilterButton(borderButton, FilterType.BORDER));
 		buttons.forEach(fb -> {
 			fb.getButton().setOnAction(new EventHandler<ActionEvent>() {
 				@Override
@@ -113,7 +118,7 @@ public class FilterTab extends Tab {
 			@Override
 			public void handle(ActionEvent event) {
 				if (img != null) {
-					result = selectedButton.getFilterType().getFilter().filter(img, 3);
+					result = selectedButton.getFilterType().getFilter(Double.parseDouble(textField1.getText())).filter(img, Integer.parseInt(windowSize.getText()));
 					resultImage.setImage(SwingFXUtils.toFXImage(result.getBufferedImage(), null));
 				} 
 			}
@@ -121,7 +126,7 @@ public class FilterTab extends Tab {
 	}
 	
 	public void setBackground(Button btn) {
-		String notSelectedStyle = "-fx-background-color:#F0F8FF";
+		String notSelectedStyle = "-fx-background-color:white";
 		String selectedStyle = "-fx-background-color:#1e90ff";
 		buttons.forEach(nb -> {
 			Button b = nb.getButton();

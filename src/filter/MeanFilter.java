@@ -23,16 +23,17 @@ public class MeanFilter extends Filter {
 	
 	public double mean(double[][] channel, int x, int y, int width, int height, int windowSize) {
 		double sum = 0;
+		int count = 0;
 		int move = (windowSize - 1) / 2;
 		for (int i = x - move; i <= x + move; i++) {
 			for (int j = y - move; j <= y + move; j++) {
-				if (i >= 0 && i <= width && j >= 0 && j <= height && !(i == x && j == y)) {
+				if (i >= 0 && i < width && j >= 0 && j < height) {
+					count ++;
 					sum += channel[i][j];
 				}
 			}
 		}
-		return sum / ((windowSize * windowSize) - 1);
-		
+		return sum / count;
 	}
 
 }

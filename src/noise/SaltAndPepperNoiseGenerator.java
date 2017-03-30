@@ -17,7 +17,6 @@ public class SaltAndPepperNoiseGenerator extends NoiseGenerator {
 	@Override
 	public double addNoiseToPixel(double pixel) {
 		double p = uniformRng.random();
-		System.out.println(p);
 		if (p1 > p) {
 			return 0;
 		} else if (p2 < p) {

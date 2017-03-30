@@ -55,7 +55,6 @@ public class ImageWithHistogramPane extends Pane {
 	protected FileChooser fileChooser = new FileChooser();
 
 	public ImageWithHistogramPane() {
-		System.out.println("dsaldkjasldj");
 		FXMLLoader fxmlLoader = new FXMLLoader(getResource());
 		fxmlLoader.setRoot(this);
 		fxmlLoader.setController(this);

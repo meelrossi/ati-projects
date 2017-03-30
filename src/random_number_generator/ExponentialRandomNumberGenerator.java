@@ -15,7 +15,7 @@ public class ExponentialRandomNumberGenerator implements RandomNumberGenerator {
 	
 	@Override
 	public double random() {
-		return (-1/lambda)*Math.log(rng.nextDouble());
+		return (-1.0/lambda)*Math.log(1 - rng.nextDouble());
 	}
 
 }

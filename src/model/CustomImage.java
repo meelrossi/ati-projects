@@ -27,7 +27,6 @@ public abstract class CustomImage {
 
 	public void saveOn(File file) {
 		try {
-			System.out.println(file);
 			ImageIO.write(this.getBufferedImage(), "png", file);
 		} catch (IOException e) {
 			e.printStackTrace();

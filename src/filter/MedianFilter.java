@@ -30,14 +30,17 @@ public class MedianFilter extends Filter {
 		int move = (windowSize - 1) / 2;
 		for (int i = x - move; i <= x + move; i++) {
 			for (int j = y - move; j <= y + move; j++) {
-				if (i >= 0 && i <= width && j >= 0 && j <= height && !(i == x && j == y)) {
+				if (i >= 0 && i < width && j >= 0 && j < height) {
 					list.add(channel[i][j]);
 				}
 			}
 		}
 		Collections.sort(list);
+		if (list.size() % 2 == 0) {
+			double half = list.size() / 2.0;
+			return (list.get((int)Math.floor(half)) + list.get((int)Math.ceil(half))) / 2;
+		}
 		return list.get(list.size() / 2);
-		
 	}
 
 }

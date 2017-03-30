@@ -90,10 +90,8 @@ public class ContrastPane extends Pane {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				System.out.println("dlasdjlaksdj");
 				if (r1.getText() != null && r2.getText() != null && s1.getText() != null && s2.getText() != null) {
 					calculateContrastImage();
-					System.out.println("daksjdhakjshd");
 				}
 			}
 		});

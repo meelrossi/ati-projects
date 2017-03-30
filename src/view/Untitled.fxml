@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.effect.*?>
@@ -166,12 +167,14 @@
                   <Pane layoutY="35.0" prefHeight="534.0" prefWidth="800.0">
                      <children>
                         <ImageView fitHeight="308.0" fitWidth="357.0" layoutX="49.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
-                        <TextField fx:id="textField11" layoutX="49.0" layoutY="390.0" />
-                        <TextField fx:id="textField21" layoutX="239.0" layoutY="390.0" />
-                        <Button layoutX="330.0" layoutY="449.0" mnemonicParsing="false" text="Calculate" />
+                        <TextField fx:id="textField11" layoutX="49.0" layoutY="434.0" />
+                        <TextField fx:id="textField21" layoutX="239.0" layoutY="434.0" />
+                        <Button layoutX="330.0" layoutY="493.0" mnemonicParsing="false" text="Calculate" />
                         <ImageView fitHeight="308.0" fitWidth="357.0" layoutX="429.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" />
                         <Button fx:id="loadImageButton1" layoutX="190.0" layoutY="334.0" mnemonicParsing="false" text="Load Image..." />
                         <Button fx:id="loadImageButton2" layoutX="557.0" layoutY="334.0" mnemonicParsing="false" text="Load Image..." />
+                        <TextField layoutX="156.0" layoutY="390.0" />
+                        <Text layoutX="57.0" layoutY="408.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Window size:" />
                      </children>
                   </Pane>
                </children>

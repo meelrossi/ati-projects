@@ -21,9 +21,16 @@ public class ColorImage extends CustomImage {
 	
 	public ColorImage(double[][] grey, int width, int height) {
 		super(width, height);
-		this.red = grey;
-		this.green = grey;
-		this.blue = grey;
+		this.red = new double[width][height];
+		this.green = new double[width][height];
+		this.blue = new double[width][height];
+		for (int i = 0; i < width; i++) {
+			for (int j = 0; j < height; j++) {
+				red[i][j] = grey[i][j];
+				green[i][j] = grey[i][j];
+				blue[i][j] = grey[i][j];
+			}
+		}
 		imageType= ColorImageType.BLACK_AND_WHITE;
 		
 	}
