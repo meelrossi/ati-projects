@@ -18,6 +18,8 @@ import javafx.stage.FileChooser;
 import javafx.util.Pair;
 import model.ColorImage;
 import model.ColorImageType;
+import model.CustomImage;
+import utils.ClipBoard;
 import utils.ImageManager;
 import utils.ImageOperation;
 
@@ -31,7 +33,14 @@ public class OperationImagesPane extends Pane {
 	@FXML
 	private Button loadImage1Button;
 	@FXML
+	private Button loadImage1FromClipBoardButton;
+	@FXML
 	private Button loadImage2Button;
+	@FXML
+	private Button loadImage2FromClipBoardButton;
+	
+	@FXML
+	private Button saveToClipboard;
 
 	private ColorImage img1;
 	private ColorImage img2;
@@ -121,6 +130,42 @@ public class OperationImagesPane extends Pane {
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
+				}
+			}
+		});
+		
+		saveToClipboard.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				if(result != null) {
+					ClipBoard.copyImage(result);
+				}
+			}
+		});
+		
+		loadImage1FromClipBoardButton.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				ColorImage clipBoardImage = ClipBoard.pasteImage();
+				if(clipBoardImage != null) {
+					img1 = clipBoardImage;
+					image1.setImage(SwingFXUtils.toFXImage(img1.getBufferedImage(), null));
+					checkResult();
+				}
+			}
+		});
+		
+		loadImage2FromClipBoardButton.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				ColorImage clipBoardImage = ClipBoard.pasteImage();
+				if(clipBoardImage != null) {
+					img2 = clipBoardImage;
+					image2.setImage(SwingFXUtils.toFXImage(img2.getBufferedImage(), null));
+					checkResult();
 				}
 			}
 		});
