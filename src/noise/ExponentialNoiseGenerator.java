@@ -6,7 +6,8 @@ public class ExponentialNoiseGenerator extends NoiseGenerator {
 
 	private final ExponentialRandomNumberGenerator exponentialRng;
 	
-	public ExponentialNoiseGenerator(double lambda) {
+	public ExponentialNoiseGenerator(double lambda, double percentageAffectedByNoise) {
+		super(percentageAffectedByNoise);
 		this.exponentialRng = new ExponentialRandomNumberGenerator(lambda);
 	}
 	

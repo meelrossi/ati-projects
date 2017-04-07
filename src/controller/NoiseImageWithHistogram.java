@@ -25,6 +25,8 @@ public class NoiseImageWithHistogram extends ImageWithHistogramPane {
 	@FXML
 	private TextField textField2;
 	@FXML
+	private TextField textField3;
+	@FXML
 	private Button calculateButton;
 
 	@Override
@@ -84,6 +86,10 @@ public class NoiseImageWithHistogram extends ImageWithHistogramPane {
 
 	public double getVal2() {
 		return Double.parseDouble(textField2.getText());
+	}
+	
+	public double getVal3() {
+		return Double.parseDouble(textField3.getText());
 	}
 
 }

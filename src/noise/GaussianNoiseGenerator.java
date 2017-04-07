@@ -6,7 +6,8 @@ public class GaussianNoiseGenerator extends NoiseGenerator{
 	
 	private final GaussianRandomNumberGenerator gaussianRng;
 	
-	public GaussianNoiseGenerator(double mean, double standardDeviation) {
+	public GaussianNoiseGenerator(double mean, double standardDeviation, double percentageAffectedByNoise) {
+		super(percentageAffectedByNoise);
 		this.gaussianRng = new GaussianRandomNumberGenerator(mean,standardDeviation);
 	}
 	
