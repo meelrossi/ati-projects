@@ -76,7 +76,7 @@ public class NoiseTab extends HistogramTab {
 	}
 	
 	public void setImage(ColorImage img) {
-		NoiseGenerator ng = selectedButton.getNoiseType().getNoiseGenerator(mainImagePane.getVal1(), mainImagePane.getVal2());
+		NoiseGenerator ng = selectedButton.getNoiseType().getNoiseGenerator(mainImagePane.getVal1(), mainImagePane.getVal2(), mainImagePane.getVal3());
 		if (img.colorImageType() == ColorImageType.COLOR) {
 			ColorImage ci = ng.addNoiseToColorImage(img);
 			ci.normalize();

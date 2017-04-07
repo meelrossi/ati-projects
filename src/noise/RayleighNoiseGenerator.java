@@ -6,7 +6,8 @@ public class RayleighNoiseGenerator extends NoiseGenerator {
 
 	private final RayleighRandomNumberGenerator rayleighRng;
 	
-	public RayleighNoiseGenerator(double epsilon){
+	public RayleighNoiseGenerator(double epsilon, double percentageAffectedByNoise){
+		super(percentageAffectedByNoise);
 		this.rayleighRng = new RayleighRandomNumberGenerator(epsilon);
 	}
 

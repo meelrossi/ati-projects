@@ -8,7 +8,8 @@ public class SaltAndPepperNoiseGenerator extends NoiseGenerator {
 	private final double p1;
 	private final double p2;
 
-	public SaltAndPepperNoiseGenerator(double p1, double p2) {
+	public SaltAndPepperNoiseGenerator(double p1, double p2,double percentageAffectedByNoise) {
+		super(percentageAffectedByNoise);
 		this.p1 = p1;
 		this.p2 = p2;
 		this.uniformRng = new UniformRandomNumberGenerator();
