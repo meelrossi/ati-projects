@@ -48,6 +48,8 @@ public class FilterTab extends Tab {
 	@FXML
 	private Button loadImageButton1;
 	@FXML
+	private Button saveImageButton;
+	@FXML
 	private ImageView image;
 	@FXML
 	private ImageView resultImage;
@@ -111,6 +113,15 @@ public class FilterTab extends Tab {
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
+				}
+			}
+		});
+		saveImageButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				File file = fileChooser.showSaveDialog(JavaFXApplication.primaryStage);
+				if (file != null) {
+					result.saveOn(file);
 				}
 			}
 		});
