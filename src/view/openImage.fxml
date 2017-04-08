@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<fx:root type="Pane" maxHeight="-Infinity" maxWidth="-Infinity"
+	minHeight="-Infinity" minWidth="-Infinity" prefHeight="278.0"
+	prefWidth="300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+	<children>
+		<ImageView fx:id="image" fitHeight="250.0" fitWidth="300.0"
+			pickOnBounds="true" preserveRatio="true" />
+		<Button fx:id="open" layoutY="250.0" mnemonicParsing="false"
+			prefHeight="27.0" prefWidth="150.0" text="Open from file" />
+		<Button fx:id="openFromClipboard" layoutX="150.0" layoutY="250.0"
+			mnemonicParsing="false" prefHeight="27.0" prefWidth="150.0"
+			text="Open from clipboard" />
+	</children>
+</fx:root>

@@ -16,7 +16,7 @@ public class JavaFXApplication extends Application {
 	public void start(Stage primaryStage) {
 		try {
 			TabPane root = FXMLLoader.load(JavaFXApplication.class.getResource("/view/index.fxml"));
-			Scene scene = new Scene(root, 800, 600);
+			Scene scene = new Scene(root, 800, 630);
 
 			File f = new File("resources/application.css");
 			scene.getStylesheets().add("file:///" + f.getAbsolutePath().replace("\\", "/"));
