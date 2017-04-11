@@ -6,6 +6,8 @@ import java.util.Optional;
 
 import javax.imageio.ImageIO;
 
+import components.OpenImage;
+import components.SaveImage;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -24,19 +26,13 @@ import utils.ImageManager;
 
 public class LimitImagePane extends Pane {
 	@FXML
-	protected ImageView image;
+	protected OpenImage image;
+	
 	@FXML
-	protected ImageView resultImage;
-	@FXML
-	protected Button loadImageButton;
+	protected SaveImage result;
+	
 	@FXML
 	protected Slider limitSlider;
-
-	private FileChooser fileChooser = new FileChooser();
-
-	protected ColorImage img;
-
-	protected ColorImage result;
 
 	public LimitImagePane() {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/limitImagePane.fxml"));
@@ -50,37 +46,7 @@ public class LimitImagePane extends Pane {
 	}
 
 	public void initialize() {
-		loadImageButton.setOnAction(new EventHandler<ActionEvent>() {
-
-			@Override
-			public void handle(ActionEvent event) {
-				File file = fileChooser.showOpenDialog(JavaFXApplication.primaryStage);
-				if (file != null) {
-					try {
-						if (file.getName().toLowerCase().contains(".raw")) {
-							OpenRawImageDialog dialog = new OpenRawImageDialog();
-							Optional<Pair<Integer, Integer>> result = dialog.showAndWait();
-							result.ifPresent(d -> {
-							    img = ImageManager.readFromRaw(file, result.get().getKey(), result.get().getValue());
-							});
-						} else {
-							OpenColorImageDialog dialog = new OpenColorImageDialog();
-							Optional<ColorImageType> result = dialog.showAndWait();
-							if (result.isPresent()){
-								img = new ColorImage(ImageIO.read(file));
-							    if (result.get() == ColorImageType.BLACK_AND_WHITE) {
-							    	img.toBlackAndWhite();
-							    }
-							}
-						}
-						image.setImage(SwingFXUtils.toFXImage(img.getBufferedImage(), null));
-						checkResult();
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-				}
-			}
-		});
+		image.initialize(this::checkResult);
 		limitSlider.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
@@ -91,9 +57,9 @@ public class LimitImagePane extends Pane {
 	}
 
 	public void checkResult() {
+		ColorImage img = image.getImage();
 		if (img != null) {
-			result = ImageManager.limitImage((ColorImage) img, limitSlider.getValue());
-			resultImage.setImage(SwingFXUtils.toFXImage(result.getBufferedImage(), null));
+			result.setImage(ImageManager.limitImage((ColorImage) img, limitSlider.getValue()));
 		}
 	}
 }

@@ -64,7 +64,7 @@ public class ImageManager {
 		BufferedImage result = new BufferedImage(img.getWidth(), img.getHeight(), BufferedImage.TYPE_BYTE_BINARY);
 		for (int i = 0; i < img.getWidth(); i++) {
 			for (int j = 0; j < img.getHeight(); j++) {
-				if (img.getGrey(i, j) < limit) {
+				if (img.getGrey(i, j) > limit) {
 					result.setRGB(i, j, Color.WHITE.getRGB());
 				}
 			}

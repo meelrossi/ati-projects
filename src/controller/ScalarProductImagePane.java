@@ -6,6 +6,8 @@ import java.util.Optional;
 
 import javax.imageio.ImageIO;
 
+import components.OpenImage;
+import components.SaveImage;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -26,21 +28,16 @@ import utils.ImageManager;
 public class ScalarProductImagePane extends Pane {
 	
 	@FXML
-	private ImageView image;
+	private OpenImage image;
+	
 	@FXML
-	private ImageView resultImage;
-	@FXML
-	private Button loadImageButton;
+	private SaveImage result;
+	
 	@FXML
 	private Slider scalarSlider;
+	
 	@FXML
 	private Label scalarLabel;
-	
-	private FileChooser fileChooser = new FileChooser();
-	
-	private ColorImage img;
-	
-	private ColorImage result;
 
 	public ScalarProductImagePane() {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/scalarProductImagePane.fxml"));
@@ -54,37 +51,6 @@ public class ScalarProductImagePane extends Pane {
 	}
 	
 	public void initialize() {
-		loadImageButton.setOnAction(new EventHandler<ActionEvent>() {
-
-			@Override
-			public void handle(ActionEvent event) {
-				File file = fileChooser.showOpenDialog(JavaFXApplication.primaryStage);
-				if (file != null) {
-					try {
-						if (file.getName().toLowerCase().contains(".raw")) {
-							OpenRawImageDialog dialog = new OpenRawImageDialog();
-							Optional<Pair<Integer, Integer>> result = dialog.showAndWait();
-							result.ifPresent(d -> {
-							    img = ImageManager.readFromRaw(file, result.get().getKey(), result.get().getValue());
-							});
-						} else {
-							OpenColorImageDialog dialog = new OpenColorImageDialog();
-							Optional<ColorImageType> result = dialog.showAndWait();
-							if (result.isPresent()){
-								img = new ColorImage(ImageIO.read(file));
-							    if (result.get() == ColorImageType.BLACK_AND_WHITE) {
-							    	img.toBlackAndWhite();
-							    }
-							}
-						}
-						image.setImage(SwingFXUtils.toFXImage(img.getBufferedImage(), null));
-						checkResult();
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-				}
-			}
-		});
 		scalarSlider.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
 			@Override
@@ -94,12 +60,13 @@ public class ScalarProductImagePane extends Pane {
 			}
 			
 		});
+		image.initialize(this::checkResult);
 	}
 	
 	public void checkResult() {
+		ColorImage img = image.getImage();
 		if (img != null) {
-			result = ImageManager.scalarProduct((ColorImage) img, scalarSlider.getValue());
-			resultImage.setImage(SwingFXUtils.toFXImage(result.getBufferedImage(), null));
+			result.setImage(ImageManager.scalarProduct((ColorImage) img, scalarSlider.getValue()));
 		}
 	}
 

@@ -6,6 +6,8 @@ import java.util.Optional;
 
 import javax.imageio.ImageIO;
 
+import components.OpenImage;
+import components.SaveImage;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -22,15 +24,10 @@ import utils.ImageManager;
 
 public class NegativeImagePane extends Pane {
 	@FXML
-	private ImageView image;
-	@FXML
-	private ImageView resultImage;
-	@FXML
-	private Button loadImageButton;
+	private OpenImage image;
 	
-	private ColorImage img;
-	private ColorImage result;
-	private FileChooser fileChooser = new FileChooser();
+	@FXML
+	private SaveImage result;
 
 	public NegativeImagePane() {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/negativeImagePane.fxml"));
@@ -44,43 +41,13 @@ public class NegativeImagePane extends Pane {
 	}
 
 	public void initialize() {
-		loadImageButton.setOnAction(new EventHandler<ActionEvent>() {
-
-			@Override
-			public void handle(ActionEvent event) {
-				File file = fileChooser.showOpenDialog(JavaFXApplication.primaryStage);
-				if (file != null) {
-					try {
-						if (file.getName().toLowerCase().contains(".raw")) {
-							OpenRawImageDialog dialog = new OpenRawImageDialog();
-							Optional<Pair<Integer, Integer>> result = dialog.showAndWait();
-							result.ifPresent(d -> {
-							    img = ImageManager.readFromRaw(file, result.get().getKey(), result.get().getValue());
-							});
-						} else {
-							OpenColorImageDialog dialog = new OpenColorImageDialog();
-							Optional<ColorImageType> result = dialog.showAndWait();
-							if (result.isPresent()){
-								img = new ColorImage(ImageIO.read(file));
-							    if (result.get() == ColorImageType.BLACK_AND_WHITE) {
-							    	img.toBlackAndWhite();
-							    }
-							}
-						}
-						image.setImage(SwingFXUtils.toFXImage(img.getBufferedImage(), null));
-						checkResult();
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-				}
-			}
-		});
+		image.initialize(this::checkResult);
 	}
 	
 	public void checkResult() {
+		ColorImage img = image.getImage();
 		if (img != null) {
-			result = img.getNegative();
-			resultImage.setImage(SwingFXUtils.toFXImage(result.getBufferedImage(), null));
+			result.setImage(img.getNegative());
 		}
 	}
 }

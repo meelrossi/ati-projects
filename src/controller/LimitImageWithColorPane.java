@@ -6,9 +6,9 @@ import utils.ImageManager;
 
 public class LimitImageWithColorPane extends LimitImagePane {
 	public void checkResult() {
+		ColorImage img = image.getImage();
 		if (img != null) {
-			result = ImageManager.limitImageWithColor((ColorImage) img, limitSlider.getValue());
-			resultImage.setImage(SwingFXUtils.toFXImage(result.getBufferedImage(), null));
+			result.setImage(ImageManager.limitImageWithColor((ColorImage) img, limitSlider.getValue()));
 		}
 	}
 }
