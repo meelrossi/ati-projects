@@ -1,53 +1,25 @@
 package controller;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.Optional;
 
-import javax.imageio.ImageIO;
-
-import javafx.embed.swing.SwingFXUtils;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import components.OpenImage;
+import components.SaveImage;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Button;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-import javafx.stage.FileChooser;
-import javafx.util.Pair;
 import model.ColorImage;
-import model.ColorImageType;
-import model.CustomImage;
-import utils.ClipBoard;
 import utils.ImageManager;
 import utils.ImageOperation;
 
 public class OperationImagesPane extends Pane {
 	@FXML
-	private ImageView image1;
+	private OpenImage image1;
 	@FXML
-	private ImageView image2;
+	private OpenImage image2;
 	@FXML
-	private ImageView resultImage;
-	@FXML
-	private Button loadImage1Button;
-	@FXML
-	private Button loadImage1FromClipBoardButton;
-	@FXML
-	private Button loadImage2Button;
-	@FXML
-	private Button loadImage2FromClipBoardButton;
+	private SaveImage result;
 	
-	@FXML
-	private Button saveToClipboard;
-
-	private ColorImage img1;
-	private ColorImage img2;
-	private ColorImage result;
 	private ImageOperation op;
-
-	private FileChooser fileChooser = new FileChooser();
 
 	public OperationImagesPane() {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/operationImagesPane.fxml"));
@@ -59,122 +31,22 @@ public class OperationImagesPane extends Pane {
 			throw new RuntimeException(exception);
 		}
 	}
+	
+	public void initialize() {
+		image1.initialize(this::checkResult);
+		image2.initialize(this::checkResult);
+	}
 
 	public void setOperation(ImageOperation op) {
 		this.op = op;
-		img1 = null;
-		img2 = null;
-		result = null;
-		image1.setImage(null);
-		image2.setImage(null);
-		resultImage.setImage(null);
-	}
-
-	public void initialize() {
-		loadImage1Button.setOnAction(new EventHandler<ActionEvent>() {
-
-			@Override
-			public void handle(ActionEvent event) {
-				File file = fileChooser.showOpenDialog(JavaFXApplication.primaryStage);
-				if (file != null) {
-					try {
-						if (file.getName().toLowerCase().contains(".raw")) {
-							OpenRawImageDialog dialog = new OpenRawImageDialog();
-							Optional<Pair<Integer, Integer>> result = dialog.showAndWait();
-							result.ifPresent(d -> {
-								img1 = ImageManager.readFromRaw(file, result.get().getKey(), result.get().getValue());
-							});
-						} else {
-							OpenColorImageDialog dialog = new OpenColorImageDialog();
-							Optional<ColorImageType> result = dialog.showAndWait();
-							if (result.isPresent()) {
-								img1 = new ColorImage(ImageIO.read(file));
-								if (result.get() == ColorImageType.BLACK_AND_WHITE) {
-									img1.toBlackAndWhite();
-								}
-							}
-						}
-						image1.setImage(SwingFXUtils.toFXImage(img1.getBufferedImage(), null));
-						checkResult();
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-				}
-			}
-		});
-		loadImage2Button.setOnAction(new EventHandler<ActionEvent>() {
-
-			@Override
-			public void handle(ActionEvent event) {
-				File file = fileChooser.showOpenDialog(JavaFXApplication.primaryStage);
-				if (file != null) {
-					try {
-						if (file.getName().toLowerCase().contains(".raw")) {
-							OpenRawImageDialog dialog = new OpenRawImageDialog();
-							Optional<Pair<Integer, Integer>> result = dialog.showAndWait();
-							result.ifPresent(d -> {
-								img2 = ImageManager.readFromRaw(file, result.get().getKey(), result.get().getValue());
-							});
-						} else {
-							OpenColorImageDialog dialog = new OpenColorImageDialog();
-							Optional<ColorImageType> result = dialog.showAndWait();
-							if (result.isPresent()) {
-								img2 = new ColorImage(ImageIO.read(file));
-								if (result.get() == ColorImageType.BLACK_AND_WHITE) {
-									img2.toBlackAndWhite();
-								}
-							}
-						}
-						image2.setImage(SwingFXUtils.toFXImage(img2.getBufferedImage(), null));
-						checkResult();
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-				}
-			}
-		});
-		
-		saveToClipboard.setOnAction(new EventHandler<ActionEvent>() {
-
-			@Override
-			public void handle(ActionEvent event) {
-				if(result != null) {
-					ClipBoard.copyImage(result);
-				}
-			}
-		});
-		
-		loadImage1FromClipBoardButton.setOnAction(new EventHandler<ActionEvent>() {
-
-			@Override
-			public void handle(ActionEvent event) {
-				ColorImage clipBoardImage = ClipBoard.pasteImage();
-				if(clipBoardImage != null) {
-					img1 = clipBoardImage;
-					image1.setImage(SwingFXUtils.toFXImage(img1.getBufferedImage(), null));
-					checkResult();
-				}
-			}
-		});
-		
-		loadImage2FromClipBoardButton.setOnAction(new EventHandler<ActionEvent>() {
-
-			@Override
-			public void handle(ActionEvent event) {
-				ColorImage clipBoardImage = ClipBoard.pasteImage();
-				if(clipBoardImage != null) {
-					img2 = clipBoardImage;
-					image2.setImage(SwingFXUtils.toFXImage(img2.getBufferedImage(), null));
-					checkResult();
-				}
-			}
-		});
+		checkResult();
 	}
 
 	public void checkResult() {
+		ColorImage img1 = image1.getImage();
+		ColorImage img2 = image2.getImage();
 		if (img1 != null && img2 != null) {
-			result = ImageManager.calculate(img1, img2, op);
-			resultImage.setImage(SwingFXUtils.toFXImage(result.getBufferedImage(), null));
+			result.setImage(ImageManager.calculate(img1, img2, op));
 		}
 	}
 
