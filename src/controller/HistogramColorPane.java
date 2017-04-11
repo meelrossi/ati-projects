@@ -7,6 +7,8 @@ import java.util.Optional;
 
 import javax.imageio.ImageIO;
 
+import components.OpenImage;
+import components.SaveImage;
 import javafx.collections.FXCollections;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
@@ -28,11 +30,7 @@ import utils.ImageManager;
 public class HistogramColorPane extends Pane {
 	
 	@FXML
-	private ImageView image;
-	@FXML
-	private ImageView resultImage;
-	@FXML
-	private Button loadImageButton;
+	protected OpenImage image;
 	@FXML
 	private BarChart<String, Number> chart;
 	@FXML
@@ -41,10 +39,6 @@ public class HistogramColorPane extends Pane {
 	private BarChart<String, Number> chartGreen;
 	@FXML
 	private BarChart<String, Number> chartBlue;
-
-	private FileChooser fileChooser = new FileChooser();
-
-	private ColorImage img;
 
 	public HistogramColorPane() {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/histogramColorPane.fxml"));
@@ -58,43 +52,13 @@ public class HistogramColorPane extends Pane {
 	}
 	
 	public void initialize() {
-		loadImageButton.setOnAction(new EventHandler<ActionEvent>() {
-
-			@Override
-			public void handle(ActionEvent event) {
-				File file = fileChooser.showOpenDialog(JavaFXApplication.primaryStage);
-				if (file != null) {
-					try {
-						if (file.getName().toLowerCase().contains(".raw")) {
-							OpenRawImageDialog dialog = new OpenRawImageDialog();
-							Optional<Pair<Integer, Integer>> result = dialog.showAndWait();
-							result.ifPresent(d -> {
-							    img = ImageManager.readFromRaw(file, result.get().getKey(), result.get().getValue());
-							});
-						} else {
-							OpenColorImageDialog dialog = new OpenColorImageDialog();
-							Optional<ColorImageType> result = dialog.showAndWait();
-							if (result.isPresent()){
-								img = new ColorImage(ImageIO.read(file));
-							    if (result.get() == ColorImageType.BLACK_AND_WHITE) {
-							    	img.toBlackAndWhite();
-							    }
-							}
-						}
-						image.setImage(SwingFXUtils.toFXImage(img.getBufferedImage(), null));
-						calculateHistograms();
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-				}
-			}
-		});
+		image.initialize(this::calculateHistograms);
 	}
 	
 	@SuppressWarnings("unchecked")
 	public void calculateHistograms() {
 		resetCharts();
-		
+		ColorImage img = image.getImage();
         chartRed.getData().addAll(ImageManager.getHistogramSeries(img.getRedChannel(), img.getWidth(), img.getHeight()));
         chartRed.setLegendVisible(false);
         for(Node n:chartRed.lookupAll(".default-color0.chart-bar")) {

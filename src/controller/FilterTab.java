@@ -8,6 +8,8 @@ import java.util.Optional;
 
 import javax.imageio.ImageIO;
 
+import components.OpenImage;
+import components.SaveImage;
 import filter.FilterButton;
 import filter.FilterType;
 import javafx.embed.swing.SwingFXUtils;
@@ -28,6 +30,10 @@ import utils.ImageManager;
 public class FilterTab extends Tab {
 	
 	@FXML
+	private OpenImage image;
+	@FXML
+	private SaveImage result;
+	@FXML
 	private Button meanButton;
 	@FXML
 	private Button medianButton;
@@ -45,20 +51,9 @@ public class FilterTab extends Tab {
 	private TextField windowSize;
 	@FXML
 	private Button calculateButton;
-	@FXML
-	private Button loadImageButton1;
-	@FXML
-	private Button saveImageButton;
-	@FXML
-	private ImageView image;
-	@FXML
-	private ImageView resultImage;
 	
-	private ColorImage img;
-	private ColorImage result;
 	private List<FilterButton> buttons;
 	private FilterButton selectedButton;
-	private FileChooser fileChooser = new FileChooser();
 	
 	public FilterTab() {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/filterTab.fxml"));
@@ -72,6 +67,7 @@ public class FilterTab extends Tab {
 	}
 	
 	public void initialize() {
+		image.initialize(this::calculateResult);
 		buttons = new LinkedList<FilterButton>();
 		buttons.add(new FilterButton(meanButton, FilterType.MEAN));
 		buttons.add(new FilterButton(medianButton, FilterType.MEDIAN));
@@ -87,51 +83,10 @@ public class FilterTab extends Tab {
 				}
 			});
 		});
-		loadImageButton1.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-				File file = fileChooser.showOpenDialog(JavaFXApplication.primaryStage);
-				if (file != null) {
-					try {
-						if (file.getName().toLowerCase().contains(".raw")) {
-							OpenRawImageDialog dialog = new OpenRawImageDialog();
-							Optional<Pair<Integer, Integer>> result = dialog.showAndWait();
-							result.ifPresent(d -> {
-							    img = ImageManager.readFromRaw(file, result.get().getKey(), result.get().getValue());
-							});
-						} else {
-							OpenColorImageDialog dialog = new OpenColorImageDialog();
-							Optional<ColorImageType> result = dialog.showAndWait();
-							if (result.isPresent()){
-								img = new ColorImage(ImageIO.read(file));
-							    if (result.get() == ColorImageType.BLACK_AND_WHITE) {
-							    	img.toBlackAndWhite();
-							    }
-							}
-						}
-						image.setImage(SwingFXUtils.toFXImage(img.getBufferedImage(), null));
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-				}
-			}
-		});
-		saveImageButton.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-				File file = fileChooser.showSaveDialog(JavaFXApplication.primaryStage);
-				if (file != null) {
-					result.saveOn(file);
-				}
-			}
-		});
 		calculateButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				if (img != null) {
-					result = selectedButton.getFilterType().getFilter(Double.parseDouble(textField1.getText())).filter(img, Integer.parseInt(windowSize.getText()));
-					resultImage.setImage(SwingFXUtils.toFXImage(result.getBufferedImage(), null));
-				} 
+				calculateResult();
 			}
 		});
 	}
@@ -143,6 +98,13 @@ public class FilterTab extends Tab {
 			Button b = nb.getButton();
 			b.setStyle(b != btn ? notSelectedStyle : selectedStyle);
 		});
+	}
+	
+	public void calculateResult(){
+		ColorImage img = image.getImage();
+		if (img != null) {
+			result.setImage(selectedButton.getFilterType().getFilter(Double.parseDouble(textField1.getText())).filter(img, Integer.parseInt(windowSize.getText())));
+		} 
 	}
 
 }
