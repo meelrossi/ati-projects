@@ -6,7 +6,7 @@ public enum NoiseType {
 	RAYLEIGH,
 	SALT_AND_PEPPER;
 	
-	public NoiseGenerator getNoiseGenerator(double val1, double val2,double percentageAffectedByNoise) {
+	public NoiseGenerator getNoiseGenerator(Double val1, Double val2, Double percentageAffectedByNoise) {
 		switch (this) {
 		case EXPONENTIAL:
 			return new ExponentialNoiseGenerator(val1,percentageAffectedByNoise);

@@ -3,6 +3,8 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import components.*?>
+
 <fx:root type="Pane" minHeight="0.0" minWidth="0.0" prefHeight="476.0"
 	prefWidth="444.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
 	<children>
@@ -95,12 +97,8 @@
 		<Pane fx:id="imagePane" layoutY="35.0" prefHeight="525.0"
 			prefWidth="395.0">
 			<children>
-				<ImageView fx:id="image" fitHeight="284.0" fitWidth="345.0"
-					layoutX="22.0" layoutY="106.0" pickOnBounds="true" preserveRatio="true" />
-				<Button fx:id="saveImageButton" layoutX="150.0" layoutY="390.0"
-					mnemonicParsing="false" text="Save Image" />
-				<Button fx:id="loadImageButton" layoutX="150.0" layoutY="390.0"
-					mnemonicParsing="false" text="Load Image..." />
+				<OpenImage fx:id="image" layoutX="49.0" layoutY="26.0"/>
+				<SaveImage fx:id="result" layoutX="49.0" layoutY="26.0"/>
 			</children>
 		</Pane>
 	</children>
