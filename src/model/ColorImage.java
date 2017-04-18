@@ -16,7 +16,7 @@ public class ColorImage extends CustomImage {
 		this.red = red;
 		this.green = green;
 		this.blue = blue;
-		imageType= ColorImageType.COLOR;
+		setColorType();
 	}
 	
 	public ColorImage(double[][] grey, int width, int height) {
@@ -31,8 +31,7 @@ public class ColorImage extends CustomImage {
 				blue[i][j] = grey[i][j];
 			}
 		}
-		imageType= ColorImageType.BLACK_AND_WHITE;
-		
+		imageType= ColorImageType.BLACK_AND_WHITE;	
 	}
 
 	public ColorImage(BufferedImage bufferedImage) {
@@ -48,6 +47,19 @@ public class ColorImage extends CustomImage {
 				blue[i][j] = (color >> 0) & 0xFF;
 			}
 		}
+		setColorType();
+	}
+	
+	public void setColorType() {
+		for (int i = 0; i < width; i++) {
+			for (int j = 0; j < height; j++) {
+				if (red[i][j] != green[i][j] || green[i][j] != blue[i][j] || blue[i][j] != red[i][j]) {
+					imageType = ColorImageType.COLOR;
+					return;
+				}
+			}
+		}
+		imageType = ColorImageType.BLACK_AND_WHITE;
 	}
 
 	public double getRed(int x, int y) {

@@ -70,6 +70,7 @@ public class FilterTab extends Tab {
 				public void handle(ActionEvent event) {
 					setBackground(fb.getButton());
 					selectedButton = fb;
+					textField1.setVisible(selectedButton.getFilterType() == FilterType.GAUSSIAN);
 				}
 			});
 		});
@@ -79,6 +80,7 @@ public class FilterTab extends Tab {
 				calculateResult();
 			}
 		});
+		textField1.setPromptText("standard deviation");
 	}
 	
 	public void setBackground(Button btn) {
@@ -93,7 +95,8 @@ public class FilterTab extends Tab {
 	public void calculateResult(){
 		ColorImage img = image.getImage();
 		if (img != null) {
-			result.setImage(selectedButton.getFilterType().getFilter(Double.parseDouble(textField1.getText())).filter(img, Integer.parseInt(windowSize.getText())));
+			Double value = textField1.getText() != null ? Double.parseDouble(textField1.getText()) : 0;
+			result.setImage(selectedButton.getFilterType().getFilter(value).filter(img, Integer.parseInt(windowSize.getText())));
 		} 
 	}
 

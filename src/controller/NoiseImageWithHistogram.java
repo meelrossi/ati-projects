@@ -35,10 +35,13 @@ public class NoiseImageWithHistogram extends ImageWithHistogramPane {
 			}
 		});
 		image.initialize(this::onLoadImage);
+		textField3.setPromptText("percentage");
 	}
 
 	public void setNoiseType(NoiseType imageType) {
-		textField2.setVisible(imageType == NoiseType.GAUSSIAN || imageType == NoiseType.SALT_AND_PEPPER);
+		textField1.setPromptText(imageType.getPlaceholder1());
+		textField2.setPromptText(imageType.getPlaceholder2());
+		textField2.setVisible(imageType.getPlaceholder2() != "");
 	}
 
 	public double getVal1() {
