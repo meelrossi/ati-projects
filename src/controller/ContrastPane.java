@@ -6,6 +6,8 @@ import java.util.Optional;
 
 import javax.imageio.ImageIO;
 
+import components.OpenImage;
+import components.SaveImage;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -32,17 +34,11 @@ public class ContrastPane extends Pane {
 	@FXML
 	private TextField s2;
 	@FXML
-	private ImageView image;
+	private OpenImage image;
 	@FXML
-	private ImageView resultImage;
-	@FXML
-	private Button loadImageButton;
+	private SaveImage result;
 	@FXML
 	private Button calculateButton;
-	
-	private ColorImage img;
-	private ColorImage result;
-	private FileChooser fileChooser = new FileChooser();
 
 	public ContrastPane() {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/contrastPane.fxml"));
@@ -56,53 +52,27 @@ public class ContrastPane extends Pane {
 	}
 	
 	public void initialize() {
-		loadImageButton.setOnAction(new EventHandler<ActionEvent>() {
-
-			@Override
-			public void handle(ActionEvent event) {
-				File file = fileChooser.showOpenDialog(JavaFXApplication.primaryStage);
-				if (file != null) {
-					try {
-						if (file.getName().toLowerCase().contains(".raw")) {
-							OpenRawImageDialog dialog = new OpenRawImageDialog();
-							Optional<Pair<Integer, Integer>> result = dialog.showAndWait();
-							result.ifPresent(d -> {
-							    img = ImageManager.readFromRaw(file, result.get().getKey(), result.get().getValue());
-							});
-						} else {
-							OpenColorImageDialog dialog = new OpenColorImageDialog();
-							Optional<ColorImageType> result = dialog.showAndWait();
-							if (result.isPresent()){
-								img = new ColorImage(ImageIO.read(file));
-							    if (result.get() == ColorImageType.BLACK_AND_WHITE) {
-							    	img.toBlackAndWhite();
-							    }
-							}
-						}
-						image.setImage(SwingFXUtils.toFXImage(img.getBufferedImage(), null));
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-				}
-			}
-		});
+		image.initialize(this::calculateContrastImage);
 		calculateButton.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				if (r1.getText() != null && r2.getText() != null && s1.getText() != null && s2.getText() != null) {
-					calculateContrastImage();
-				}
+				calculateContrastImage();
 			}
 		});
 	}
 	
 	public void calculateContrastImage() {
-		Double value_r1 = Double.parseDouble(r1.getText());
-		Double value_r2 = Double.parseDouble(r2.getText());
-		Double value_s1 = Double.parseDouble(s1.getText());
-		Double value_s2 = Double.parseDouble(s2.getText());
-		result = ImageManager.calculateContrast(img, value_r1, value_r2, value_s1, value_s2);
-		resultImage.setImage(SwingFXUtils.toFXImage(result.getBufferedImage(), null));
+		if (r1.getText() != null && r2.getText() != null && s1.getText() != null && s2.getText() != null) {
+			try {
+				Double value_r1 = Double.parseDouble(r1.getText());
+				Double value_r2 = Double.parseDouble(r2.getText());
+				Double value_s1 = Double.parseDouble(s1.getText());
+				Double value_s2 = Double.parseDouble(s2.getText());
+				result.setImage(ImageManager.calculateContrast(image.getImage(), value_r1, value_r2, value_s1, value_s2));
+			} catch (Exception e) {
+	
+			}		
+		}
 	}
 }

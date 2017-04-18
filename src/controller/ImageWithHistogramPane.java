@@ -8,6 +8,8 @@ import java.util.Optional;
 
 import javax.imageio.ImageIO;
 
+import components.OpenImage;
+import components.SaveImage;
 import javafx.collections.FXCollections;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
@@ -19,21 +21,18 @@ import javafx.scene.chart.BarChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.TabPane;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-import javafx.stage.FileChooser;
 import javafx.util.Pair;
 import model.ColorImage;
 import model.ColorImageType;
 import utils.ImageManager;
 
 public class ImageWithHistogramPane extends Pane {
+	
 	@FXML
-	protected Button loadImageButton;
+	protected OpenImage image;
 	@FXML
-	protected ImageView image;
-	@FXML
-	private Button saveImageButton;
+	protected SaveImage result;
 	@FXML
 	private BarChart<String, Number> chart;
 	@FXML
@@ -50,10 +49,10 @@ public class ImageWithHistogramPane extends Pane {
 	private TabPane histogramView;
 	@FXML
 	private Pane imagePane;
-
-	protected ColorImage img;
-	protected FileChooser fileChooser = new FileChooser();
-
+	
+	private HistogramTab controller;
+	private boolean isResult;
+	
 	public ImageWithHistogramPane() {
 		FXMLLoader fxmlLoader = new FXMLLoader(getResource());
 		fxmlLoader.setRoot(this);
@@ -70,10 +69,12 @@ public class ImageWithHistogramPane extends Pane {
 	}
 
 	public void initialize(HistogramTab controller, boolean isResult) {
+		this.isResult = isResult;
+		this.controller = controller;
 		imagePane.setVisible(false);
 		histogramView.setVisible(false);
-		loadImageButton.setVisible(!isResult);
-		saveImageButton.setVisible(isResult);
+		image.setVisible(!isResult);
+		result.setVisible(isResult);
 		imageButton.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
@@ -92,56 +93,18 @@ public class ImageWithHistogramPane extends Pane {
 				setBackground(histogramButton);
 			}
 		});
-		loadImageButton.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-				File file = fileChooser.showOpenDialog(JavaFXApplication.primaryStage);
-				if (file != null) {
-					try {
-						if (file.getName().toLowerCase().contains(".raw")) {
-							OpenRawImageDialog dialog = new OpenRawImageDialog();
-							Optional<Pair<Integer, Integer>> result = dialog.showAndWait();
-							result.ifPresent(d -> {
-							    img = ImageManager.readFromRaw(file, result.get().getKey(), result.get().getValue());
-							});
-						} else {
-							OpenColorImageDialog dialog = new OpenColorImageDialog();
-							Optional<ColorImageType> result = dialog.showAndWait();
-							if (result.isPresent()){
-								img = new ColorImage(ImageIO.read(file));
-							    if (result.get() == ColorImageType.BLACK_AND_WHITE) {
-							    	img.toBlackAndWhite();
-							    }
-							}
-						}
-						image.setImage(SwingFXUtils.toFXImage(img.getBufferedImage(), null));
-						controller.setImage(img);
-						calculateHistograms();
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-				}
-			}
-		});
-		saveImageButton.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-				File file = fileChooser.showSaveDialog(JavaFXApplication.primaryStage);
-				if (file != null) {
-					img.saveOn(file);
-				}
-			}
-		});
+		image.initialize(this::onLoadImage);
+		result.initialize();
 	}
 	
 	public void setImage(ColorImage cImage) {
-		img = cImage;
-		image.setImage(SwingFXUtils.toFXImage(cImage.getBufferedImage(), null));
+		result.setImage(cImage);
 		calculateHistograms();
 	}
 
 	@SuppressWarnings("unchecked")
 	public void calculateHistograms() {
+		ColorImage img = isResult ? result.getImage() : image.getImage();
 		resetCharts();
 		chartRed.getData().addAll(ImageManager.getHistogramSeries(img.getRedChannel(), img.getWidth(), img.getHeight()));
 		chartRed.setLegendVisible(false);
@@ -190,5 +153,10 @@ public class ImageWithHistogramPane extends Pane {
 		String selectedStyle = "-fx-background-color:#1e90ff";
 		histogramButton.setStyle(histogramButton != btn ? notSelectedStyle : selectedStyle);
 		imageButton.setStyle(imageButton != btn ? notSelectedStyle : selectedStyle);
+	}
+	
+	public void onLoadImage(){
+		controller.setImage(image.getImage());
+		calculateHistograms();
 	}
 }

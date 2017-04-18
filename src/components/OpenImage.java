@@ -81,6 +81,7 @@ public class OpenImage extends ViewComponent {
 				if (clipBoardImage != null) {
 					img = clipBoardImage;
 					image.setImage(SwingFXUtils.toFXImage(img.getBufferedImage(), null));
+					onLoad.run();
 				}
 			}
 		});

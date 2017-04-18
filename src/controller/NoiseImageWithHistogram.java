@@ -41,39 +41,10 @@ public class NoiseImageWithHistogram extends ImageWithHistogramPane {
 		calculateButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				controller.setImage(img);
+				controller.setImage(image.getImage());
 			}
 		});
-		loadImageButton.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-				File file = fileChooser.showOpenDialog(JavaFXApplication.primaryStage);
-				if (file != null) {
-					try {
-						if (file.getName().toLowerCase().contains(".raw")) {
-							OpenRawImageDialog dialog = new OpenRawImageDialog();
-							Optional<Pair<Integer, Integer>> result = dialog.showAndWait();
-							result.ifPresent(d -> {
-								img = ImageManager.readFromRaw(file, result.get().getKey(), result.get().getValue());
-							});
-						} else {
-							OpenColorImageDialog dialog = new OpenColorImageDialog();
-							Optional<ColorImageType> result = dialog.showAndWait();
-							if (result.isPresent()) {
-								img = new ColorImage(ImageIO.read(file));
-								if (result.get() == ColorImageType.BLACK_AND_WHITE) {
-									img.toBlackAndWhite();
-								}
-							}
-						}
-						image.setImage(SwingFXUtils.toFXImage(img.getBufferedImage(), null));
-						calculateHistograms();
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-				}
-			}
-		});
+		image.initialize(this::onLoadImage);
 	}
 
 	public void setNoiseType(NoiseType imageType) {
@@ -84,7 +55,10 @@ public class NoiseImageWithHistogram extends ImageWithHistogramPane {
 		return Double.parseDouble(textField1.getText());
 	}
 
-	public double getVal2() {
+	public Double getVal2() {
+		if(textField2.getText().equals("")){
+			return null;
+		}
 		return Double.parseDouble(textField2.getText());
 	}
 	

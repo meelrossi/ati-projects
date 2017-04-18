@@ -51,6 +51,10 @@ public class SaveImage extends ViewComponent {
 		});
 	}
 	
+	public ColorImage getImage(){
+		return result;
+	}
+	
 	public void setImage(ColorImage img) {
 		result = img;
 		image.setImage(SwingFXUtils.toFXImage(result.getBufferedImage(), null));
