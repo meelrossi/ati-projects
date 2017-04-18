@@ -3,7 +3,6 @@ package components;
 import java.io.File;
 import java.io.IOException;
 import java.util.Optional;
-import java.util.function.Function;
 
 import javax.imageio.ImageIO;
 

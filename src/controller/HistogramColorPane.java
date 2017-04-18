@@ -1,30 +1,17 @@
 package controller;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
-import java.util.Optional;
-
-import javax.imageio.ImageIO;
 
 import components.OpenImage;
-import components.SaveImage;
 import javafx.collections.FXCollections;
-import javafx.embed.swing.SwingFXUtils;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.XYChart;
-import javafx.scene.control.Button;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-import javafx.stage.FileChooser;
-import javafx.util.Pair;
 import model.ColorImage;
-import model.ColorImageType;
 import utils.ImageManager;
 
 public class HistogramColorPane extends Pane {

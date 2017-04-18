@@ -1,6 +1,5 @@
 package controller;
 
-import javafx.embed.swing.SwingFXUtils;
 import model.ColorImage;
 import utils.ImageManager;
 
