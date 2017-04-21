@@ -3,9 +3,10 @@ package matrix_operations;
 public class Mask {
 
 	private double[][] mask;
-	private double default_value = 0;
+	private double default_value;
 	private int mx;
 	private int my;
+	private boolean use_default_value = false;
 	
 	
 	public Mask(double[][] mask){
@@ -19,6 +20,7 @@ public class Mask {
 		this.mx = (mask.length-1)/2;
 		this.my = (mask[0].length-1)/2;
 		this.default_value = default_value;
+		this.use_default_value = true;
 	}
 	
 	public double[][] apply(double[][] matrix){
@@ -26,7 +28,11 @@ public class Mask {
 		for(int i=0; i<matrix.length; i++){
 			for(int j=0; j<matrix[0].length; j++){
 				if(maskDoesNotFit(matrix, i, j)){
-					result[i][j] = default_value;
+					if(use_default_value){
+						result[i][j] = default_value;
+					} else {
+						result[i][j] = matrix[i][j];
+					}
 				} else {
 					result[i][j] = applyMaskToPoint(matrix,i,j);
 				}

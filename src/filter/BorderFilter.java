@@ -17,7 +17,7 @@ public class BorderFilter extends Filter {
 			}
 		}
 		maskMatrix[(windowSize-1)/2][(windowSize-1)/2] = windowSize*windowSize-1;
-		Mask mask = new Mask(maskMatrix, 0);
+		Mask mask = new Mask(maskMatrix);
 		double[][] red = mask.apply(img.getRedChannel());
 		double[][] green = mask.apply(img.getGreenChannel());
 		double[][] blue = mask.apply(img.getBlueChannel());
