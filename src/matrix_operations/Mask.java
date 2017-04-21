@@ -2,28 +2,29 @@ package matrix_operations;
 
 public class Mask {
 
-	private int[][] mask;
-	private int default_value = 0;
+	private double[][] mask;
+	private double default_value = 0;
 	private int mx;
 	private int my;
 	
 	
-	public Mask(int[][] mask){
+	public Mask(double[][] mask){
 		this.mask = mask;
-		this.mx = (mask[0].length-1)/2;
-		this.my = (mask.length-1)/2;
+		this.mx = (mask.length-1)/2;
+		this.my = (mask[0].length-1)/2;
 	}
 	
-	public Mask(int[][] mask, int default_value){
+	public Mask(double[][] mask, int default_value){
 		this.mask = mask;
+		this.mx = (mask.length-1)/2;
+		this.my = (mask[0].length-1)/2;
 		this.default_value = default_value;
 	}
 	
-	public int[][] apply(int[][] matrix){
-		int[][] result = new int[matrix[0].length][matrix.length];
-		
-		for(int i=0; i<matrix[0].length; i++){
-			for(int j=0; j<matrix.length; j++){
+	public double[][] apply(double[][] matrix){
+		double[][] result = new double[matrix.length][matrix[0].length];
+		for(int i=0; i<matrix.length; i++){
+			for(int j=0; j<matrix[0].length; j++){
 				if(maskDoesNotFit(matrix, i, j)){
 					result[i][j] = default_value;
 				} else {
@@ -34,7 +35,7 @@ public class Mask {
 		return result;
 	}
 
-	private int applyMaskToPoint(int[][] matrix, int i, int j) {
+	private int applyMaskToPoint(double[][] matrix, int i, int j) {
 		int sum = 0;
 		for(int x = -mx; x <= mx; x++){
 			for(int y = -my; y <= my; y++){
@@ -44,10 +45,10 @@ public class Mask {
 		return sum;
 	}
 
-	private boolean maskDoesNotFit(int[][] matrix, int i, int j) {
-		int minimunX = (mask[0].length-1)/2;
-		int minimunY = (mask.length-1)/2;
-		return i<minimunX || j<minimunY || i>=matrix[0].length-minimunX || j>=matrix.length-minimunY;
+	private boolean maskDoesNotFit(double[][] matrix, int i, int j) {
+		int minimunX = mx;
+		int minimunY = my;
+		return i<minimunX || j<minimunY || i>=matrix.length-minimunX-1 || j>=matrix[0].length-minimunY-1;
 	}
 	
 }
