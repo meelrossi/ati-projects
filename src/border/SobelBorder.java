@@ -1,7 +1,6 @@
 package border;
 
 import matrix_operations.masks.MaskType;
-import matrix_operations.masks.PrewittMask;
 import matrix_operations.masks.SobelMask;
 import matrix_operations.point_to_point.ModulePointToPointOperation;
 import matrix_operations.point_to_point.PointToPointOperation;
