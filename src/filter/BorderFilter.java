@@ -1,6 +1,6 @@
 package filter;
 
-import matrix_operations.Mask;
+import matrix_operations.masks.Mask;
 import model.ColorImage;
 
 public class BorderFilter extends Filter {

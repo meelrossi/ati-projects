@@ -1,4 +1,4 @@
-package matrix_operations;
+package matrix_operations.masks;
 
 public class Mask {
 
