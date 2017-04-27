@@ -112,6 +112,23 @@ public class ImageManager {
 		return pixelColor;
 	}
 
+	public static double[] getAcumulativeHistogramData(double[][] channel, int width, int height){
+		double[] pixelColor = getHistogramData(channel, width, height);
+		for(int i=1; i < pixelColor.length; i++){
+			pixelColor[i] += pixelColor[i-1];
+		}
+		return pixelColor;
+	}
+	
+	public static double[] getAcumulativeMean (double[][] channel, int width, int height){
+		double[] pixelColor = getHistogramData(channel, width, height);
+		pixelColor[0] = 0;
+		for(int i=1; i < pixelColor.length; i++){
+			pixelColor[i] = pixelColor[i-1] + pixelColor[i]*i;
+		}
+		return pixelColor;
+	}
+	
 	public static ColorImage calculateContrast(ColorImage img, Double r1, Double r2, Double s1, Double s2) {
 		int width = img.getWidth();
 		int height = img.getHeight();
