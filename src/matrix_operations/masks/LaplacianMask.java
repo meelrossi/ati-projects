@@ -3,9 +3,9 @@ package matrix_operations.masks;
 public class LaplacianMask extends Mask {
 
 	private static double[][] maskMatrix = new double[][]{
-		{-1,-2,-1},
-		{0,0,0},
-		{1,2,1}
+		{0,-1,0},
+		{-1,4,-1},
+		{0,-1,0}
 	};
 	
 	public LaplacianMask(){
