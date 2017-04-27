@@ -15,5 +15,6 @@
 		<EqualizingTab fx:id="equalizingTab"/>
 		<NoiseTab fx:id="noiseTab"/>
 		<FilterTab fx:id="filterTab"/>
+		<BorderDetectorsTab fx:id="borderDetectorsTab"/>
 	</tabs>
 </TabPane>
