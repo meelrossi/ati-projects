@@ -5,6 +5,9 @@ import java.awt.image.BufferedImage;
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javafx.scene.chart.XYChart;
 import model.ColorImage;
@@ -176,6 +179,30 @@ public class ImageManager {
 			}
 		}
 		ColorImage resp = new ColorImage(red, green, blue, width, height);
+		
+		Map<utils.Color, Integer> colors = new HashMap<>();
+		
+		for(int i=0; i<red.length; i++){
+			for(int j=0; j<red[0].length; j++){
+				utils.Color color = new utils.Color(img.getRed(i, j), img.getGreen(i, j), img.getGreen(i, j));
+				
+				if(colors.get(color) != null){
+					colors.put(color, colors.get(color)+1);
+				} else {
+					colors.put(color, 1);
+				}
+			}
+		}
+		int max = 0;
+		utils.Color maxColor = null;
+		for(Entry<utils.Color, Integer> entry : colors.entrySet()){
+			if(entry.getValue() > max){
+				maxColor = entry.getKey();
+				max = entry.getValue();
+			}
+		}
+		System.out.println("R: "+maxColor.getR()+"G: "+maxColor.getG()+"B: "+maxColor.getB());
+		
 		resp.normalize();
 		return resp;
 	}

@@ -21,6 +21,9 @@ public class PrewittBorder {
 		double[][] green = pointToPointOperation.apply(xMask.apply(image.getGreenChannel()), yMask.apply(image.getGreenChannel()));
 		double[][] blue = pointToPointOperation.apply(xMask.apply(image.getBlueChannel()), yMask.apply(image.getBlueChannel()));
 		
+		
+		
+		
 		return new ColorImage(red, green, blue, width, height);
 	}
 	
