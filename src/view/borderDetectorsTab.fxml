@@ -2,7 +2,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import controller.*?>
-<?import components.*?>
+<?import components.view.*?>
 
 <fx:root xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
 	type="Tab" text="BORDER DETECTOR">
@@ -17,49 +17,32 @@
 							styleClass="noise-toolbar" />
 						<Button fx:id="sobelButton" mnemonicParsing="false" text="SOBEL"
 							styleClass="noise-toolbar" />
+						<Button fx:id="prewittDirectionalButton" mnemonicParsing="false"
+							text="PREWITT DIREC." styleClass="noise-toolbar" />
+						<Button fx:id="sobelDirectionalButton" mnemonicParsing="false"
+							text="SOBEL DIREC." styleClass="noise-toolbar" />
+						<Button fx:id="misteryDirectionalButton" mnemonicParsing="false"
+							text="MISTERY DIREC." styleClass="noise-toolbar" />
+						<Button fx:id="kirshDirectionalButton" mnemonicParsing="false"
+							text="KIRSH DIREC." styleClass="noise-toolbar" />
+						<Button fx:id="laplacianButton" mnemonicParsing="false"
+							text="LAPLACIAN" styleClass="noise-toolbar" />
+						<Button fx:id="LoGButton" mnemonicParsing="false" text="LOG"
+							styleClass="noise-toolbar" />
 					</items>
 				</ToolBar>
-				<SplitPane layoutY="38.0" prefHeight="534.0" prefWidth="800.0"
-					dividerPositions="0.8" layoutX="1.0">
-					<items>
-						<OpenImage fx:id="image" />
-						<TabPane layoutX="14.0" layoutY="80.0"
-							prefHeight="450.0" prefWidth="362.0" tabClosingPolicy="UNAVAILABLE">
-							<tabs>
-								<Tab text="Border">
-									<content>
-										<AnchorPane minHeight="0.0" minWidth="0.0"
-											prefHeight="180.0" prefWidth="200.0">
-											<children>
-												<SaveImage fx:id="borderImage"/>
-											</children>
-										</AnchorPane>
-									</content>
-								</Tab>
-								<Tab text="X Mask">
-									<content>
-										<AnchorPane minHeight="0.0" minWidth="0.0"
-											prefHeight="180.0" prefWidth="200.0">
-											<children>
-												<SaveImage fx:id="xImage"/>
-											</children>
-										</AnchorPane>
-									</content>
-								</Tab>
-								<Tab text="Y Mask">
-									<content>
-										<AnchorPane minHeight="0.0" minWidth="0.0"
-											prefHeight="180.0" prefWidth="200.0">
-											<children>
-												<SaveImage fx:id="yImage"/>
-											</children>
-										</AnchorPane>
-									</content>
-								</Tab>
-							</tabs>
-						</TabPane>
-					</items>
-				</SplitPane>
+				<Pane prefHeight="533.0" layoutY="35" prefWidth="800.0"
+					xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+					<children>
+						<OpenImage fx:id="image" layoutX="30.0" layoutY="100.0" />
+						<SaveImage fx:id="resultImage" layoutX="450.0" layoutY="100.0" />
+						<TextField fx:id="thresholdLabel" layoutX="40.0" layoutY="400.0" promptText="threshold"/>
+						<TextField fx:id="mLabel" layoutX="215.0" layoutY="400.0" promptText="m" />
+						<TextField fx:id="sigmaLabel" layoutX="40.0" layoutY="450.0" promptText="sigma" />
+						<Button fx:id="calculateButton" layoutX="215.0" layoutY="450"
+							mnemonicParsing="false" text="Calculate" textOverrun="CLIP" />
+					</children>
+				</Pane>
 			</children>
 		</AnchorPane>
 	</content>

@@ -230,4 +230,18 @@ public class ImageManager {
 		}
         return new ColorImage(image, width, height);
 	}
+	
+	public static double[][] applyThreshold(double[][] matrix, int threshold) {
+		double[][] result = new double[matrix.length][matrix[0].length];
+		for (int i = 0; i < matrix.length; i++) {
+			for (int j = 0; j < matrix[0].length; j++) {
+				if (matrix[i][j] < threshold) {
+					result[i][j] = 0;
+				} else {
+					result[i][j] = 255;
+				}
+			}
+		}
+		return result;
+	}
 }

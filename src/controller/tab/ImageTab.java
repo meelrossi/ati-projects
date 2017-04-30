@@ -1,4 +1,4 @@
-package controller;
+package controller.tab;
 
 import java.awt.Point;
 import java.io.File;
@@ -6,6 +6,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import controller.CustomMenuBar;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -69,7 +70,6 @@ public class ImageTab extends Tab {
 					if (event.isShiftDown()) {
 						dragPos = new Point((int) event.getX(), (int) event.getY());
 					} else {
-
 						x = (int) event.getX();
 						y = (int) event.getY();
 						refreshPixelColor();

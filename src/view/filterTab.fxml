@@ -10,7 +10,7 @@
 <?import javafx.scene.Group?>
 <?import javafx.scene.chart.*?>
 <?import javafx.scene.text.*?>
-<?import components.*?>
+<?import components.view.*?>
 
 <fx:root type="Tab" text="FILTER" xmlns="http://javafx.com/javafx/8"
 	xmlns:fx="http://javafx.com/fxml/1">
@@ -26,20 +26,26 @@
 						<Button fx:id="medianButton" mnemonicParsing="false" text="MEADIAN"
 							styleClass="operations-toolbar" />
 						<Button fx:id="weightedMedianButton" mnemonicParsing="false"
-							text="WEIGHTED MEDIAN" styleClass="operations-toolbar" />
+							text="W. MEDIAN" styleClass="operations-toolbar" />
 						<Button fx:id="gaussianButton" mnemonicParsing="false"
 							text="GAUSSIAN" styleClass="operations-toolbar" />
-						<Button fx:id="borderButton" mnemonicParsing="false"
-							text="BORDER" styleClass="operations-toolbar" />
+						<Button fx:id="borderButton" mnemonicParsing="false" text="BORDER"
+							styleClass="operations-toolbar" />
+						<Button fx:id="isotropicButton" mnemonicParsing="false" text="ISOTROPIC DIF"
+							styleClass="operations-toolbar" />
+						<Button fx:id="anisotropicButtonLeclerc" mnemonicParsing="false" text="ANISO. DIF. LECLERC"
+							styleClass="operations-toolbar" />
+						<Button fx:id="anisotropicButtonLorentzian" mnemonicParsing="false" text="ANISO. DIF.LORENT."
+							styleClass="operations-toolbar" />
 					</items>
 				</ToolBar>
 				<Pane layoutY="35.0" prefHeight="534.0" prefWidth="800.0">
 					<children>
-						<OpenImage fx:id="image" layoutX="49.0" layoutY="26.0"/>
+						<OpenImage fx:id="image" layoutX="49.0" layoutY="26.0" />
 						<TextField fx:id="textField1" layoutX="49.0" layoutY="434.0" />
 						<Button fx:id="calculateButton" layoutX="330.0" layoutY="493.0"
 							mnemonicParsing="false" text="Calculate" />
-						<SaveImage fx:id="result" layoutX="429.0" layoutY="26.0"/>
+						<SaveImage fx:id="result" layoutX="429.0" layoutY="26.0" />
 						<TextField fx:id="windowSize" layoutX="156.0" layoutY="390.0" />
 						<Text layoutX="57.0" layoutY="408.0" strokeType="OUTSIDE"
 							strokeWidth="0.0" text="Window size:" />

@@ -2,13 +2,14 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import controller.*?>
+<?import controller.tab.*?>
+<?import controller.tab.ThresholdTab?>
 
 <TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
 	minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0"
 	style="-fx-background-color: white;" tabClosingPolicy="UNAVAILABLE"
 	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-	fx:controller="controller.TabPaneViewController">
+	fx:controller="controller.tab.TabPaneViewController">
 	<tabs>
 		<ImageTab fx:id="imageTab"/>
 		<OperationsTab fx:id="operationsTab"/>
@@ -16,5 +17,6 @@
 		<NoiseTab fx:id="noiseTab"/>
 		<FilterTab fx:id="filterTab"/>
 		<BorderDetectorsTab fx:id="borderDetectorsTab"/>
+		<ThresholdTab fx:id="thresholdTab"/>
 	</tabs>
 </TabPane>

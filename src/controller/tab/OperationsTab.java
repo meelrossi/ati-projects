@@ -1,9 +1,18 @@
-package controller;
+package controller.tab;
 
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
+import components.ButtonPane;
+import controller.ContrastPane;
+import controller.HistogramColorPane;
+import controller.LimitImagePane;
+import controller.LimitImageWithColorPane;
+import controller.NegativeImagePane;
+import controller.OperationImagesPane;
+import controller.PowerPane;
+import controller.ScalarProductImagePane;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;

@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Optional;
 
+import controller.tab.ImageTab;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;

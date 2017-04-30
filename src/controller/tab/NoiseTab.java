@@ -1,9 +1,13 @@
-package controller;
+package controller.tab;
 
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
+import components.EnumButton;
+import controller.HistogramTab;
+import controller.ImageWithHistogramPane;
+import controller.NoiseImageWithHistogram;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -11,7 +15,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import model.ColorImage;
 import model.ColorImageType;
-import model.NoiseButton;
 import noise.NoiseGenerator;
 import noise.NoiseType;
 
@@ -30,9 +33,9 @@ public class NoiseTab extends HistogramTab {
 	private ImageWithHistogramPane resultImagePane;
 
 	@FXML
-	private List<NoiseButton> buttons;
+	private List<EnumButton> buttons;
 
-	private NoiseButton selectedButton;
+	private EnumButton selectedButton;
 
 	public NoiseTab() {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/noiseTab.fxml"));
@@ -46,18 +49,18 @@ public class NoiseTab extends HistogramTab {
 	}
 
 	public void initialize() {
-		buttons = new LinkedList<NoiseButton>();
-		buttons.add(new NoiseButton(gaussianButton, NoiseType.GAUSSIAN));
-		buttons.add(new NoiseButton(rayleighButton, NoiseType.RAYLEIGH));
-		buttons.add(new NoiseButton(exponentialButton, NoiseType.EXPONENTIAL));
-		buttons.add(new NoiseButton(saltAndPepperButton, NoiseType.SALT_AND_PEPPER));
+		buttons = new LinkedList<EnumButton>();
+		buttons.add(new EnumButton(gaussianButton, NoiseType.GAUSSIAN));
+		buttons.add(new EnumButton(rayleighButton, NoiseType.RAYLEIGH));
+		buttons.add(new EnumButton(exponentialButton, NoiseType.EXPONENTIAL));
+		buttons.add(new EnumButton(saltAndPepperButton, NoiseType.SALT_AND_PEPPER));
 		buttons.forEach((nb -> {
 			nb.getButton().setOnAction(new EventHandler<ActionEvent>() {
 
 				@Override
 				public void handle(ActionEvent event) {
 					setBackground(nb.getButton());
-					mainImagePane.setNoiseType(nb.getNoiseType());
+					mainImagePane.setNoiseType((NoiseType)nb.getType());
 					selectedButton = nb;
 				}
 			});
@@ -76,7 +79,7 @@ public class NoiseTab extends HistogramTab {
 	}
 	
 	public void setImage(ColorImage img) {
-		NoiseGenerator ng = selectedButton.getNoiseType().getNoiseGenerator(mainImagePane.getVal1(), mainImagePane.getVal2(), mainImagePane.getVal3());
+		NoiseGenerator ng = ((NoiseType)selectedButton.getType()).getNoiseGenerator(mainImagePane.getVal1(), mainImagePane.getVal2(), mainImagePane.getVal3());
 		if (img.colorImageType() == ColorImageType.COLOR) {
 			ColorImage ci = ng.addNoiseToColorImage(img);
 			ci.normalize();

@@ -21,8 +21,8 @@ public class ZeroCrossing {
 			lastNonZeroValue = 0;
 		}
 		
-		for(int j = 0; j < result.length; j++){
-			for(int i = 0; i< result[0].length; i++){
+		for(int j = 0; j < result[0].length; j++){
+			for(int i = 0; i< result.length; i++){
 				if(lastNonZeroValue != 0 && matrix[i][j] != 0){
 					if(lastNonZeroValue*matrix[i][j] < 0){
 						if(Math.abs(lastNonZeroValue - matrix[i][j]) >= threashold){
