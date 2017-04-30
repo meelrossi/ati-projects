@@ -2,6 +2,7 @@ package controller;
 
 import java.io.IOException;
 
+import controller.tab.ImageTab;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.MenuBar;

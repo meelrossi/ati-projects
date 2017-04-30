@@ -1,4 +1,4 @@
-package controller;
+package controller.tab;
 
 import java.net.URL;
 import java.util.ResourceBundle;

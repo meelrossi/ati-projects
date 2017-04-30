@@ -3,7 +3,7 @@ package controller;
 import java.io.IOException;
 import java.util.LinkedList;
 
-import components.OpenImage;
+import components.view.OpenImage;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

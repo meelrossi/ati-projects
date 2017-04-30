@@ -1,11 +1,11 @@
-package controller;
+package controller.tab;
 
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
-import components.OpenImage;
-import components.SaveImage;
+import components.view.OpenImage;
+import components.view.SaveImage;
 import filter.FilterButton;
 import filter.FilterType;
 import javafx.event.ActionEvent;
@@ -33,6 +33,12 @@ public class FilterTab extends Tab {
 	private Button gaussianButton;
 	@FXML
 	private Button borderButton;
+	@FXML
+	private Button anisotropicButtonLeclerc;
+	@FXML
+	private Button anisotropicButtonLorentzian;
+	@FXML
+	private Button isotropicButton;
 	@FXML
 	private TextField textField1;
 	@FXML
@@ -64,13 +70,19 @@ public class FilterTab extends Tab {
 		buttons.add(new FilterButton(weightedMedianButton, FilterType.WEIGHTED_MEDIAN));
 		buttons.add(new FilterButton(gaussianButton, FilterType.GAUSSIAN));
 		buttons.add(new FilterButton(borderButton, FilterType.BORDER));
+		buttons.add(new FilterButton(anisotropicButtonLeclerc, FilterType.ANISOTROPIC_DIFFUSION_LECLERC));
+		buttons.add(new FilterButton(anisotropicButtonLorentzian, FilterType.ANISOTROPIC_DIFFUSION_LORENTZIAN));
+		buttons.add(new FilterButton(isotropicButton, FilterType.ISOTROPIC_DIFUSSION));
 		buttons.forEach(fb -> {
 			fb.getButton().setOnAction(new EventHandler<ActionEvent>() {
 				@Override
 				public void handle(ActionEvent event) {
 					setBackground(fb.getButton());
 					selectedButton = fb;
-					textField1.setVisible(selectedButton.getFilterType() == FilterType.GAUSSIAN);
+					textField1.setVisible(selectedButton.getFilterType() == FilterType.GAUSSIAN
+								|| selectedButton.getFilterType() == FilterType.ANISOTROPIC_DIFFUSION_LECLERC
+								|| selectedButton.getFilterType() == FilterType.ANISOTROPIC_DIFFUSION_LORENTZIAN
+								|| selectedButton.getFilterType() == FilterType.ISOTROPIC_DIFUSSION);
 				}
 			});
 		});
@@ -95,7 +107,7 @@ public class FilterTab extends Tab {
 	public void calculateResult(){
 		ColorImage img = image.getImage();
 		if (img != null) {
-			Double value = textField1.getText() != null ? Double.parseDouble(textField1.getText()) : 0;
+			Double value = !textField1.getText().equals("") ? Double.parseDouble(textField1.getText()) : 0;
 			result.setImage(selectedButton.getFilterType().getFilter(value).filter(img, Integer.parseInt(windowSize.getText())));
 		} 
 	}

@@ -3,6 +3,7 @@
 <?import javafx.scene.layout.*?>
 <?import controller.*?>
 <?import controller.HistogramColorPane?>
+<?import controller.view.*?>
 
 <fx:root type="Tab" text="OPERATIONS" xmlns="http://javafx.com/javafx/8"
 	xmlns:fx="http://javafx.com/fxml/1">
@@ -28,7 +29,7 @@
 						<Button mnemonicParsing="false" styleClass="operations-toolbar"
 							text="Limit" fx:id="limitImageButton" />
 						<Button mnemonicParsing="false" styleClass="operations-toolbar"
-							text="Limit with Color" fx:id="limitImageWithColorButton" />
+							text="Limit w/ Color" fx:id="limitImageWithColorButton" />
 						<Button mnemonicParsing="false" styleClass="operations-toolbar"
 							text="Histogram" fx:id="histogramColorButton" />
 						<Button mnemonicParsing="false" styleClass="operations-toolbar"

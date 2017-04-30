@@ -4,8 +4,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.LinkedList;
 
-import components.OpenImage;
-import components.SaveImage;
+import components.view.OpenImage;
+import components.view.SaveImage;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;

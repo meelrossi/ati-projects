@@ -2,8 +2,8 @@ package controller;
 
 import java.io.IOException;
 
-import components.OpenImage;
-import components.SaveImage;
+import components.view.OpenImage;
+import components.view.SaveImage;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.Pane;

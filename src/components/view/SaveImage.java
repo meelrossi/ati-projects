@@ -1,4 +1,4 @@
-package components;
+package components.view;
 
 import java.io.File;
 

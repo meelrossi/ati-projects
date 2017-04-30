@@ -1,41 +1,36 @@
-package controller;
+package controller.tab;
 
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
-import components.OpenImage;
-import components.SaveImage;
+import components.EnumButton;
+import components.view.OpenImage;
+import components.view.SaveImage;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
-import model.BorderDetectorButton;
-import model.BorderDetectorsType;
+import matrix_operations.thresholdings.ThresholdType;
 import model.ColorImage;
 
-public class BorderDetectorsTab extends Tab {
+public class ThresholdTab extends Tab {
 	@FXML
-	private Button prewittButton;
+	private Button globalButton;
 	@FXML
-	private Button sobelButton;
+	private Button otsuButton;
 	@FXML
 	private OpenImage image;
+	@FXML
+	private SaveImage resultImage;
 
-	@FXML
-	private SaveImage borderImage;
-	@FXML
-	private SaveImage xImage;
-	@FXML
-	private SaveImage yImage;
-	
-	private List<BorderDetectorButton> buttons;
-	private BorderDetectorButton selectedButton;
+	private List<EnumButton> buttons;
+	private EnumButton selectedButton;
 
-	public BorderDetectorsTab() {
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/borderDetectorsTab.fxml"));
+	public ThresholdTab() {
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/thresholdTab.fxml"));
 		fxmlLoader.setRoot(this);
 		fxmlLoader.setController(this);
 		try {
@@ -44,12 +39,12 @@ public class BorderDetectorsTab extends Tab {
 			throw new RuntimeException(exception);
 		}
 	}
-	
+
 	public void initialize() {
 		image.initialize(this::checkResults);
-		buttons = new LinkedList<BorderDetectorButton>();
-		buttons.add(new BorderDetectorButton(prewittButton, BorderDetectorsType.PREWITT));
-		buttons.add(new BorderDetectorButton(sobelButton, BorderDetectorsType.SOBEL));
+		buttons = new LinkedList<EnumButton>();
+		buttons.add(new EnumButton(globalButton, ThresholdType.GLOBAL));
+		buttons.add(new EnumButton(otsuButton, ThresholdType.OTSU));
 		buttons.forEach((bd -> {
 			bd.getButton().setOnAction(new EventHandler<ActionEvent>() {
 
@@ -57,6 +52,7 @@ public class BorderDetectorsTab extends Tab {
 				public void handle(ActionEvent event) {
 					setBackground(bd.getButton());
 					selectedButton = bd;
+					checkResults();
 				}
 			});
 		}));
@@ -71,17 +67,12 @@ public class BorderDetectorsTab extends Tab {
 			b.setStyle(b != btn ? notSelectedStyle : selectedStyle);
 		});
 	}
-	
+
 	public void checkResults() {
-		ColorImage result = selectedButton.getType().getBorderImage(image.getImage());
+		if (image.getImage() == null) return;
+		ColorImage result = ((ThresholdType)selectedButton.getType()).getImageWithThreshold(image.getImage());
 		result.normalize();
-		borderImage.setImage(result);
-		ColorImage x = selectedButton.getType().getPartialX(image.getImage());
-		x.normalize();
-		xImage.setImage(x);
-		ColorImage y = selectedButton.getType().getPartialY(image.getImage());
-		y.normalize();
-		yImage.setImage(y);
+		resultImage.setImage(result);
 	}
 
 }

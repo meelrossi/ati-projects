@@ -1,7 +1,8 @@
-package controller;
+package controller.tab;
 
 import java.io.IOException;
 
+import controller.HistogramTab;
 import javafx.fxml.FXMLLoader;
 import model.ColorImage;
 import utils.ImageManager;
