@@ -1,6 +1,6 @@
-package utils;
+package visua.model;
 
-public class Color {
+public class Color implements Comparable{
 
 	private double r;
 	private double g;
@@ -67,7 +67,23 @@ public class Color {
 			return false;
 		return true;
 	}
+
+	@Override
+	public int compareTo(Object o) {
+		visua.model.Color colorO = (visua.model.Color) o;
+		float[] hsvThis = new float[3];
+		float[] hsvOther = new float[3];
+		java.awt.Color.RGBtoHSB((int)r,(int)g,(int)b,hsvThis);
+		java.awt.Color.RGBtoHSB((int)colorO.getR(), (int)colorO.getG(), (int)colorO.getB(), hsvOther);
+		return (int)(hsvThis[0]*1000 - hsvOther[0]*1000);
+	}
 	
+	public static void main(String[] args) {
+		Color a = new Color(10.0,20.0,30.0);
+		Color b = new Color(10.0,20.0,30.0);
+		System.out.println(a.equals(a));
+		System.out.println(b.equals(a));
+	}
 	
 	
 	
