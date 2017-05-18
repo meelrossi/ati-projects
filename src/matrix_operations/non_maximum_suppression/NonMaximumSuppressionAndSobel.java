@@ -3,6 +3,7 @@ package matrix_operations.non_maximum_suppression;
 import matrix_operations.Normalizationer;
 import matrix_operations.masks.MaskType;
 import matrix_operations.masks.SobelMask;
+import matrix_operations.point_to_point.ModulePointToPointOperation;
 import matrix_operations.point_to_point.PointToPointOperation;
 import matrix_operations.point_to_point.SumPointToPointOperation;
 
@@ -12,7 +13,7 @@ public class NonMaximumSuppressionAndSobel {
 	public double[][] sobelAndSuppress(double[][] matrix){
 		SobelMask xMask = new SobelMask(MaskType.X);
 		SobelMask yMask = new SobelMask(MaskType.Y);
-		PointToPointOperation pointToPointOperation = new SumPointToPointOperation();
+		PointToPointOperation pointToPointOperation = new ModulePointToPointOperation();
 		
 		double[][] dx = xMask.apply(matrix);
 		double[][] dy = yMask.apply(matrix);
@@ -40,6 +41,9 @@ public class NonMaximumSuppressionAndSobel {
 	}
 
 	private BorderDirection getBorderDirection(int x, int y, double[][] dx, double[][] dy) {
+		if(dx[x][y] == 0){
+			return BorderDirection.VERTICAL;
+		}
 		double angle = Math.atan2(dy[x][y], dx[x][y]);
 		angle = (angle * 180 / Math.PI);
 		if(angle < 0){
