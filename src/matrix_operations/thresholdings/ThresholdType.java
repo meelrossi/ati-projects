@@ -15,12 +15,12 @@ public enum ThresholdType {
 		case GLOBAL:
 			tRed = GlobalThreshholding.getThreshold(img.getRedChannel());
 			tGreen = GlobalThreshholding.getThreshold(img.getGreenChannel());
-			tBlue = GlobalThreshholding.getThreshold(img.getGreenChannel());
+			tBlue = GlobalThreshholding.getThreshold(img.getBlueChannel());
 			break;
 		case OTSU:
 			tRed = OtsuMethodThresholding.getThreshold(img.getRedChannel());
 			tGreen = OtsuMethodThresholding.getThreshold(img.getGreenChannel());
-			tBlue = OtsuMethodThresholding.getThreshold(img.getGreenChannel());
+			tBlue = OtsuMethodThresholding.getThreshold(img.getBlueChannel());
 			break;
 		}
 

@@ -23,6 +23,7 @@ public class OtsuMethodThresholding {
 				currentThreshold = i;
 			}
 		}
+		System.out.println("Threshold otsu: " + currentThreshold);
 		return currentThreshold;
 	}
 

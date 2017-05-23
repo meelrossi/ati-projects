@@ -33,7 +33,7 @@ public class GlobalThreshholding {
 			deltaT = Math.abs(newT - T);
 			T = newT;
 		}
-
+		System.out.println("Threshold global: " + T);
 		return T;
 	}
 
@@ -49,7 +49,7 @@ public class GlobalThreshholding {
 		List<Integer> result = new LinkedList<>();
 		for (int i = 0; i < matrix.length; i++) {
 			for (int j = 0; j < matrix[0].length; j++) {
-				if (matrix[i][j] >= x) {
+				if (matrix[i][j] > x) {
 					result.add((int) matrix[i][j]);
 				}
 			}
@@ -61,7 +61,7 @@ public class GlobalThreshholding {
 		List<Integer> result = new LinkedList<>();
 		for (int i = 0; i < matrix.length; i++) {
 			for (int j = 0; j < matrix[0].length; j++) {
-				if (matrix[i][j] < x) {
+				if (matrix[i][j] <= x) {
 					result.add((int) matrix[i][j]);
 				}
 			}
