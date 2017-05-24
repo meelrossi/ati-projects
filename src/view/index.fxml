@@ -18,5 +18,6 @@
 		<FilterTab fx:id="filterTab"/>
 		<BorderDetectorsTab fx:id="borderDetectorsTab"/>
 		<ThresholdTab fx:id="thresholdTab"/>
+		<SusanTab fx:id="susanTab"/>
 	</tabs>
 </TabPane>

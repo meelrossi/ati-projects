@@ -4,8 +4,8 @@ import utils.ErrorDispersion;
 
 public class MeanAndStandardDeviationThreashholding {
 
-	private static int MIN_T1 = 200;
-	private static int MAX_T2 = 50;
+	private static int MIN_T1 = 150;
+	private static int MAX_T2 = 80;
 	
 	private double[][] matrix;
 	private int t1;
@@ -26,6 +26,8 @@ public class MeanAndStandardDeviationThreashholding {
 		ErrorDispersion statistics = new ErrorDispersion(values);
 		double mean = statistics.getMean();
 		double deviation = statistics.getStdDev();
+		System.out.println(mean);
+		System.out.println(deviation);
 		t1 = (int) ((mean-deviation) > MIN_T1 ? (mean-deviation) : MIN_T1);
 		t2 = (int) ((mean+deviation) < MAX_T2 ? (mean+deviation) : MAX_T2);
 	}

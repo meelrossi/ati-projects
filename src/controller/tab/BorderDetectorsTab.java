@@ -35,6 +35,9 @@ public class BorderDetectorsTab extends Tab {
 	@FXML
 	private Button laplacianButton;
 	@FXML
+	private Button cannyButton;
+
+	@FXML
 	private OpenImage image;
 	@FXML
 	private SaveImage resultImage;
@@ -72,6 +75,7 @@ public class BorderDetectorsTab extends Tab {
 		buttons.add(new EnumButton(kirshDirectionalButton, BorderDetectorsType.KIRSH_DIRECTIONAL));
 		buttons.add(new EnumButton(LoGButton, BorderDetectorsType.LOG));
 		buttons.add(new EnumButton(laplacianButton, BorderDetectorsType.LAPLACIAN));
+		buttons.add(new EnumButton(cannyButton, BorderDetectorsType.CANNY));
 		buttons.forEach((bd -> {
 			bd.getButton().setOnAction(new EventHandler<ActionEvent>() {
 
@@ -79,8 +83,10 @@ public class BorderDetectorsTab extends Tab {
 				public void handle(ActionEvent event) {
 					setBackground(bd.getButton());
 					selectedButton = bd;
-					thresholdLabel.setVisible(bd.getType() == BorderDetectorsType.LAPLACIAN || bd.getType() == BorderDetectorsType.LOG);
-					mLabel.setVisible(bd.getType() == BorderDetectorsType.LOG);
+					thresholdLabel.setVisible(bd.getType() == BorderDetectorsType.LAPLACIAN
+							|| bd.getType() == BorderDetectorsType.LOG || bd.getType() == BorderDetectorsType.CANNY);
+					mLabel.setVisible(
+							bd.getType() == BorderDetectorsType.LOG || bd.getType() == BorderDetectorsType.CANNY);
 					sigmaLabel.setVisible(bd.getType() == BorderDetectorsType.LOG);
 					checkResults();
 				}
@@ -106,11 +112,13 @@ public class BorderDetectorsTab extends Tab {
 	}
 
 	public void checkResults() {
-		if (image.getImage() == null) return;
+		if (image.getImage() == null)
+			return;
 		double threshold = !thresholdLabel.getText().equals("") ? Double.parseDouble(thresholdLabel.getText()) : 0;
 		int m = !mLabel.getText().equals("") ? Integer.parseInt(mLabel.getText()) : 0;
 		double sigma = !sigmaLabel.getText().equals("") ? Double.parseDouble(sigmaLabel.getText()) : 0;
-		ColorImage result = ((BorderDetectorsType)selectedButton.getType()).getBorderImage(image.getImage(), threshold, m, sigma);
+		ColorImage result = ((BorderDetectorsType) selectedButton.getType()).getBorderImage(image.getImage(), threshold,
+				m, sigma);
 		result.normalize();
 		resultImage.setImage(result);
 	}

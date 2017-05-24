@@ -29,6 +29,8 @@
 							text="LAPLACIAN" styleClass="noise-toolbar" />
 						<Button fx:id="LoGButton" mnemonicParsing="false" text="LOG"
 							styleClass="noise-toolbar" />
+						<Button fx:id="cannyButton" mnemonicParsing="false" text="CANNY"
+							styleClass="noise-toolbar" />
 					</items>
 				</ToolBar>
 				<Pane prefHeight="533.0" layoutY="35" prefWidth="800.0"
