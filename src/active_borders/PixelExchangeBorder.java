@@ -1,5 +1,6 @@
 package active_borders;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -7,7 +8,6 @@ import java.util.Map;
 
 import javafx.scene.paint.Color;
 import model.ColorImage;
-import sun.util.resources.cldr.aa.CurrencyNames_aa_ER;
 import utils.Pair;
 
 public class PixelExchangeBorder {
@@ -24,6 +24,7 @@ public class PixelExchangeBorder {
 	private static int WINDOWS_SIZE = 5;
 	private static double SIGMA = 1;
 	private static int Na = 1000;
+	private boolean useForceDLog = true;
 	
 	public PixelExchangeBorder(ColorImage initialImage, int initialX, int initialY, int rectWidth, int rectHeight){
 		currentImage = initialImage;
@@ -37,11 +38,151 @@ public class PixelExchangeBorder {
 	
 	
 	public void rearrangeBorders(){
-		
+		double startTime = System.currentTimeMillis();
+		firstCycle();
+		secondCycle();
+		System.out.println("Tracking time(ms): " + (System.currentTimeMillis() - startTime));
 	}
 	
 	
 	
+	private void secondCycle() {
+		boolean hasChanged = true;
+		for(int i=0; i<Na && hasChanged; i++){
+			hasChanged = false;
+			List<Pixel> loutCopy = new ArrayList<>(lout);
+			for(Pixel pixel : loutCopy){
+				double isIn = ForceS(pixel.getX(), pixel.getY());
+				if(isIn >= 0){
+					hasChanged = true;
+					expand(pixel);
+				}	
+			}
+			fixLin();
+			List<Pixel> linCopy = new ArrayList<>(lin);
+			for (Pixel pixel : linCopy) {
+				double isIn = ForceS(pixel.getX(), pixel.getY());
+				if (isIn < 0) {
+					contract(pixel);
+					hasChanged = true;
+				}
+			}
+			fixLOut();
+		}
+	}
+
+
+	private void firstCycle() {
+		boolean hasChanged = true;
+		for(int i=0; i<Na && hasChanged; i++){
+			hasChanged = false;
+			List<Pixel> loutCopy = new ArrayList<>(lout);
+			for(Pixel pixel : loutCopy){
+				double isIn = useForceDLog ? ForceDLog(pixel.getX(), pixel.getY()) : ForceD(pixel.getX(), pixel.getY());
+				if(isIn >= 0){
+					hasChanged = true;
+					expand(pixel);
+				}	
+			}
+			fixLin();
+			List<Pixel> linCopy = new ArrayList<>(lin);
+			for (Pixel pixel : linCopy) {
+				double isIn = useForceDLog ? ForceDLog(pixel.getX(), pixel.getY()) : ForceD(pixel.getX(), pixel.getY());
+				if (isIn < 0) {
+					contract(pixel);
+					hasChanged = true;
+				}
+			}
+			fixLOut();
+		}
+	}
+
+
+	private void fixLOut() {
+		List<Pixel> toRemove = new ArrayList<>();
+		for (Pixel pixel : lout) {
+			if (!isInLOut(pixel)) {
+				toRemove.add(pixel);
+				pixel.setType(PixelType.OUT);
+			}
+		}
+		lout.removeAll(toRemove);
+	}
+
+
+	private boolean isInLOut(Pixel pixel) {
+		for (Pixel neigh : neighbours(pixel)) {
+			if (neigh.getType().equals(PixelType.IN) 
+					|| neigh.getType().equals(PixelType.BORDER_IN)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+
+	private void contract(Pixel pixel) {
+		pixel.setType(PixelType.BORDER_OUT);
+		lin.remove(pixel);
+		lout.add(pixel);
+		for(Pixel neighbour : neighbours(pixel)){
+			if (neighbour.getType().equals(PixelType.IN)) {
+				neighbour.setType(PixelType.BORDER_IN);
+				lin.add(neighbour);
+			}
+		}
+	}
+
+
+	private List<Pixel> neighbours(Pixel pixel) {
+		List<Pixel> neighbours = new ArrayList<>();
+		int[][] dirs = new int[][]{{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+		for (int[] dir : dirs) {
+			Pair neighPoint = new Pair(pixel.getX() + dir[0], pixel.getY() + dir[1]);
+			if (pixels.containsKey(neighPoint)) {
+				neighbours.add(pixels.get(neighPoint));
+			}
+		}
+		return neighbours;
+	}
+
+
+	private void fixLin() {
+		List<Pixel> toRemove = new ArrayList<>();
+		for (Pixel pixel : lin) {
+			if (!isInLIn(pixel)) {
+				toRemove.add(pixel);
+				pixel.setType(PixelType.IN);
+			}
+		}
+		lin.removeAll(toRemove);
+	}
+
+
+	private boolean isInLIn(Pixel pixel) {
+		for (Pixel neigh : neighbours(pixel)) {
+			if (neigh.getType().equals(PixelType.OUT) 
+					|| neigh.getType().equals(PixelType.BORDER_OUT)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+
+	private void expand(Pixel pixel) {
+		pixel.setType(PixelType.BORDER_IN);
+		lout.remove(pixel);
+		lin.add(pixel);
+		for(Pixel neighbour : neighbours(pixel)){
+			if (neighbour.getType().equals(PixelType.OUT)) {
+				neighbour.setType(PixelType.BORDER_OUT);
+				lin.add(neighbour);
+			}
+		}
+	}
+
+
 	private void initializeData(int initialX, int initialY, int rectWidth, int rectHeight) {
 		pixels = new HashMap<>();
 		lin = new LinkedList<>();
