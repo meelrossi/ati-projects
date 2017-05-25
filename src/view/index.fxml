@@ -11,13 +11,14 @@
 	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
 	fx:controller="controller.tab.TabPaneViewController">
 	<tabs>
-		<ImageTab fx:id="imageTab"/>
-		<OperationsTab fx:id="operationsTab"/>
-		<EqualizingTab fx:id="equalizingTab"/>
-		<NoiseTab fx:id="noiseTab"/>
-		<FilterTab fx:id="filterTab"/>
-		<BorderDetectorsTab fx:id="borderDetectorsTab"/>
-		<ThresholdTab fx:id="thresholdTab"/>
-		<SusanTab fx:id="susanTab"/>
+		<ImageTab fx:id="imageTab" />
+		<OperationsTab fx:id="operationsTab" />
+		<EqualizingTab fx:id="equalizingTab" />
+		<NoiseTab fx:id="noiseTab" />
+		<FilterTab fx:id="filterTab" />
+		<BorderDetectorsTab fx:id="borderDetectorsTab" />
+		<ThresholdTab fx:id="thresholdTab" />
+		<SusanTab fx:id="susanTab" />
+		<HoughTab fx:id="houghTab" />
 	</tabs>
 </TabPane>
