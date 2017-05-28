@@ -5,7 +5,6 @@ import matrix_operations.masks.MaskType;
 import matrix_operations.masks.SobelMask;
 import matrix_operations.point_to_point.ModulePointToPointOperation;
 import matrix_operations.point_to_point.PointToPointOperation;
-import matrix_operations.point_to_point.SumPointToPointOperation;
 
 public class NonMaximumSuppressionAndSobel {
 

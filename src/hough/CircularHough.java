@@ -27,9 +27,9 @@ public class CircularHough {
 			rValues[i] = rValues[i - 1] + rStep;
 		}
 
-		int xCenter = (image.getWidth()-1)/2;
-		int yCenter = (image.getHeight()-1)/2;
-		
+		int xCenter = (image.getWidth() - 1) / 2;
+		int yCenter = (image.getHeight() - 1) / 2;
+
 		for (int i = 0; i < circularScore.length; i++) {
 			for (Pair p : whitePoints) {
 				if (belongsToCircle(rValues[i], epsilon, p.getX(), p.getY(), xCenter, yCenter)) {
@@ -45,6 +45,7 @@ public class CircularHough {
 
 		for (int i = 0; i < circularScore.length; i++) {
 			if (circularScore[i] > circlesThreashhold) {
+				System.out.println(circularScore[i]);
 				drawCircle(rValues[i], xCenter, yCenter, newImage);
 			}
 
@@ -54,17 +55,15 @@ public class CircularHough {
 	}
 
 	private boolean belongsToCircle(double r, double epsilon, int x, int y, int xCenter, int yCenter) {
-		return (Math.pow(x-xCenter, 2)+Math.pow(y-yCenter, 2) - Math.pow(r, 2)) <= epsilon;
+		return Math.abs((Math.pow(x - xCenter, 2) + Math.pow(y - yCenter, 2) - Math.pow(r, 2))) <= epsilon;
 	}
 
-	private void drawCircle(double r,int xCenter, int yCenter,double[][] newImage) {
-		for(int x=0; x<newImage.length; x++){
-			double xSquared = Math.pow(xCenter-x, 2);
-			double rSquared = Math.pow(r, 2);
-			if(xSquared <= rSquared){
-				double deltaY = Math.sqrt(rSquared-xSquared);
-				newImage[x][(int) (yCenter-deltaY)] = 128;
-				newImage[x][(int) (yCenter+deltaY)] = 128;
+	private void drawCircle(double r, int xCenter, int yCenter, double[][] newImage) {
+		for (int x = 0; x < newImage.length; x++) {
+			for (int y = 0; y < newImage[0].length; y++) {
+				if (belongsToCircle(r, 1, x, y, xCenter, yCenter)) {
+					newImage[x][y] = 128;
+				}
 			}
 		}
 	}
@@ -90,7 +89,6 @@ public class CircularHough {
 		}
 		return max;
 	}
-
 
 	private void getWhitePoints(double[][] matrix) {
 		whitePoints = new LinkedList<>();
