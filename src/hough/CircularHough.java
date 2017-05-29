@@ -61,7 +61,7 @@ public class CircularHough {
 	private void drawCircle(double r, int xCenter, int yCenter, double[][] newImage) {
 		for (int x = 0; x < newImage.length; x++) {
 			for (int y = 0; y < newImage[0].length; y++) {
-				if (belongsToCircle(r, 1, x, y, xCenter, yCenter)) {
+				if (belongsToCircle(r, 200, x, y, xCenter, yCenter)) {
 					newImage[x][y] = 128;
 				}
 			}
