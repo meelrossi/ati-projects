@@ -40,10 +40,7 @@ public class NonMaximumSuppressionAndSobel {
 	}
 
 	private BorderDirection getBorderDirection(int x, int y, double[][] dx, double[][] dy) {
-		if(dx[x][y] == 0){
-			return BorderDirection.VERTICAL;
-		}
-		double angle = Math.atan2(dy[x][y], dx[x][y]);
+		double angle = Math.atan((dy[x][y]+0.01)/(dx[x][y]+0.01));
 		angle = (angle * 180 / Math.PI);
 		if(angle < 0){
 			angle += 180;
@@ -58,5 +55,8 @@ public class NonMaximumSuppressionAndSobel {
 			return BorderDirection.DESCENDING;
 		}
 	}
+
 	
 }
+
+
