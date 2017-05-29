@@ -1,5 +1,6 @@
 package model;
 
+import border.CannyBorder;
 import border.DirectionalBorder;
 import border.LaplacianBorder;
 import border.LoGBorder;
@@ -18,7 +19,8 @@ public enum BorderDetectorsType {
 	MISTERY_DIRECTIONAL,
 	KIRSH_DIRECTIONAL,
 	LAPLACIAN,
-	LOG;
+	LOG,
+	CANNY;
 	
 	public ColorImage getBorderImage(ColorImage img, double threshold, int m, double sigma) {
 		switch(this) {
@@ -38,6 +40,8 @@ public enum BorderDetectorsType {
 			return LaplacianBorder.getBorderImage(img, threshold);
 		case LOG:
 			return LoGBorder.getBorderImage(img, threshold, m, sigma);
+		case CANNY:
+			return CannyBorder.getBorderImage(img, threshold, m);
 		default:
 			return null;
 		}
