@@ -1,7 +1,5 @@
 package active_borders;
 
-import javafx.scene.paint.Color;
-
 public class Pixel {
 
 	private int x;

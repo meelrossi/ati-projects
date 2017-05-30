@@ -4,6 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import controller.tab.*?>
 <?import controller.tab.ThresholdTab?>
+<?import controller.tab.ActiveBordersTab?>
 
 <TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
 	minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0"
@@ -20,5 +21,6 @@
 		<ThresholdTab fx:id="thresholdTab" />
 		<SusanTab fx:id="susanTab" />
 		<HoughTab fx:id="houghTab" />
+		<ActiveBordersTab />
 	</tabs>
 </TabPane>
