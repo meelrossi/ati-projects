@@ -1,36 +1,38 @@
-package utils;
+package active_borders;
 
-public class Pair {
+public class Pixel {
 
 	private int x;
 	private int y;
+	private PixelType type;
 	
-	public Pair(int x, int y) {
-		super();
+	public Pixel(int x, int y, PixelType type) {
 		this.x = x;
 		this.y = y;
+		this.type = type;
+	}
+
+	public PixelType getType() {
+		return type;
+	}
+
+	public void setType(PixelType type) {
+		this.type = type;
 	}
 
 	public int getX() {
 		return x;
 	}
 
-	public void setX(int x) {
-		this.x = x;
-	}
-
 	public int getY() {
 		return y;
-	}
-
-	public void setY(int y) {
-		this.y = y;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((type == null) ? 0 : type.hashCode());
 		result = prime * result + x;
 		result = prime * result + y;
 		return result;
@@ -44,12 +46,17 @@ public class Pair {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Pair other = (Pair) obj;
+		Pixel other = (Pixel) obj;
+		if (type != other.type)
+			return false;
 		if (x != other.x)
 			return false;
 		if (y != other.y)
 			return false;
 		return true;
 	}
+	
+		
+	
 	
 }
