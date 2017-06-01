@@ -6,6 +6,10 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 import javax.imageio.ImageIO;
 
@@ -16,6 +20,7 @@ import components.view.SaveImage;
 import controller.JavaFXApplication;
 import controller.OpenColorImageDialog;
 import controller.OpenRawImageDialog;
+import javafx.animation.AnimationTimer;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -124,6 +129,7 @@ public class ActiveBordersTab extends Tab {
 							for (int i = 0; i < files.size(); i++) {
 								images.add(new ColorImage(ImageIO.read(files.get(i))));
 							}
+							System.out.println(images.get(0));
 							image.setImage(SwingFXUtils.toFXImage(images.get(0).getBufferedImage(), null));
 						} catch (IOException e) {
 							e.printStackTrace();
@@ -171,17 +177,41 @@ public class ActiveBordersTab extends Tab {
 				peb = new PixelExchangeBorder(images.get(0), dragPos.x, dragPos.y, width, height);
 				peb.rearrangeBorders();
 				resultImage.setImage(peb.getImageWithBorder());
-				for (int i = 1; i < images.size(); i++) {
-					image.setImage(SwingFXUtils.toFXImage(img.getBufferedImage(), null));
-					peb.setNewImage(images.get(i));
-					peb.rearrangeBorders();
-					try {
-						resultImage.setImage(peb.getImageWithBorder());
-						Thread.sleep(500);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-				}
+				Executor exec = Executors.newCachedThreadPool(runnable -> {
+		            Thread t = new Thread(runnable);
+		            t.setDaemon(true);
+		            return t ;
+		        });
+
+		        final int imageBufferSize = images.size();
+		        BlockingQueue<ColorImage> imageQueue = new ArrayBlockingQueue<ColorImage>(imageBufferSize);
+
+		        exec.execute(() -> {
+		            int index = 0 ;
+		            try {
+		                while (index < images.size()) {
+							peb.setNewImage(images.get(index));
+							peb.rearrangeBorders();
+							Thread.sleep(100);
+		                    imageQueue.put(peb.getImageWithBorder());
+		                    index = (index + 1);
+		                }
+		            } catch (InterruptedException e) {
+		                Thread.currentThread().interrupt();
+		            }
+		        });
+ 
+		        AnimationTimer timer = new AnimationTimer() {
+
+		            @Override
+		            public void handle(long now) {
+		                ColorImage image = imageQueue.poll();
+		                if (image != null) {
+		                    resultImage.setImage(image);
+		                }
+		            }
+		        };
+		        timer.start();
 			}
 
 		});
