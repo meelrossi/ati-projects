@@ -4,8 +4,8 @@ import utils.ErrorDispersion;
 
 public class MeanAndStandardDeviationThreashholding {
 
-	private static int MIN_T1 = 80;
-	private static int MAX_T2 = 150;
+	private static int MIN_T1 = 50;
+	private static int MAX_T2 = 200;
 	
 	private double[][] matrix;
 	private int t1;

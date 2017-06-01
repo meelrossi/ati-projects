@@ -19,11 +19,12 @@ public class ThreashholdingWithHystesis {
 		}
 		for (int i = 0; i < matrix.length; i++) {
 			for (int j = 0; j < matrix[0].length; j++) {
-				if (result[i][j] > t1) {
+				if (result[i][j] > t2) {
 					result[i][j] = 255;
-				} else if (result[i][j] > t2) {
+				} else if (result[i][j] < t1) {
 					result[i][j] = 0;
 				} else {
+					result[i][j] = 0;
 					hysteresisPoints.add(new Pair(i, j));
 				}
 			}

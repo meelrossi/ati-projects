@@ -16,7 +16,7 @@ public class NonMaximumSuppressionAndSobel {
 		
 		double[][] dx = xMask.apply(matrix);
 		double[][] dy = yMask.apply(matrix);
-		double[][] sobel = Normalizationer.linearlyNormalize(pointToPointOperation.apply(dx,dy));
+		double[][] sobel = pointToPointOperation.apply(dx,dy);
 		
 		for(int i=1; i < matrix.length-1; i++){
 			for(int j=1; j < matrix[0].length-1; j++){
