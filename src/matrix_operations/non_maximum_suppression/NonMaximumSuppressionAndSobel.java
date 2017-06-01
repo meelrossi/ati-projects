@@ -17,24 +17,29 @@ public class NonMaximumSuppressionAndSobel {
 		double[][] dx = xMask.apply(matrix);
 		double[][] dy = yMask.apply(matrix);
 		double[][] sobel = pointToPointOperation.apply(dx,dy);
-		
+		double[][] result = new double[sobel.length][sobel[0].length];
+		for(int i=1; i < matrix.length-1; i++){
+			for(int j=1; j < matrix[0].length-1; j++){
+				result[i][j] = sobel[i][j];
+			}
+		}
 		for(int i=1; i < matrix.length-1; i++){
 			for(int j=1; j < matrix[0].length-1; j++){
 				BorderDirection direction = getBorderDirection(i,j,dx,dy);
-				checkForSupression(i,j,sobel,direction);
+				checkForSupression(i,j,sobel,direction,result);
 			}
 		}
 				
-		return sobel;
+		return result;
 	}
 
-	private void checkForSupression(int i, int j, double[][] sobel, BorderDirection direction) {
+	private void checkForSupression(int i, int j, double[][] sobel, BorderDirection direction, double[][] result) {
 		if(sobel[i][j] <= sobel[i+direction.getDeltaX()][j+direction.getDeltaY()]){
-			sobel[i][j] = 0;
+			result[i][j] = 0;
 			return;
 		}
 		if(sobel[i][j] <= sobel[i-direction.getDeltaX()][j-direction.getDeltaY()]){
-			sobel[i][j] = 0;
+			result[i][j] = 0;
 			return;
 		}
 	}

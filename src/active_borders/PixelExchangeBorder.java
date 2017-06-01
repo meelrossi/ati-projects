@@ -24,7 +24,7 @@ public class PixelExchangeBorder {
 	private static int WINDOWS_SIZE = 5;
 	private static double SIGMA = 1;
 	private static int Na = 1000;
-	private boolean useForceDLog = true;
+	private boolean useForceDLog = false;
 
 	public PixelExchangeBorder(ColorImage initialImage, int initialX, int initialY, int rectWidth, int rectHeight) {
 		currentImage = initialImage;
@@ -38,7 +38,7 @@ public class PixelExchangeBorder {
 	public void rearrangeBorders() {
 		double startTime = System.currentTimeMillis();
 		firstCycle();
-		// secondCycle();
+		secondCycle();
 		System.out.println("Tracking time(ms): " + (System.currentTimeMillis() - startTime));
 	}
 
@@ -49,8 +49,8 @@ public class PixelExchangeBorder {
 			hasChanged = false;
 			List<Pixel> loutCopy = new ArrayList<>(lout);
 			for (Pixel pixel : loutCopy) {
-				double isIn = ForceS(pixel.getX(), pixel.getY());
-				if (isIn >= 0) {
+				double isIn = ForceS(pixel.getX(), pixel.getY())*pixel.getType().getPhi();
+				if (isIn < 0) {
 					hasChanged = true;
 					expand(pixel);
 				}
@@ -58,7 +58,7 @@ public class PixelExchangeBorder {
 			fixLin();
 			List<Pixel> linCopy = new ArrayList<>(lin);
 			for (Pixel pixel : linCopy) {
-				double isIn = ForceS(pixel.getX(), pixel.getY());
+				double isIn = ForceS(pixel.getX(), pixel.getY())*pixel.getType().getPhi();
 				if (isIn < 0) {
 					contract(pixel);
 					hasChanged = true;
@@ -283,9 +283,9 @@ public class PixelExchangeBorder {
 	}
 
 	private double subsAndApplyNorm2(Color c1, Color c2) {
-		double rSquared = Math.pow(c1.getRed() - c2.getRed(), 2);
-		double gSquared = Math.pow(c1.getGreen() - c2.getGreen(), 2);
-		double bSquared = Math.pow(c1.getBlue() - c2.getBlue(), 2);
+		double rSquared = Math.pow((c1.getRed() - c2.getRed())*255, 2);
+		double gSquared = Math.pow((c1.getGreen() - c2.getGreen())*255, 2);
+		double bSquared = Math.pow((c1.getBlue() - c2.getBlue())*255, 2);
 		return Math.sqrt(rSquared + gSquared + bSquared);
 	}
 
