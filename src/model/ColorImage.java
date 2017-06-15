@@ -1,6 +1,7 @@
 package model;
 
 import java.awt.image.BufferedImage;
+import java.io.File;
 
 import javafx.scene.paint.Color;
 import utils.ImageManager;
@@ -10,6 +11,7 @@ public class ColorImage extends CustomImage {
 	private double[][] green;
 	private double[][] blue;
 	ColorImageType imageType;
+	File file;
 
 	public ColorImage(double[][] red, double[][] green, double[][] blue, int width, int height) {
 		super(width, height);
@@ -33,6 +35,22 @@ public class ColorImage extends CustomImage {
 		}
 		imageType= ColorImageType.BLACK_AND_WHITE;	
 	}
+	
+	public ColorImage(double[][] grey, int width, int height, File file) {
+		super(width, height);
+		this.red = new double[width][height];
+		this.green = new double[width][height];
+		this.blue = new double[width][height];
+		for (int i = 0; i < width; i++) {
+			for (int j = 0; j < height; j++) {
+				red[i][j] = grey[i][j];
+				green[i][j] = grey[i][j];
+				blue[i][j] = grey[i][j];
+			}
+		}
+		imageType= ColorImageType.BLACK_AND_WHITE;	
+		this.file = file;
+	}
 
 	public ColorImage(BufferedImage bufferedImage) {
 		super(bufferedImage.getWidth(), bufferedImage.getHeight());
@@ -48,6 +66,23 @@ public class ColorImage extends CustomImage {
 			}
 		}
 		setColorType();
+	}
+	
+	public ColorImage(BufferedImage bufferedImage, File file) {
+		super(bufferedImage.getWidth(), bufferedImage.getHeight());
+		red = new double[width][height];
+		green = new double[width][height];
+		blue = new double[width][height];
+		for (int i = 0; i < width; i++) {
+			for (int j = 0; j < height; j++) {
+				Integer color = bufferedImage.getRGB(i, j);
+				red[i][j] = (color >> 16) & 0xFF;
+				green[i][j] = (color >> 8) & 0xFF;
+				blue[i][j] = (color >> 0) & 0xFF;
+			}
+		}
+		setColorType();
+		this.file = file;
 	}
 	
 	public void setColorType() {
@@ -233,5 +268,9 @@ public class ColorImage extends CustomImage {
 
 	public ColorImageType colorImageType() {
 		return this.imageType;
+	}
+	
+	public File getFile() {
+		return file;
 	}
 }

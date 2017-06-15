@@ -58,7 +58,7 @@ public class OpenImage extends ViewComponent {
 							OpenColorImageDialog dialog = new OpenColorImageDialog();
 							Optional<ColorImageType> result = dialog.showAndWait();
 							if (result.isPresent()) {
-								img = new ColorImage(ImageIO.read(file));
+								img = new ColorImage(ImageIO.read(file), file);
 								if (result.get() == ColorImageType.BLACK_AND_WHITE) {
 									img.toBlackAndWhite();
 								}
@@ -88,6 +88,10 @@ public class OpenImage extends ViewComponent {
 	
 	public ColorImage getImage() {
 		return img;
+	}
+	
+	public void setImage(ColorImage img) {
+		image.setImage(SwingFXUtils.toFXImage(img.getBufferedImage(), null));
 	}
 
 }

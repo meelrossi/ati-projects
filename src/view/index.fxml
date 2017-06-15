@@ -22,5 +22,6 @@
 		<SusanTab fx:id="susanTab" />
 		<HoughTab fx:id="houghTab" />
 		<ActiveBordersTab />
+		<ImageDetectorTab />
 	</tabs>
 </TabPane>

@@ -9,7 +9,6 @@ import java.util.Map;
 import javafx.scene.paint.Color;
 import model.ColorImage;
 import utils.Pair;
-
 public class PixelExchangeBorder {
 
 	private ColorImage currentImage;

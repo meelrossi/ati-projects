@@ -228,7 +228,7 @@ public class ImageManager {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-        return new ColorImage(image, width, height);
+        return new ColorImage(image, width, height, file);
 	}
 	
 	public static double[][] applyThreshold(double[][] matrix, int threshold) {
