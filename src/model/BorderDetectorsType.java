@@ -6,6 +6,7 @@ import border.LaplacianBorder;
 import border.LoGBorder;
 import border.PrewittBorder;
 import border.SobelBorder;
+import harris.HarrisBorderDetector;
 import matrix_operations.masks.directional.KirshDirectionalMask;
 import matrix_operations.masks.directional.MisteryDirectionalMask;
 import matrix_operations.masks.directional.PrewittDirectionalMask;
@@ -20,7 +21,8 @@ public enum BorderDetectorsType {
 	KIRSH_DIRECTIONAL,
 	LAPLACIAN,
 	LOG,
-	CANNY;
+	CANNY,
+	HARRIS;
 	
 	public ColorImage getBorderImage(ColorImage img, double threshold, int m, double sigma) {
 		switch(this) {
@@ -42,6 +44,8 @@ public enum BorderDetectorsType {
 			return LoGBorder.getBorderImage(img, threshold, m, sigma);
 		case CANNY:
 			return CannyBorder.getBorderImage(img, threshold, m);
+		case HARRIS:
+			return HarrisBorderDetector.getHarrisBorders(img);
 		default:
 			return null;
 		}
