@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import matrix_operations.BasicMatrixOp;
+import matrix_operations.masks.LoGMask;
 import matrix_operations.masks.MaskType;
 import matrix_operations.masks.SobelMask;
 import matrix_operations.point_to_point.MultiplyPointToPointOperation;
@@ -14,6 +15,9 @@ import utils.Pair;
 
 public class HarrisBorderDetector {
 
+
+	private static int WINDOWS_SIZE = 7;
+	private static double SIGMA = 2;
 	public static double K = 0.04;
 	
 	public static ColorImage getHarrisBorders(ColorImage image){
@@ -25,8 +29,8 @@ public class HarrisBorderDetector {
 		double[][] greenResult = new double[image.getWidth()][image.getHeight()];
 		double[][] blueResult = new double[image.getWidth()][image.getHeight()];
 		
-		for(int i=0; i<image.getWidth(); i++){
-			for(int j=0; j<image.getHeight(); j++){
+		for(int i=1; i<image.getWidth()-1; i++){
+			for(int j=1; j<image.getHeight()-1; j++){
 				redResult[i][j] = band[i][j];
 				greenResult[i][j] = band[i][j];
 				blueResult[i][j] = band[i][j];
@@ -39,7 +43,7 @@ public class HarrisBorderDetector {
 			blueResult[p.getX()][p.getY()] = 0;
 		}
 		
-		
+		System.out.println(borders.size());
 		return new ColorImage(redResult, greenResult, blueResult, image.getWidth(), image.getHeight());
 	}
 
@@ -54,37 +58,79 @@ public class HarrisBorderDetector {
 		double[][] iy = yMask.apply(band);
 		
 		PointToPointOperation multiplyP2pOp = new MultiplyPointToPointOperation();
-		PointToPointOperation sumP2pOp = new SumPointToPointOperation();
 		
-		double[][] ix2 = multiplyP2pOp.apply(ix, ix);
-		double[][] iy2 = multiplyP2pOp.apply(iy, iy);
+		double[][] ix2 = soften(multiplyP2pOp.apply(ix, ix));
+		double[][] iy2 = soften(multiplyP2pOp.apply(iy, iy));
+		double[][] ixy = soften(multiplyP2pOp.apply(ix, iy));
 		
-		double[][] ixy = multiplyP2pOp.apply(ix, iy);
+		double[][] r = new double[band.length][band[0].length];
 		
-		double[][] ix2byiy2 = multiplyP2pOp.apply(ix2, iy2);
+		for(int i=0; i<r.length; i++){
+			for(int j=0; j<r[0].length; j++){
+				double ix2a = ix2[i][j];
+				double iy2a = iy2[i][j];
+				double ixya = ixy[i][j];
+				r[i][j] = (ix2a * iy2a - ixya * ixya) - K * Math.pow(ix2a+iy2a, 2);
+			}
+		}
 		
-		double[][] minusixy2 = BasicMatrixOp.scalarMult(multiplyP2pOp.apply(ixy, ixy), -1);
 		
-		double[][] firstTerm = sumP2pOp.apply(ix2byiy2, minusixy2);
-		
-		double[][] ix2sumiy2 = sumP2pOp.apply(ix2, iy2);
-		
-		double[][] ix2sumiy22 = multiplyP2pOp.apply(ix2sumiy2, ix2sumiy2);
-		
-		double[][] multk = BasicMatrixOp.scalarMult(ix2sumiy22, -K);
-		
-		double[][] r = sumP2pOp.apply(firstTerm, multk);
+		double max = -100000000;
 		
 		for(int i=0; i<r.length; i++){
 			for(int j=0; j<r[0].length; j++){
 				if(r[i][j] > 0){
+					if(r[i][j] > max){
+						max = r[i][j];
+					}
+				}
+			}
+		}
+		System.out.println(max);
+		for(int i=0; i<r.length; i++){
+			for(int j=0; j<r[0].length; j++){
+				if(r[i][j] > max*0.1){
 					borders.add(new Pair(i,j));
 				}
 			}
 		}
 		
+		
 		return borders;
 		
+	}
+
+	private static double[][] soften(double[][] matrix) {
+		double[][] result =  new double[matrix.length][matrix[0].length];
+		for(int i=0; i<matrix.length; i++){
+			for(int j=0; j<matrix[0].length; j++){
+				if(i<(WINDOWS_SIZE-1)/2+1 || i>matrix.length-(WINDOWS_SIZE-1)/2-1 || j<(WINDOWS_SIZE-1)/2+1 || j>matrix[0].length-(WINDOWS_SIZE-1)/2-1 ){
+					result[i][j] = matrix[i][j];
+				} else {
+					result[i][j] = softenValue(i,j,matrix);					
+				}
+			}
+		}
+		return result;
+	}
+	
+	private static double softenValue(int x, int y, double[][] matrix) {
+		double sum = 0;
+		int move = (WINDOWS_SIZE - 1) / 2;
+		for (int i = x - move; i <= x + move; i++) {
+			for (int j = y - move; j <= y + move; j++) {
+				if (i >= 0 && i < matrix.length && j >= 0 && j < matrix[0].length) {
+					int dx = Math.abs(x - i);
+					int dy = Math.abs(y - j);
+					sum += gaussianValue(dx, dy) * matrix[i][j];
+				}
+			}
+		}
+		return sum;
+	}
+
+	private static double gaussianValue(double x, double y) {
+		return (1 / (2 * Math.PI * SIGMA * SIGMA)) * (Math.exp(-(x * x + y * y) / 2 * (SIGMA * SIGMA)));
 	}
 	
 }

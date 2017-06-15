@@ -36,6 +36,8 @@ public class BorderDetectorsTab extends Tab {
 	private Button laplacianButton;
 	@FXML
 	private Button cannyButton;
+	@FXML
+	private Button harrisButton;
 
 	@FXML
 	private OpenImage image;
@@ -76,6 +78,7 @@ public class BorderDetectorsTab extends Tab {
 		buttons.add(new EnumButton(LoGButton, BorderDetectorsType.LOG));
 		buttons.add(new EnumButton(laplacianButton, BorderDetectorsType.LAPLACIAN));
 		buttons.add(new EnumButton(cannyButton, BorderDetectorsType.CANNY));
+		buttons.add(new EnumButton(harrisButton, BorderDetectorsType.HARRIS));
 		buttons.forEach((bd -> {
 			bd.getButton().setOnAction(new EventHandler<ActionEvent>() {
 

@@ -31,6 +31,8 @@
 							styleClass="noise-toolbar" />
 						<Button fx:id="cannyButton" mnemonicParsing="false" text="CANNY"
 							styleClass="noise-toolbar" />
+						<Button fx:id="harrisButton" mnemonicParsing="false" text="HARRIS"
+							styleClass="noise-toolbar" />
 					</items>
 				</ToolBar>
 				<Pane prefHeight="533.0" layoutY="35" prefWidth="800.0"
