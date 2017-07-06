@@ -23,5 +23,6 @@
 		<HoughTab fx:id="houghTab" />
 		<ActiveBordersTab />
 		<ImageDetectorTab />
+		<GSiftTab />
 	</tabs>
 </TabPane>
