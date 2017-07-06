@@ -1,6 +1,5 @@
 package matrix_operations.non_maximum_suppression;
 
-import matrix_operations.Normalizationer;
 import matrix_operations.masks.MaskType;
 import matrix_operations.masks.SobelMask;
 import matrix_operations.point_to_point.ModulePointToPointOperation;

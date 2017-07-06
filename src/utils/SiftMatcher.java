@@ -44,6 +44,7 @@ public class SiftMatcher {
 		MatOfKeyPoint descriptors2 = new MatOfKeyPoint();
 		featureDetector.detect(matImage2, keyPoints2);
 		descriptorExtractor.compute(matImage2, keyPoints2, descriptors2);
+		System.out.println(descriptors2.row(1));
 		Mat image2WithKeypoints = new Mat(matImage2.rows(), matImage2.cols(), Highgui.CV_LOAD_IMAGE_COLOR);
 		Features2d.drawKeypoints(matImage2, keyPoints2, image2WithKeypoints, keyPointColor, 0);
 		Highgui.imwrite("image2WithKeyPoints.jpg", image2WithKeypoints);
