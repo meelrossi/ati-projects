@@ -1,6 +1,5 @@
 package controller;
 
-
 import java.io.File;
 
 import javafx.application.Application;
@@ -24,8 +23,9 @@ public class JavaFXApplication extends Application {
 			primaryStage.setTitle("ATI");
 			primaryStage.setScene(scene);
 			primaryStage.show();
-			
+
 			JavaFXApplication.primaryStage = primaryStage;
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
